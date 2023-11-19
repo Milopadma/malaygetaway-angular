@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 
 @Component({
-  selector: "my-component, MyComponent",
+  selector: "my-component, landing",
   template: `
     <header class="bg-white flex flex-col items-stretch">
       <div class="self-center flex w-full max-w-[1141px] items-stretch justify-between gap-5 mt-7 px-5 max-md:max-w-full max-md:flex-wrap">
@@ -49,11 +49,11 @@ import { Component } from "@angular/core";
     </div>
   `,
 })
-export class MyComponent {}
+export class landing {}
 
 @NgModule({
-  declarations: [MyComponent],
+  declarations: [landing],
   imports: [CommonModule],
-  exports: [MyComponent],
+  exports: [landing],
 })
-export class MyComponentModule {}
+export class landingModule {}
