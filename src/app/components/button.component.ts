@@ -18,11 +18,11 @@ import { Component } from '@angular/core';
     </div>
   `,
 })
-export class buttonwIcon {}
+export class ButtonwIcon {}
 
 @NgModule({
-  declarations: [buttonwIcon],
+  declarations: [ButtonwIcon],
   imports: [CommonModule],
-  exports: [buttonwIcon],
+  exports: [ButtonwIcon],
 })
 export class buttonwIconModule {}

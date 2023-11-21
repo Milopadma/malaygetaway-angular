@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { landing } from './landing.component';
-import { merchantRegister } from './merchantRegister.component';
+import { MerchantRegister } from './merchantRegister.component';
 
 export const routes: Routes = [
     {
@@ -9,7 +9,7 @@ export const routes: Routes = [
     },
     {
         path: 'merchant/register',
-        component: merchantRegister,
+        component: MerchantRegister,
     },
     {
         path: 'review',

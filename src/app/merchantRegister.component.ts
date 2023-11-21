@@ -2,14 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { buttonwIconModule } from './components/button.component';
+import { ProgressBarComponentModule } from './components/form/progressbar.component';
 
 @Component({
-  selector: 'my-component, MyComponent',
+  selector: 'merchant-register, MerchantRegister',
   template: `
     <main
       class="justify-center items-center bg-white flex flex-col px-20 max-md:px-5"
     >
-      <nav
+      <!-- <nav
         class="flex w-[348px] max-w-full items-stretch justify-between gap-5 mt-48 max-md:justify-center max-md:mt-10"
       >
         <div class="flex shrink-0 h-[9px] flex-col flex-1 rounded-[50%]"></div>
@@ -40,7 +41,11 @@ import { buttonwIconModule } from './components/button.component';
           class="text-zinc-500 text-base font-light leading-5 tracking-tighter whitespace-nowrap"
           >Done</a
         >
-      </nav>
+      </nav> -->
+      <progress-bar
+        [labels]="['Business name', 'Details', 'Documents', 'Done']"
+        [current]="'Business name'"
+      />
       <div class="flex flex-col">
         <h1
           class="text-zinc-800 text-3xl font-light leading-10 tracking-tighter max-w-[313px] mt-20 max-md:mt-10"
@@ -66,11 +71,11 @@ import { buttonwIconModule } from './components/button.component';
     </main>
   `,
 })
-export class merchantRegister {}
+export class MerchantRegister {}
 
 @NgModule({
-  declarations: [merchantRegister],
-  exports: [merchantRegister],
-  imports: [CommonModule, buttonwIconModule],
+  declarations: [MerchantRegister],
+  exports: [MerchantRegister],
+  imports: [CommonModule, buttonwIconModule, ProgressBarComponentModule],
 })
-export class merchantRegisterModule {}
+export class MerchantRegisterModule {}
