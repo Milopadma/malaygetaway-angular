@@ -48,7 +48,7 @@ import { ProgressBarComponentModule } from './components/form/progressbar.compon
       />
       <div class="flex flex-col">
         <h1
-          class="text-zinc-800 text-3xl font-light leading-10 tracking-tighter max-w-[313px] mt-20 max-md:mt-10"
+          class="text-zinc-800 text-subtitles text font-light leading-10 tracking-tighter max-w-[313px] mt-20 max-md:mt-10"
         >
           What is your business <br />
           name?

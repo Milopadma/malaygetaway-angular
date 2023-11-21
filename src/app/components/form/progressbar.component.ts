@@ -9,15 +9,23 @@ import { CommonModule } from '@angular/common';
       <div
         class="w-full flex-row border-t-2 border-gray-200 relative flex justify-between"
       >
-        @for (label of labels; track label ){
+        @for (label of labels; track label ){ @if (label == current) {
+
         <div
-          class="-bottom-5 text-xs after:content-['*'] after:text-red-500
+          class="-bottom-5 text-xs after:content-['*'] after:text-accent
             after:relative after:bottom-1/2 after:right-1/2 after:transform 
         "
         >
           {{ label }}
         </div>
-        } @empty {
+        } @else {
+        <div
+          class="-bottom-5 text-xs after:content-['*'] 
+            after:relative after:bottom-1/2 after:right-1/2 after:transform "
+        >
+          {{ label }}
+        </div>
+        } } @empty {
         <div class="relative">empty</div>
         }
       </div>
