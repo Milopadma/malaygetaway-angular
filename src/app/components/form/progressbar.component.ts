@@ -11,13 +11,12 @@ import { CommonModule } from '@angular/common';
       >
         @for (label of labels; track label ){
         <div
-          class="absolute top-0 left-0 before:content-['•'] before:text-blue-500 before:opacity-50 before:animate-pulse"
-        ></div>
-        <div
-          class="-top-1.5 w-3 h-3 bg-gray-300 rounded-full"
-          [class.bg-green-500]="current === label"
-        ></div>
-        <div class="-bottom-5 text-xs">{{ label }}</div>
+          class="-bottom-5 text-xs after:content-['*'] after:text-red-500
+            after:relative after:bottom-1/2 after:right-1/2 after:transform 
+        "
+        >
+          {{ label }}
+        </div>
         } @empty {
         <div class="relative">empty</div>
         }
