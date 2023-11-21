@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
         @for (label of labels; track label ){ @if (label == current) {
 
         <div
-          class="-bottom-5 text-xs after:content-['*'] after:text-accent
+          class="-bottom-5 text-small after:content-['*'] after:text-accent text-softgray
             after:relative after:bottom-1/2 after:right-1/2 after:transform 
         "
         >
@@ -20,7 +20,7 @@ import { CommonModule } from '@angular/common';
         </div>
         } @else {
         <div
-          class="-bottom-5 text-xs after:content-['*'] 
+          class="-bottom-5 text-small after:content-['*'] text-softgray
             after:relative after:bottom-1/2 after:right-1/2 after:transform "
         >
           {{ label }}
