@@ -11,23 +11,28 @@
 
 @layer components {
   .text-titles {
-    font-size: 3rem;
-    font-weight: 900;
-    line-height: 1;
+    @apply text-5xl font-black
   }
   .text-subtitles {
-    font-size: 1.875rem;
+    /* font-size: 1.875rem;
     font-weight: 400;
-    line-height: 2.25rem;
+    line-height: 2.25rem; */
+    @apply text-3xl font-normal
+
   }
   .text-paragraph {
-    font-size: 1.5rem;
+    /* font-size: 1.5rem;
     font-weight: 300;
-    line-height: 2rem;
+    line-height: 2rem; */
+    @apply text-2xl font-light
   }
   .text-small {
-    font-size: 1rem;
+    /* font-size: 1rem;
     font-weight: 300;
-    line-height: 1.5rem;
+    line-height: 1.5rem; */
+    @apply text-base font-light
+  }
+  .padding-height-128 {
+    @apply h-32
   }
 }
