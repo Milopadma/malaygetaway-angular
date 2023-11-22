@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { landing } from './landing.component';
 import { MerchantRegister } from './pages/merchantRegister.component';
 import { BusinessNameFormComponent } from './pages/registrationform/businessname.component';
+import { NotFoundComponent } from './pages/notfound/notfound.component';
 
 export const routes: Routes = [
     {
@@ -13,7 +14,7 @@ export const routes: Routes = [
         component: MerchantRegister,
         children: [
             {
-                path: 'businessname',
+                path: 'name',
                 component: BusinessNameFormComponent,
             },
             {
@@ -49,5 +50,11 @@ export const routes: Routes = [
     {
         path: 'analytics',
         component: landing,
-    }
+    },
+    // 404
+    {
+        path: '**',
+        component: NotFoundComponent,
+    },
+
 ];
