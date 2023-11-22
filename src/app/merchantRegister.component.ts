@@ -48,14 +48,14 @@ import { ProgressBarComponentModule } from './components/form/progressbar.compon
       />
       <div class="flex flex-col">
         <h1
-          class="text-zinc-800 text-subtitles text font-light leading-10 tracking-tighter max-w-[313px] mt-20 max-md:mt-10"
+          class="text-zinc-800 text-subtitles leading-10 tracking-tighter max-w-[313px] mt-20 max-md:mt-10"
         >
           What is your business <br />
           name?
         </h1>
         <input
           type="text"
-          class="text-stone-300 font-light leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full mt-4 px-5 py-2 border-2 border-solid max-md:pl-1"
+          class="text-stone-300 text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full mt-4 px-5 py-2 border-2 border-solid max-md:pl-1"
           placeholder="business name"
         />
         <div class="h-32" id="spacer"></div>

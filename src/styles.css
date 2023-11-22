@@ -4,7 +4,30 @@
 @tailwind utilities;
 
 @layer base {
-    html {
-      font-family: "Inter", system-ui, sans-serif;
-    }
+  html {
+    font-family: "Inter", system-ui, sans-serif;
   }
+}
+
+@layer components {
+  .text-titles {
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .text-subtitles {
+    font-size: 1.875rem;
+    font-weight: 400;
+    line-height: 2.25rem;
+  }
+  .text-paragraph {
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 2rem;
+  }
+  .text-small {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.5rem;
+  }
+}
