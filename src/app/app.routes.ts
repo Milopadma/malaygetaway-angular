@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { landing } from './landing.component';
-import { MerchantRegister } from './merchantRegister.component';
+import { MerchantRegister } from './pages/merchantRegister.component';
+import { BusinessNameFormComponent } from './pages/registrationform/businessname.component';
 
 export const routes: Routes = [
     {
@@ -10,6 +11,24 @@ export const routes: Routes = [
     {
         path: 'merchant/register',
         component: MerchantRegister,
+        children: [
+            {
+                path: 'businessname',
+                component: BusinessNameFormComponent,
+            },
+            {
+                path: 'details',
+                component: landing,
+            },
+            {
+                path: 'documents',
+                component: landing,
+            },
+            {
+                path: 'done',
+                component: landing,
+            },
+        ],
     },
     {
         path: 'review',
