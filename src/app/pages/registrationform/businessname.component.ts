@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { HostListener, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { buttonwIconModule } from '../../components/button.component';
@@ -36,6 +36,11 @@ import { Router, RouterOutlet } from '@angular/router';
 })
 export class BusinessNameFormComponent {
   constructor(private router: Router) {}
+
+  @HostListener('document:keydown.enter', ['$event'])
+  onKeydownHandler(event: KeyboardEvent) {
+    this.navigateToNextPage();
+  }
 
   navigateToNextPage() {
     this.router.navigate(['/merchant/register/details']); // replace '/nextPage' with the actual route

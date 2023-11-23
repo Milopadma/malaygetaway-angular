@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { buttonwIconModule } from '../../components/button.component';
 import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
 import { Router, RouterOutlet } from '@angular/router';
@@ -35,6 +35,11 @@ import { FileInputComponentModule } from '../../components/form/fileinput.compon
 })
 export class BusinessFilesFormComponent {
   constructor(private router: Router) {}
+
+  @HostListener('document:keydown.enter', ['$event'])
+  onKeydownHandler(event: KeyboardEvent) {
+    this.navigateToNextPage();
+  }
 
   navigateToNextPage() {
     this.router.navigate(['/merchant/register/complete']); // replace '/nextPage' with the actual route

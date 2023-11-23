@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { HostListener, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { buttonwIconModule } from '../../components/button.component';
@@ -32,7 +32,10 @@ import { Router, RouterOutlet } from '@angular/router';
       ></textarea>
       <div class="h-32" id="spacer"></div>
       <div class="flex flex-col items-end">
-        <buttonwicon (click)="navigateToNextPage()" label="Continue"></buttonwicon>
+        <buttonwicon
+          (click)="navigateToNextPage()"
+          label="Continue"
+        ></buttonwicon>
         <p
           class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
         >
@@ -53,6 +56,11 @@ export class BusinessDetailsFormComponent {
 
   navigateToNextPage() {
     this.router.navigate(['/merchant/register/documents']); // replace '/nextPage' with the actual route
+  }
+
+  @HostListener('document:keydown.enter', ['$event'])
+  onKeydownHandler(event: KeyboardEvent) {
+    this.navigateToNextPage();
   }
 }
 

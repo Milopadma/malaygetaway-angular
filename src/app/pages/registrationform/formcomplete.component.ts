@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
+import { HostListener, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { buttonwIconModule } from '../../components/button.component';
 import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { FileInputComponentModule } from '../../components/form/fileinput.component';
 @Component({
   selector: 'completed-form',
@@ -15,8 +15,8 @@ import { FileInputComponentModule } from '../../components/form/fileinput.compon
       </h1>
       <div id="spacer" class="h-4"></div>
       <div class="flex flex-col md:flex-row gap-6 text-paragraph">
-        You have completed the application <br>form, our officials will check back
-        with <br>you soon.
+        You have completed the application <br />form, our officials will check
+        back with <br />you soon.
       </div>
       <div class="h-32" id="spacer"></div>
       <div class="flex flex-col items-end">
@@ -30,7 +30,18 @@ import { FileInputComponentModule } from '../../components/form/fileinput.compon
     </div>
   `,
 })
-export class CompletedFormComponent {}
+export class CompletedFormComponent {
+  constructor(private router: Router) {}
+
+  @HostListener('document:keydown.enter', ['$event'])
+  onKeydownHandler(event: KeyboardEvent) {
+    this.navigateToNextPage();
+  }
+
+  navigateToNextPage() {
+    this.router.navigate(['/']); // replace '/nextPage' with the actual route
+  }
+}
 
 @NgModule({
   declarations: [CompletedFormComponent],
