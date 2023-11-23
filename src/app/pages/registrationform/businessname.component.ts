@@ -39,6 +39,7 @@ export class BusinessNameFormComponent {
 
   @HostListener('document:keydown.enter', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
+    // TODO! need to check if user is currently in an input field
     this.navigateToNextPage();
   }
 
