@@ -8,13 +8,19 @@ import { FileInputComponentModule } from "../../components/form/fileinput.compon
 @Component({
   selector: 'businessfiles-form',
   template: `
+  <div id="spacer" class="h-64"></div>
     <div class="flex flex-col">
       <h1
-        class="text-zinc-800 text-subtitles leading-10 tracking-tighter max-w-[313px] mt-20 max-md:mt-10"
+        class="text-zinc-800 text-subtitles leading-10 tracking-tighter"
       >
         Upload your business documents
       </h1>
-      <fileinput label="Licenses"></fileinput>
+      <div id="spacer" class="h-4"></div>
+      <div class="flex flex-col md:flex-row gap-6">
+
+          <fileinput label="Licenses"></fileinput>
+          <fileinput label="Testimonials"></fileinput>
+        </div>
       <div class="h-32" id="spacer"></div>
       <div class="flex flex-col items-end">
         <buttonwicon></buttonwicon>
