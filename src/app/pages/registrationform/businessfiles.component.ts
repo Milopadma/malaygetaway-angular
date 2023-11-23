@@ -23,7 +23,7 @@ import { FileInputComponentModule } from "../../components/form/fileinput.compon
         </div>
       <div class="h-32" id="spacer"></div>
       <div class="flex flex-col items-end">
-        <buttonwicon></buttonwicon>
+        <buttonwicon label="Continue"></buttonwicon>
         <p
           class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
         >

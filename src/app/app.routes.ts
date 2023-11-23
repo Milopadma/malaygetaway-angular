@@ -5,6 +5,7 @@ import { BusinessNameFormComponent } from './pages/registrationform/businessname
 import { NotFoundComponent } from './pages/notfound/notfound.component';
 import { BusinessDetailsFormComponent } from './pages/registrationform/businessdetails.component';
 import { BusinessFilesFormComponent } from './pages/registrationform/businessfiles.component';
+import { CompletedFormComponent } from './pages/registrationform/formcomplete.component';
 
 export const routes: Routes = [
     {
@@ -28,8 +29,8 @@ export const routes: Routes = [
                 component: BusinessFilesFormComponent,
             },
             {
-                path: 'done',
-                component: landing,
+                path: 'complete',
+                component: CompletedFormComponent,
             },
         ],
     },

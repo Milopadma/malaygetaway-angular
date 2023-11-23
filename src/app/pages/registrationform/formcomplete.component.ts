@@ -4,24 +4,23 @@ import { Component } from '@angular/core';
 import { buttonwIconModule } from '../../components/button.component';
 import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
 import { RouterOutlet } from '@angular/router';
+import { FileInputComponentModule } from '../../components/form/fileinput.component';
 @Component({
-  selector: 'businessname-form',
+  selector: 'completed-form',
   template: `
+    <div id="spacer" class="h-64"></div>
     <div class="flex flex-col">
-      <h1
-        class="text-zinc-800 text-subtitles leading-10 tracking-tighter max-w-[313px] mt-20 max-md:mt-10"
-      >
-        What is your business <br />
-        name?
+      <h1 class="text-zinc-800 text-titles leading-10 tracking-tighter">
+        Congratulations!
       </h1>
-      <input
-        type="text"
-        class="text-stone-300 text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full mt-4 px-5 py-2 border-2 border-solid max-md:pl-1"
-        placeholder="business name"
-      />
+      <div id="spacer" class="h-4"></div>
+      <div class="flex flex-col md:flex-row gap-6 text-paragraph">
+        You have completed the application <br>form, our officials will check back
+        with <br>you soon.
+      </div>
       <div class="h-32" id="spacer"></div>
       <div class="flex flex-col items-end">
-        <buttonwicon label="Continue"></buttonwicon>
+        <buttonwicon label="Finish"></buttonwicon>
         <p
           class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
         >
@@ -31,16 +30,17 @@ import { RouterOutlet } from '@angular/router';
     </div>
   `,
 })
-export class BusinessNameFormComponent {}
+export class CompletedFormComponent {}
 
 @NgModule({
-  declarations: [BusinessNameFormComponent],
-  exports: [BusinessNameFormComponent],
+  declarations: [CompletedFormComponent],
+  exports: [CompletedFormComponent],
   imports: [
     CommonModule,
     buttonwIconModule,
     ProgressBarComponentModule,
     RouterOutlet,
+    FileInputComponentModule,
   ],
 })
-export class BusinessNameFormComponentModule {}
+export class CompletedFormComponentModule {}
