@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { buttonwIconModule } from '../../components/button.component';
 import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'businessdetails-form',
   template: `
@@ -32,7 +32,7 @@ import { RouterOutlet } from '@angular/router';
       ></textarea>
       <div class="h-32" id="spacer"></div>
       <div class="flex flex-col items-end">
-        <buttonwicon label="Continue"></buttonwicon>
+        <buttonwicon (click)="navigateToNextPage()" label="Continue"></buttonwicon>
         <p
           class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
         >
@@ -47,6 +47,12 @@ export class BusinessDetailsFormComponent {
     textarea.style.overflow = 'auto';
     textarea.style.height = 'auto';
     textarea.style.height = textarea.scrollHeight + 'px';
+  }
+
+  constructor(private router: Router) {}
+
+  navigateToNextPage() {
+    this.router.navigate(['/merchant/register/documents']); // replace '/nextPage' with the actual route
   }
 }
 

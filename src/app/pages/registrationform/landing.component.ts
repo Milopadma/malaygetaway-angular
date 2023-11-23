@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { buttonwIconModule } from '../../components/button.component';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'my-component, landing',
+  selector: 'landing',
   template: `
-    <div class="bg-black min-h-[1px] w-full mt-7 max-md:max-w-full"></div>
 
     <section
       class="self-center flex w-full max-w-[899px] justify-between gap-5 mt-36 mb-48 max-md:max-w-full max-md:flex-wrap max-md:my-10"
@@ -28,7 +28,7 @@ import { buttonwIconModule } from '../../components/button.component';
         </p>
         <div class="h-8" id="spacer"></div>
         <div class="flex flex-shrink">
-          <buttonwicon label="Start"></buttonwicon>
+          <buttonwicon (click)="navigateToNextPage()" label="Start"></buttonwicon>
         </div>
       </div>
     </section>
@@ -43,7 +43,13 @@ import { buttonwIconModule } from '../../components/button.component';
     </div>
   `,
 })
-export class landing {}
+export class landing {
+  constructor(private router: Router) {}
+
+  navigateToNextPage() {
+    this.router.navigate(['/merchant/register/name']); // replace '/nextPage' with the actual route
+  }
+}
 
 @NgModule({
   declarations: [landing],

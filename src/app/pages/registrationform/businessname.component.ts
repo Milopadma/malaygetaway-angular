@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { buttonwIconModule } from '../../components/button.component';
 import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'businessname-form',
   template: `
@@ -21,7 +21,10 @@ import { RouterOutlet } from '@angular/router';
       />
       <div class="h-32" id="spacer"></div>
       <div class="flex flex-col items-end">
-        <buttonwicon label="Continue"></buttonwicon>
+        <buttonwicon
+          (click)="navigateToNextPage()"
+          label="Continue"
+        ></buttonwicon>
         <p
           class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
         >
@@ -31,7 +34,13 @@ import { RouterOutlet } from '@angular/router';
     </div>
   `,
 })
-export class BusinessNameFormComponent {}
+export class BusinessNameFormComponent {
+  constructor(private router: Router) {}
+
+  navigateToNextPage() {
+    this.router.navigate(['/merchant/register/details']); // replace '/nextPage' with the actual route
+  }
+}
 
 @NgModule({
   declarations: [BusinessNameFormComponent],

@@ -3,27 +3,27 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { buttonwIconModule } from '../../components/button.component';
 import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
-import { RouterOutlet } from '@angular/router';
-import { FileInputComponentModule } from "../../components/form/fileinput.component";
+import { Router, RouterOutlet } from '@angular/router';
+import { FileInputComponentModule } from '../../components/form/fileinput.component';
 @Component({
   selector: 'businessfiles-form',
   template: `
-  <div id="spacer" class="h-64"></div>
+    <div id="spacer" class="h-64"></div>
     <div class="flex flex-col">
-      <h1
-        class="text-zinc-800 text-subtitles leading-10 tracking-tighter"
-      >
+      <h1 class="text-zinc-800 text-subtitles leading-10 tracking-tighter">
         Upload your business documents
       </h1>
       <div id="spacer" class="h-4"></div>
       <div class="flex flex-col md:flex-row gap-6">
-
-          <fileinput label="Licenses"></fileinput>
-          <fileinput label="Testimonials"></fileinput>
-        </div>
+        <fileinput label="Licenses"></fileinput>
+        <fileinput label="Testimonials"></fileinput>
+      </div>
       <div class="h-32" id="spacer"></div>
       <div class="flex flex-col items-end">
-        <buttonwicon label="Continue"></buttonwicon>
+        <buttonwicon
+          (click)="navigateToNextPage()"
+          label="Continue"
+        ></buttonwicon>
         <p
           class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
         >
@@ -33,17 +33,23 @@ import { FileInputComponentModule } from "../../components/form/fileinput.compon
     </div>
   `,
 })
-export class BusinessFilesFormComponent {}
+export class BusinessFilesFormComponent {
+  constructor(private router: Router) {}
+
+  navigateToNextPage() {
+    this.router.navigate(['/merchant/register/complete']); // replace '/nextPage' with the actual route
+  }
+}
 
 @NgModule({
-    declarations: [BusinessFilesFormComponent],
-    exports: [BusinessFilesFormComponent],
-    imports: [
-        CommonModule,
-        buttonwIconModule,
-        ProgressBarComponentModule,
-        RouterOutlet,
-        FileInputComponentModule
-    ]
+  declarations: [BusinessFilesFormComponent],
+  exports: [BusinessFilesFormComponent],
+  imports: [
+    CommonModule,
+    buttonwIconModule,
+    ProgressBarComponentModule,
+    RouterOutlet,
+    FileInputComponentModule,
+  ],
 })
 export class BusinessFilesFormComponentModule {}
