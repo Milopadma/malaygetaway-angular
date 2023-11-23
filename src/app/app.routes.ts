@@ -4,6 +4,7 @@ import { MerchantRegister } from './pages/merchantRegister.component';
 import { BusinessNameFormComponent } from './pages/registrationform/businessname.component';
 import { NotFoundComponent } from './pages/notfound/notfound.component';
 import { BusinessDetailsFormComponent } from './pages/registrationform/businessdetails.component';
+import { BusinessFilesFormComponent } from './pages/registrationform/businessfiles.component';
 
 export const routes: Routes = [
     {
@@ -24,7 +25,7 @@ export const routes: Routes = [
             },
             {
                 path: 'documents',
-                component: landing,
+                component: BusinessFilesFormComponent,
             },
             {
                 path: 'done',
