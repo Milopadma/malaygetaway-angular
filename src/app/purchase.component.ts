@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { buttonwIconModule } from './components/button.component';
 import { ProgressBarComponentModule } from './components/form/progressbar.component';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'merchantPage',
+  selector: 'PurchasePage',
   template: `
-    <section class="font-sans text-gray-900 bg-white">
+    <section class="font-sans text-softblack bg-white">
         <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
-            <nav class="text-sm mb-5" aria-label="Breadcrumb">
+            <nav class="text-small mb-5" aria-label="Breadcrumb">
                 <ol class="list-none p-0 inline-flex">
                     <li class="flex items-center">
                         <a href="#" class="text-blue-600 hover:text-blue-700">Malay Getaway</a>
@@ -63,7 +64,8 @@ import { ProgressBarComponentModule } from './components/form/progressbar.compon
                             <div class="text-center mb-2">
                                 <span class="text-paragraph text-gray-400 line-through ml-2">RM 350.20</span>
                             </div>
-                                <button class="text-lg bg-softblack text-white font-semibold py-3 px-20 rounded-lg border hover:bg-orange-600 transition ease-in-out duration-300">
+                            <a routerLink="personal"></a>
+                                <button (click)="navButton1()" class="text-lg bg-softblack text-white font-semibold py-3 px-20 rounded-lg border hover:bg-orange-600 transition ease-in-out duration-300">
                                 Save
                             </button>
                         </div>
@@ -71,14 +73,18 @@ import { ProgressBarComponentModule } from './components/form/progressbar.compon
                 </div>
             </div>
     </section>
-
   `,
 })
-export class purchase {}
+export class purchase1 {
+    constructor(private router: Router) {}
+    navButton1() {
+      this.router.navigate(['purchase2']);
+    }
+}
 
 @NgModule({
-  declarations: [purchase],
-  exports: [purchase],
+  declarations: [purchase1],
+  exports: [purchase1],
   imports: [CommonModule, buttonwIconModule, ProgressBarComponentModule],
 })
 export class purchaseModule {}
