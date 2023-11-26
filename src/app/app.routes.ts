@@ -7,6 +7,11 @@ import { purchase3 } from './purchase3.component';
 import { purchase4 } from './purchase4.component';
 import { purchase5 } from './purchase5.component';
 import { NgModule } from '@angular/core';
+import { order } from './order.component';
+import { reviewKL } from './reviewKL.component';
+import { reviewAquaria } from './reviewAquaria.component';
+import { reviewGenting } from './reviewGenting.component';
+import { send } from './send.component';
 
 
 export const routes: Routes = [
@@ -18,10 +23,7 @@ export const routes: Routes = [
         path: 'merchant/register',
         component: MerchantRegister,
     },
-    {
-        path: 'review',
-        component: landing,
-    },
+ 
     {
         path: 'manage',
         component: landing,
@@ -48,5 +50,26 @@ export const routes: Routes = [
     {
         path: 'purchase5',
         component: purchase5,
+    },
+    {
+        path: 'reviewGenting',
+        component: reviewGenting,
+    },
+    {
+        path: 'reviewKL',
+        component: reviewKL,
+    },
+    {
+        path: 'reviewAquaria',
+        component: reviewAquaria,
+    },
+    {
+        path: 'send',
+        component: send,
+    },
+    {
+        path: 'order',
+        component: order,
     }
+
 ];
