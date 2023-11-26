@@ -39,7 +39,7 @@ export class CompletedFormComponent {
   }
 
   navigateToNextPage() {
-    this.router.navigate(['/']); // replace '/nextPage' with the actual route
+    this.router.navigate(['/']); // TODO replace '/' with the actual route later
   }
 }
 

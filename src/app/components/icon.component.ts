@@ -8,7 +8,7 @@ import { Component, Input, NgModule } from '@angular/core';
 // }
 
 @Component({
-  selector: 'app-icon',
+  selector: 'icon',
   template: `
     @if (iconName === "Home") {
     <svg
@@ -39,6 +39,32 @@ import { Component, Input, NgModule } from '@angular/core';
       />
     </svg>
 
+    } @else if (iconName === "ChevronDown") {
+    <svg
+      width="24"
+      height="25"
+      viewBox="0 0 24 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M16.59 9.09L12 13.67L7.41 9.09L6 10.5L12 16.5L18 10.5L16.59 9.09Z"
+        fill="#2C2C2C"
+      />
+    </svg>
+    } @else if (iconName === "LeftArrow") {
+    <svg
+      width="16"
+      height="17"
+      viewBox="0 0 16 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1.60008 8.49929L1.22248 8.12169L0.845947 8.49929L1.22248 8.87689L1.60008 8.49929ZM1.97768 8.87689L6.24435 4.61022L5.48915 3.85502L1.22248 8.12169L1.97768 8.87689ZM1.22248 8.87689L5.48915 13.1436L6.24435 12.3884L1.97768 8.12169L1.22248 8.87689ZM1.60008 9.03262H14.9334V7.96595L1.60008 7.96595L1.60008 9.03262Z"
+        fill="#2C2C2C"
+      />
+    </svg>
     }
 
     <!-- Add more svg icons as needed -->

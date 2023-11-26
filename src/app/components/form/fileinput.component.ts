@@ -11,7 +11,7 @@ import { IconComponentModule } from '../icon.component';
         class="flex flex-row text-softblack text-2xl font-light leading-7 tracking-tighter border-softblack border-2 border-solid cursor-pointer items-center gap-3 px-9 py-12"
       >
         {{ label }}
-        <app-icon iconName="Upload"></app-icon>
+        <icon iconName="Upload"></icon>
       </label>
       <input id="file-upload" type="file" class="hidden" />
     </div>

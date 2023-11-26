@@ -10,6 +10,9 @@
 }
 
 @layer components {
+  .test{
+    @apply border-2 border-red-500
+  }
   .text-titles {
     @apply text-5xl font-black
   }
