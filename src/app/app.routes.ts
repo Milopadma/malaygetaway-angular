@@ -21,6 +21,9 @@ import { OfficerHomeComponent } from './pages/applicationReview/home.component';
 import { OfficerApplicationsComponent } from './pages/applicationReview/applicationslist.component';
 import { OfficerMerchantApplicationsComponent } from './pages/applicationReview/merchantapplication.component';
 import { Login } from './pages/login.component';
+import { MerchantHomeComponent } from './pages/merchant/home.component';
+import { MerchantViewProductsComponent } from './pages/merchant/viewproducts.component';
+import { MerchantAddProductsComponent } from './pages/merchant/addproducts.component';
 
 export const routes: Routes = [
   {
@@ -30,6 +33,24 @@ export const routes: Routes = [
   {
     path: 'login',
     component: Login,
+  },
+  {
+    path: 'merchant',
+    component: OfficerLayout,
+    children: [
+      {
+        path: '' || 'home',
+        component: MerchantHomeComponent,
+      },
+      {
+        path: 'products',
+        component: MerchantViewProductsComponent,
+      },
+      {
+        path: 'addproduct',
+        component: MerchantAddProductsComponent,
+      },
+    ],
   },
   {
     path: 'merchant/register',
