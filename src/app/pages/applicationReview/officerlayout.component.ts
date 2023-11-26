@@ -14,7 +14,7 @@ import { SidebarModule } from '../sidebar.component';
         <sidebar></sidebar>
       </div>
       <div class="w-12" id="spacer"></div>
-      <div class="w-full">
+      <div class="w-full h-screen">
         <router-outlet></router-outlet>
       </div>
       <div class="w-12" id="spacer"></div>

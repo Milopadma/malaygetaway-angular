@@ -19,6 +19,7 @@ import { CompletedFormComponent } from './pages/registrationform/formcomplete.co
 import { OfficerLayout } from './pages/applicationReview/officerlayout.component';
 import { OfficerHomeComponent } from './pages/applicationReview/home.component';
 import { OfficerApplicationsComponent } from './pages/applicationReview/applicationslist.component';
+import { OfficerMerchantApplicationsComponent } from './pages/applicationReview/merchantapplication.component';
 
 export const routes: Routes = [
   {
@@ -62,12 +63,16 @@ export const routes: Routes = [
       {
         path: 'applications',
         component: OfficerApplicationsComponent,
-        //     children: [
-        //         {
-        //             path: ':id',
-        //             component: OfficerMerchantApplicationComponent,
-        //         },
-        //         ],
+        // children: [
+        //   {
+        //     path: ':id',
+        //     component: OfficerMerchantApplicationsComponent,
+        //   },
+        // ],
+      },
+      {
+        path: 'applications/:id',
+        component: OfficerMerchantApplicationsComponent,
       },
     ],
   },
