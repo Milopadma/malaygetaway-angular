@@ -1,4 +1,14 @@
 import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+
+// purchase tourism
+import { purchase1 } from './purchase.component';
+import { purchase2 } from './purchase2.componen';
+import { purchase3 } from './purchase3.component';
+import { purchase4 } from './purchase4.component';
+import { purchase5 } from './purchase5.component';
+
+// merchant registration flow
 import { landing } from './pages/registrationform/landing.component';
 import { MerchantRegister } from './pages/merchantRegister.component';
 import { BusinessNameFormComponent } from './pages/registrationform/businessname.component';
@@ -6,6 +16,7 @@ import { NotFoundComponent } from './pages/notfound/notfound.component';
 import { BusinessDetailsFormComponent } from './pages/registrationform/businessdetails.component';
 import { BusinessFilesFormComponent } from './pages/registrationform/businessfiles.component';
 import { CompletedFormComponent } from './pages/registrationform/formcomplete.component';
+
 
 export const routes: Routes = [
     {
@@ -42,15 +53,31 @@ export const routes: Routes = [
         path: 'manage',
         component: landing,
     },
+    // epic 4
     {
-        path: 'purchase',
-        component: landing,
+        path: 'purchase1',
+        component: purchase1,
     },
     {
-        path: 'orders',
-        component: landing,
+        path: 'purchase2',
+        component: purchase2,
     },
     {
+        path: 'purchase3',
+        component: purchase3,
+    }
+    ,
+    {
+        path: 'purchase4',
+        component: purchase4,
+    }
+    ,
+    {
+        path: 'purchase5',
+        component: purchase5,
+    },
+    {
+    
         path: 'analytics',
         component: landing,
     },
@@ -59,5 +86,4 @@ export const routes: Routes = [
         path: '**',
         component: NotFoundComponent,
     },
-
 ];
