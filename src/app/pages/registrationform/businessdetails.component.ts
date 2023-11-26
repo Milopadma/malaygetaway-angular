@@ -55,7 +55,7 @@ export class BusinessDetailsFormComponent {
   constructor(private router: Router) {}
 
   navigateToNextPage() {
-    this.router.navigate(['/merchant/register/documents']); // replace '/nextPage' with the actual route
+    this.router.navigate(['/merchant/register/documents']); 
   }
 
   @HostListener('document:keydown.enter', ['$event'])

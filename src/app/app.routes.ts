@@ -20,11 +20,16 @@ import { OfficerLayout } from './pages/applicationReview/officerlayout.component
 import { OfficerHomeComponent } from './pages/applicationReview/home.component';
 import { OfficerApplicationsComponent } from './pages/applicationReview/applicationslist.component';
 import { OfficerMerchantApplicationsComponent } from './pages/applicationReview/merchantapplication.component';
+import { Login } from './pages/login.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: landing,
+  },
+  {
+    path: 'login',
+    component: Login,
   },
   {
     path: 'merchant/register',
