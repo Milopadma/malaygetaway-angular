@@ -63,12 +63,6 @@ export const routes: Routes = [
       {
         path: 'applications',
         component: OfficerApplicationsComponent,
-        // children: [
-        //   {
-        //     path: ':id',
-        //     component: OfficerMerchantApplicationsComponent,
-        //   },
-        // ],
       },
       {
         path: 'applications/:id',
