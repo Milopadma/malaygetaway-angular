@@ -18,7 +18,7 @@ import { ButtonBorderedModule } from '../../components/buttonbordered.component'
       <div class="h-4" id="spacer"></div>
       <span class="text-paragraph">Manage the products in your catalogue</span>
       <div class="h-4" id="spacer"></div>
-      <div class="flex flex-row justify-between px-4">
+      <div class="flex flex-row justify-between">
         <buttonbordered label="Filter By"
           ><icon iconName="ChevronDown"></icon
         ></buttonbordered>
@@ -27,12 +27,65 @@ import { ButtonBorderedModule } from '../../components/buttonbordered.component'
         ></buttonbordered>
       </div>
       <div class="flex flex-col">
+        <div class="h-4" id="spacer"></div>
         <!--  -->
-        <div class="flex flex-row">
+        <div class="flex flex-row border-t-2 border-fadedgray pt-4 pb-6">
           <div>
             <!-- placeholder image -->
-            <img src="https://via.placeholder.com/165x165" /> 
+            <img src="https://via.placeholder.com/165x165" />
           </div>
+          <div class="w-12" id="spacer"></div>
+          <div class="flex flex-col">
+            <div class="text-subtitles text-softblack">Acme Product</div>
+            <div class="flex flex-row gap-4">
+              <div class="text-small text-softgray">Merchant Name</div>
+              <div class="text-small text-softgray">Product Type</div>
+            </div>
+            <div class="h-4" id="spacer"></div>
+            <div class="text-small text-softblack">Product Description</div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="flex flex-row border-t-2 border-fadedgray pt-4 pb-6">
+          <div>
+            <!-- placeholder image -->
+            <img src="https://via.placeholder.com/165x165" />
+          </div>
+          <div class="w-12" id="spacer"></div>
+          <div class="flex flex-col">
+            <div class="text-subtitles text-softblack">Acme Product</div>
+            <div class="flex flex-row gap-4">
+              <div class="text-small text-softgray">Merchant Name</div>
+              <div class="text-small text-softgray">Product Type</div>
+            </div>
+            <div class="h-4" id="spacer"></div>
+            <div class="text-small text-softblack">Product Description</div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="flex flex-row border-t-2 border-fadedgray pt-4 pb-6">
+          <div>
+            <!-- placeholder image -->
+            <img src="https://via.placeholder.com/165x165" />
+          </div>
+          <div class="w-12" id="spacer"></div>
+          <div class="flex flex-col">
+            <div class="text-subtitles text-softblack">Acme Product</div>
+            <div class="flex flex-row gap-4">
+              <div class="text-small text-softgray">Merchant Name</div>
+              <div class="text-small text-softgray">Product Type</div>
+            </div>
+            <div class="h-4" id="spacer"></div>
+            <div class="text-small text-softblack">Product Description</div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="flex flex-row border-t-2 border-fadedgray pt-4 pb-6">
+          <div>
+            <!-- placeholder image -->
+            <img src="https://via.placeholder.com/165x165" />
+          </div>
+          <div class="w-12" id="spacer"></div>
           <div class="flex flex-col">
             <div class="text-subtitles text-softblack">Acme Product</div>
             <div class="flex flex-row gap-4">
