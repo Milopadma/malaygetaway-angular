@@ -9,9 +9,15 @@ import { SidebarModule } from '../sidebar.component';
 @Component({
   selector: 'officer-layout',
   template: `
-    <main>
-      <sidebar></sidebar>
-      <router-outlet></router-outlet>
+    <main class="flex flex-row">
+      <div class="flex flex-shrink-0">
+        <sidebar></sidebar>
+      </div>
+      <div class="w-12" id="spacer"></div>
+      <div class="w-full">
+        <router-outlet></router-outlet>
+      </div>
+      <div class="w-12" id="spacer"></div>
     </main>
   `,
 })
