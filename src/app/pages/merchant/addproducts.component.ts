@@ -15,7 +15,7 @@ import { FileInputComponentModule } from '../../components/form/fileinput.compon
       <span class="text-paragraph">Add a new product to your catalogue</span>
       <div id="spacer" class="h-4"></div>
       <div class="flex flex-col md:flex-row gap-6">
-        <div class="flex flex-col gap-4 w-1/2">
+        <div class="flex flex-col gap-4">
           <input
             type="text"
             class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
@@ -37,7 +37,7 @@ import { FileInputComponentModule } from '../../components/form/fileinput.compon
             placeholder="product description"
           />
         </div>
-        <div class="flex w-1/2">
+        <div class="flex">
             <fileinput label="Upload Images"></fileinput>
         </div>
       </div>
