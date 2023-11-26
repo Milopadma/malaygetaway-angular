@@ -1,6 +1,11 @@
 import { Routes } from '@angular/router';
-import { landing } from './landing.component';
-import { MerchantRegister } from './merchantRegister.component';
+import { landing } from './pages/registrationform/landing.component';
+import { MerchantRegister } from './pages/merchantRegister.component';
+import { BusinessNameFormComponent } from './pages/registrationform/businessname.component';
+import { NotFoundComponent } from './pages/notfound/notfound.component';
+import { BusinessDetailsFormComponent } from './pages/registrationform/businessdetails.component';
+import { BusinessFilesFormComponent } from './pages/registrationform/businessfiles.component';
+import { CompletedFormComponent } from './pages/registrationform/formcomplete.component';
 
 export const routes: Routes = [
     {
@@ -10,6 +15,24 @@ export const routes: Routes = [
     {
         path: 'merchant/register',
         component: MerchantRegister,
+        children: [
+            {
+                path: 'name',
+                component: BusinessNameFormComponent,
+            },
+            {
+                path: 'details',
+                component: BusinessDetailsFormComponent,
+            },
+            {
+                path: 'documents',
+                component: BusinessFilesFormComponent,
+            },
+            {
+                path: 'complete',
+                component: CompletedFormComponent,
+            },
+        ],
     },
     {
         path: 'review',
@@ -30,5 +53,11 @@ export const routes: Routes = [
     {
         path: 'analytics',
         component: landing,
-    }
+    },
+    // 404
+    {
+        path: '**',
+        component: NotFoundComponent,
+    },
+
 ];
