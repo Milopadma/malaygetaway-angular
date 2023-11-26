@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   selector: 'buttonunbordered',
   template: `
     <div
-      class="flex flex-row text-softblack text-2xl font-light leading-7 tracking-tighter max-w-full gap-2.5 px-6 py-2 max-md:px-5 cursor-pointer"
+      class="text-paragraph flex flex-row text-softblack text-2xl max-w-full cursor-pointer px-6 py-4 max-md:px-5"
     >
       <button type="submit">{{label}}</button>
     </div>

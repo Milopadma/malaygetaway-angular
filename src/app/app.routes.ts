@@ -16,7 +16,9 @@ import { NotFoundComponent } from './pages/notfound/notfound.component';
 import { BusinessDetailsFormComponent } from './pages/registrationform/businessdetails.component';
 import { BusinessFilesFormComponent } from './pages/registrationform/businessfiles.component';
 import { CompletedFormComponent } from './pages/registrationform/formcomplete.component';
+import { OfficerLayout } from './pages/applicationReview/officerlayout.component';
 import { OfficerHomeComponent } from './pages/applicationReview/home.component';
+import { OfficerApplicationsComponent } from './pages/applicationReview/applicationslist.component';
 
 export const routes: Routes = [
   {
@@ -50,19 +52,23 @@ export const routes: Routes = [
     ],
   },
   {
-    path: 'officer/home',
-    component: OfficerHomeComponent,
+    path: 'officer',
+    component: OfficerLayout,
     children: [
-      //   {
-      //     path: 'applications',
-      //     component: OfficerApplicationsComponent,
-      //     children: [
-      //         {
-      //             path: ':id',
-      //             component: OfficerMerchantApplicationComponent,
-      //         },
-      //         ],
-      //   },
+      {
+        path: '' || 'home',
+        component: OfficerHomeComponent,
+      },
+      {
+        path: 'applications',
+        component: OfficerApplicationsComponent,
+        //     children: [
+        //         {
+        //             path: ':id',
+        //             component: OfficerMerchantApplicationComponent,
+        //         },
+        //         ],
+      },
     ],
   },
   {

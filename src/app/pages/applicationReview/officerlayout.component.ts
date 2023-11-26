@@ -5,29 +5,28 @@ import { buttonwIconModule } from '../../components/button.component';
 import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
 import { Router, RouterOutlet } from '@angular/router';
 import { FileInputComponentModule } from '../../components/form/fileinput.component';
+import { SidebarModule } from '../sidebar.component';
 @Component({
-  selector: 'officer-home',
+  selector: 'officer-layout',
   template: `
-    <div id="spacer" class="h-64"></div>
-    <div class="flex flex-col">
-      <h1 class="text-zinc-800 text-titles leading-10 tracking-tighter">
-        home
-      </h1>
-    </div>
+    <main>
+      <sidebar></sidebar>
+      <router-outlet></router-outlet>
+    </main>
   `,
 })
-export class OfficerHomeComponent {
-}
+export class OfficerLayout {}
 
 @NgModule({
-  declarations: [OfficerHomeComponent],
-  exports: [OfficerHomeComponent],
+  declarations: [OfficerLayout],
+  exports: [OfficerLayout],
   imports: [
     CommonModule,
     buttonwIconModule,
     ProgressBarComponentModule,
     RouterOutlet,
     FileInputComponentModule,
+    SidebarModule,
   ],
 })
-export class OfficerHomeComponentModule {}
+export class OfficerLayoutModule {}

@@ -6,22 +6,22 @@ import { ProgressBarComponentModule } from '../../components/form/progressbar.co
 import { Router, RouterOutlet } from '@angular/router';
 import { FileInputComponentModule } from '../../components/form/fileinput.component';
 @Component({
-  selector: 'officer-home',
+  selector: 'officer-applications-list',
   template: `
     <div id="spacer" class="h-64"></div>
     <div class="flex flex-col">
       <h1 class="text-zinc-800 text-titles leading-10 tracking-tighter">
-        home
+        appliactions
       </h1>
     </div>
   `,
 })
-export class OfficerHomeComponent {
+export class OfficerApplicationsComponent {
 }
 
 @NgModule({
-  declarations: [OfficerHomeComponent],
-  exports: [OfficerHomeComponent],
+  declarations: [OfficerApplicationsComponent],
+  exports: [OfficerApplicationsComponent],
   imports: [
     CommonModule,
     buttonwIconModule,
@@ -30,4 +30,4 @@ export class OfficerHomeComponent {
     FileInputComponentModule,
   ],
 })
-export class OfficerHomeComponentModule {}
+export class OfficerApplicationsComponentModule {}
