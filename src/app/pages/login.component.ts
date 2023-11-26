@@ -8,6 +8,7 @@ import { FileInputComponentModule } from '../components/form/fileinput.component
 import { ButtonUnborderedModule } from '../components/buttonunbordered.component';
 import { ButtonNoIconModule } from '../components/buttonnoicon.component';
 import { IconComponentModule } from '../components/icon.component';
+import { DialogueBoxModule } from "../components/dialoguebox.component";
 @Component({
   selector: 'login',
   template: `
@@ -44,6 +45,7 @@ import { IconComponentModule } from '../components/icon.component';
         <img src="https://via.placeholder.com/600x600" />
       </div>
     </div>
+    <!-- <dialogue-box header="Info" content="First time logging in? You should change your password." button1="Change Password" button2="Later" ></dialogue-box> -->
   `,
 })
 export class Login {
@@ -54,17 +56,18 @@ export class Login {
 }
 
 @NgModule({
-  declarations: [Login],
-  exports: [Login],
-  imports: [
-    CommonModule,
-    buttonwIconModule,
-    ProgressBarComponentModule,
-    RouterOutlet,
-    FileInputComponentModule,
-    ButtonUnborderedModule,
-    ButtonNoIconModule,
-    IconComponentModule,
-  ],
+    declarations: [Login],
+    exports: [Login],
+    imports: [
+        CommonModule,
+        buttonwIconModule,
+        ProgressBarComponentModule,
+        RouterOutlet,
+        FileInputComponentModule,
+        ButtonUnborderedModule,
+        ButtonNoIconModule,
+        IconComponentModule,
+        DialogueBoxModule
+    ]
 })
 export class LoginModule {}
