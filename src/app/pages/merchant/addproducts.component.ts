@@ -8,15 +8,38 @@ import { FileInputComponentModule } from '../../components/form/fileinput.compon
 @Component({
   selector: 'merchant-products-add',
   template: `
-    <div id="spacer" class="h-64"></div>
-    <div class="flex flex-col">
-      <h1 class="text-zinc-800 text-subtitles leading-10 tracking-tighter">
-        Upload your business documents
-      </h1>
+    <div class="h-12" id="spacer"></div>
+    <div class="flex flex-col w-full">
+      <h1 class="text-titles">Add Products</h1>
+      <div class="h-4" id="spacer"></div>
+      <span class="text-paragraph">Add a new product to your catalogue</span>
       <div id="spacer" class="h-4"></div>
       <div class="flex flex-col md:flex-row gap-6">
-        <fileinput label="Licenses"></fileinput>
-        <fileinput label="Testimonials"></fileinput>
+        <div class="flex flex-col gap-4 w-1/2">
+          <input
+            type="text"
+            class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
+            placeholder="product name"
+          />
+          <input
+            type="text"
+            class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
+            placeholder="product type"
+          />
+          <input
+            type="text"
+            class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
+            placeholder="product price"
+          />
+          <input
+            type="text"
+            class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
+            placeholder="product description"
+          />
+        </div>
+        <div class="flex w-1/2">
+            <fileinput label="Upload Images"></fileinput>
+        </div>
       </div>
       <div class="h-32" id="spacer"></div>
       <div class="flex flex-col items-end">
