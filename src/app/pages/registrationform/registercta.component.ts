@@ -5,7 +5,7 @@ import { buttonwIconModule } from '../../components/button.component';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'landing',
+  selector: 'merchantregistercta',
   template: `
 
     <section
@@ -43,7 +43,7 @@ import { Router } from '@angular/router';
     </div>
   `,
 })
-export class landing {
+export class MerchantRegisterCTA {
   constructor(private router: Router) {}
 
   navigateToNextPage() {
@@ -52,8 +52,8 @@ export class landing {
 }
 
 @NgModule({
-  declarations: [landing],
-  exports: [landing],
+  declarations: [MerchantRegisterCTA],
+  exports: [MerchantRegisterCTA],
   imports: [CommonModule, buttonwIconModule],
 })
-export class landingModule {}
+export class MerchantRegisterCTAModule {}

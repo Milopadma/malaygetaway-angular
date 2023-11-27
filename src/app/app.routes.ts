@@ -9,7 +9,7 @@ import { purchase4 } from './purchase4.component';
 import { purchase5 } from './purchase5.component';
 
 // merchant registration flow
-import { landing } from './pages/registrationform/landing.component';
+import { MerchantRegisterCTA } from './pages/registrationform/registercta.component';
 import { MerchantRegister } from './pages/merchantRegister.component';
 import { BusinessNameFormComponent } from './pages/registrationform/businessname.component';
 import { NotFoundComponent } from './pages/notfound/notfound.component';
@@ -58,7 +58,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: landing,
+        component: MerchantRegisterCTA,
       },
       {
         path: 'name',
