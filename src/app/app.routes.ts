@@ -9,7 +9,7 @@ import { purchase4 } from './purchase4.component';
 import { purchase5 } from './purchase5.component';
 
 // merchant registration flow
-import { landing } from './pages/registrationform/landing.component';
+import { MerchantRegisterCTA } from './pages/registrationform/registercta.component';
 import { MerchantRegister } from './pages/merchantRegister.component';
 import { BusinessNameFormComponent } from './pages/registrationform/businessname.component';
 import { NotFoundComponent } from './pages/notfound/notfound.component';
@@ -20,11 +20,43 @@ import { OfficerLayout } from './pages/applicationReview/officerlayout.component
 import { OfficerHomeComponent } from './pages/applicationReview/home.component';
 import { OfficerApplicationsComponent } from './pages/applicationReview/applicationslist.component';
 import { OfficerMerchantApplicationsComponent } from './pages/applicationReview/merchantapplication.component';
+import { Login } from './pages/login.component';
+import { MerchantHomeComponent } from './pages/merchant/home.component';
+import { MerchantViewProductsComponent } from './pages/merchant/viewproducts.component';
+import { MerchantAddProductsComponent } from './pages/merchant/addproducts.component';
+import { Home } from './pages/home/home.component';
+import { MerchantLayout } from './pages/merchant/merchantlayout.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: landing,
+    component: Home,
+  },
+  {
+    path: 'login',
+    component: Login,
+  },
+  {
+    path: 'merchant',
+    component: MerchantLayout,
+    children: [
+      {
+        path: '',
+        component: MerchantHomeComponent,
+      },
+      {
+        path: 'home',
+        component: MerchantHomeComponent,
+      },
+      {
+        path: 'products',
+        component: MerchantViewProductsComponent,
+      },
+      {
+        path: 'addproduct',
+        component: MerchantAddProductsComponent,
+      },
+    ],
   },
   {
     path: 'merchant/register',
@@ -32,7 +64,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: landing,
+        component: MerchantRegisterCTA,
       },
       {
         path: 'name',
@@ -57,7 +89,11 @@ export const routes: Routes = [
     component: OfficerLayout,
     children: [
       {
-        path: '' || 'home',
+        path: '',
+        component: OfficerHomeComponent,
+      },
+      {
+        path: 'home',
         component: OfficerHomeComponent,
       },
       {
@@ -72,11 +108,11 @@ export const routes: Routes = [
   },
   {
     path: 'review',
-    component: landing,
+    component: MerchantRegisterCTA,
   },
   {
     path: 'manage',
-    component: landing,
+    component: MerchantRegisterCTA,
   },
   // epic 4
   {
@@ -101,7 +137,7 @@ export const routes: Routes = [
   },
   {
     path: 'analytics',
-    component: landing,
+    component: MerchantRegisterCTA,
   },
   // 404
   {

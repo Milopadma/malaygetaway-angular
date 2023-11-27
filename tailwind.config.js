@@ -17,6 +17,7 @@ module.exports = {
         fadedgray: "#CCCCCC",
         confirm: "#3DBC01",
         reject: "#D13A3A",
+        warning: "#E0FFFF",
         accent: "#007BFF",
         softaccent: "#E0FFFF",
       },
