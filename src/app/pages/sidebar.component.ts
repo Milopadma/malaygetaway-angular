@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { buttonwIconModule } from '../components/button.component';
 import { ProgressBarComponentModule } from '../components/form/progressbar.component';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { ButtonUnborderedModule } from '../components/buttonunbordered.component';
 @Component({
   selector: 'sidebar',
@@ -16,19 +16,48 @@ import { ButtonUnborderedModule } from '../components/buttonunbordered.component
       <div class="flex flex-col justify-between h-screen">
         <div class="flex flex-col">
           @if (type === "merchant") {
-          <buttonunbordered label="Home"></buttonunbordered>
-          <buttonunbordered label="View Products"></buttonunbordered>
-          <buttonunbordered label="View Reports"></buttonunbordered>
-          <buttonunbordered label="Account"></buttonunbordered>
+          <buttonunbordered
+            label="Home"
+            (click)="navigateToPage('merchant/home')"
+          ></buttonunbordered>
+          <buttonunbordered
+            label="View Products"
+            (click)="navigateToPage('merchant/products')"
+          ></buttonunbordered>
+          <buttonunbordered
+            label="View Reports"
+            (click)="navigateToPage('merchant/reports')"
+          ></buttonunbordered>
+          <buttonunbordered
+            label="Account"
+            (click)="navigateToPage('merchant/account')"
+          ></buttonunbordered>
           } @else {
-          <buttonunbordered label="Home"></buttonunbordered>
-          <buttonunbordered label="View Applications"></buttonunbordered>
-          <buttonunbordered label="View Reports"></buttonunbordered>
-          <buttonunbordered label="Account"></buttonunbordered>
+          <buttonunbordered
+            label="Home"
+            (click)="navigateToPage('officer/home')"
+          ></buttonunbordered>
+          <buttonunbordered
+            label="View Applications"
+            (click)="navigateToPage('officer/applications')"
+          ></buttonunbordered>
+          <buttonunbordered
+            label="View Reports"
+            (click)="navigateToPage('officer/reports')"
+          ></buttonunbordered>
+          <buttonunbordered
+            label="Account"
+            (click)="navigateToPage('officer/account')"
+          ></buttonunbordered>
           }
         </div>
         <div>
-          <button class="px-6 text-paragraph text-reject">Logout</button>
+          <button
+            class="px-6 text-paragraph text-reject"
+            (click)="navigateToPage('/')"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </nav>
@@ -36,6 +65,11 @@ import { ButtonUnborderedModule } from '../components/buttonunbordered.component
 })
 export class Sidebar {
   @Input() type!: string;
+
+  constructor(private router: Router) {}
+  navigateToPage(page: string) {
+    this.router.navigate([page]);
+  }
 }
 
 @NgModule({

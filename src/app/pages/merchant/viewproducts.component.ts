@@ -22,8 +22,8 @@ import { ButtonBorderedModule } from '../../components/buttonbordered.component'
         <buttonbordered label="Filter By"
           ><icon iconName="ChevronDown"></icon
         ></buttonbordered>
-        <buttonbordered label="Add"
-          ><icon iconName="ChevronDown"></icon
+        <buttonbordered label="Add" (click)="navigateToPage('merchant/addproduct')"
+          ><icon iconName="Plus"></icon
         ></buttonbordered>
       </div>
       <div class="flex flex-col">
@@ -100,7 +100,12 @@ import { ButtonBorderedModule } from '../../components/buttonbordered.component'
     </div>
   `,
 })
-export class MerchantViewProductsComponent {}
+export class MerchantViewProductsComponent {
+    constructor(private router: Router) {}
+    navigateToPage(page: string) {
+        this.router.navigate([page]);
+    }
+}
 
 @NgModule({
   declarations: [MerchantViewProductsComponent],

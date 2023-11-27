@@ -65,6 +65,23 @@ import { Component, Input, NgModule } from '@angular/core';
         fill="#2C2C2C"
       />
     </svg>
+    } @else if (iconName === "Plus") {
+    <svg
+      width="24"
+      height="25"
+      viewBox="0 0 24 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 5.75V19.25M18.75 12.5H5.25"
+        stroke="#2C2C2C"
+        stroke-width="1.5"
+        stroke-linecap="square"
+        stroke-linejoin="round"
+      />
+    </svg>
+
     } @else if (iconName === "Logo") {
     <svg
       width="126"

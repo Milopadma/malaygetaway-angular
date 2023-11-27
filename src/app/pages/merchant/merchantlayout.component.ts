@@ -11,7 +11,7 @@ import { SidebarModule } from '../sidebar.component';
   template: `
     <main class="flex flex-row">
       <div class="flex flex-shrink-0">
-        <!-- <sidebar type="merchant"></sidebar> -->
+        <sidebar type="merchant"></sidebar>
       </div>
       <div class="w-12" id="spacer"></div>
       <div class="w-full h-screen">

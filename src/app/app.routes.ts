@@ -25,6 +25,7 @@ import { MerchantHomeComponent } from './pages/merchant/home.component';
 import { MerchantViewProductsComponent } from './pages/merchant/viewproducts.component';
 import { MerchantAddProductsComponent } from './pages/merchant/addproducts.component';
 import { Home } from './pages/home/home.component';
+import { MerchantLayout } from './pages/merchant/merchantlayout.component';
 
 export const routes: Routes = [
   {
@@ -37,10 +38,14 @@ export const routes: Routes = [
   },
   {
     path: 'merchant',
-    component: OfficerLayout,
+    component: MerchantLayout,
     children: [
       {
-        path: '' || 'home',
+        path: '',
+        component: MerchantHomeComponent,
+      },
+      {
+        path: 'home',
         component: MerchantHomeComponent,
       },
       {
@@ -84,7 +89,11 @@ export const routes: Routes = [
     component: OfficerLayout,
     children: [
       {
-        path: '' || 'home',
+        path: '',
+        component: OfficerHomeComponent,
+      },
+      {
+        path: 'home',
         component: OfficerHomeComponent,
       },
       {
