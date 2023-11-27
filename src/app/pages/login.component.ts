@@ -8,7 +8,7 @@ import { FileInputComponentModule } from '../components/form/fileinput.component
 import { ButtonUnborderedModule } from '../components/buttonunbordered.component';
 import { ButtonNoIconModule } from '../components/buttonnoicon.component';
 import { IconComponentModule } from '../components/icon.component';
-import { DialogueBoxModule } from "../components/dialoguebox.component";
+import { DialogueBoxModule } from '../components/dialoguebox.component';
 @Component({
   selector: 'login',
   template: `
@@ -29,10 +29,10 @@ import { DialogueBoxModule } from "../components/dialoguebox.component";
         />
         <div class="h-2" id="spacer"></div>
         <div class="flex flex-row gap-2 items-center justify-end">
-            <div class="text-small text-right">
-                don't have an account? <br>
-                <span class="underline">register</span>
-            </div>
+          <div class="text-small text-right">
+            don't have an account? <br />
+            <span class="underline">register</span>
+          </div>
           <buttonwicon
             (click)="navigateToNextPage()"
             label="Continue"
@@ -45,29 +45,44 @@ import { DialogueBoxModule } from "../components/dialoguebox.component";
         <img src="https://via.placeholder.com/600x600" />
       </div>
     </div>
-    <!-- <dialogue-box header="Info" content="First time logging in? You should change your password." button1="Change Password" button2="Later" ></dialogue-box> -->
+    @if (showDialog){
+
+    <dialogue-box
+      header="Info"
+      content="First time logging in? You should change your password."
+      button1="Change Password"
+      button2="Later"
+      (close)="closeDialog()"
+    ></dialogue-box>
+    }
   `,
 })
 export class Login {
+  showDialog = false;
   constructor(private router: Router) {}
   navigateToNextPage() {
-    this.router.navigate(['/merchant/home']);
+    this.showDialog = true;
+    console.log('navigate to next page:', this.showDialog);
+  }
+  closeDialog() {
+    this.showDialog = false;
+    console.log('close dialog:', this.showDialog);
   }
 }
 
 @NgModule({
-    declarations: [Login],
-    exports: [Login],
-    imports: [
-        CommonModule,
-        buttonwIconModule,
-        ProgressBarComponentModule,
-        RouterOutlet,
-        FileInputComponentModule,
-        ButtonUnborderedModule,
-        ButtonNoIconModule,
-        IconComponentModule,
-        DialogueBoxModule
-    ]
+  declarations: [Login],
+  exports: [Login],
+  imports: [
+    CommonModule,
+    buttonwIconModule,
+    ProgressBarComponentModule,
+    RouterOutlet,
+    FileInputComponentModule,
+    ButtonUnborderedModule,
+    ButtonNoIconModule,
+    IconComponentModule,
+    DialogueBoxModule,
+  ],
 })
 export class LoginModule {}
