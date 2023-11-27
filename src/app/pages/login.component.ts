@@ -34,7 +34,7 @@ import { DialogueBoxModule } from '../components/dialoguebox.component';
             <span class="underline">register</span>
           </div>
           <buttonwicon
-            (click)="navigateToNextPage()"
+            (click)="showDialogue()"
             label="Continue"
           ></buttonwicon>
         </div>
@@ -46,13 +46,13 @@ import { DialogueBoxModule } from '../components/dialoguebox.component';
       </div>
     </div>
     @if (showDialog){
-
     <dialogue-box
       header="Info"
       content="First time logging in? You should change your password."
       button1="Change Password"
       button2="Later"
       (close)="closeDialog()"
+      (secondButtonClicked)="navigateToNextPage()"
     ></dialogue-box>
     }
   `,
@@ -61,12 +61,13 @@ export class Login {
   showDialog = false;
   constructor(private router: Router) {}
   navigateToNextPage() {
-    this.showDialog = true;
-    console.log('navigate to next page:', this.showDialog);
+    this.router.navigate(['/merchant/home']);
   }
   closeDialog() {
     this.showDialog = false;
-    console.log('close dialog:', this.showDialog);
+  }
+  showDialogue() {
+    this.showDialog = true;
   }
 }
 

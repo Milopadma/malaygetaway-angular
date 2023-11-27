@@ -20,7 +20,10 @@ import { FileInputComponentModule } from '../../components/form/fileinput.compon
       </div>
       <div class="h-32" id="spacer"></div>
       <div class="flex flex-col items-end">
-        <buttonwicon label="Finish"></buttonwicon>
+        <buttonwicon
+          label="Finish"
+          (click)="navigateToNextPage()"
+        ></buttonwicon>
         <p
           class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
         >
@@ -39,7 +42,7 @@ export class CompletedFormComponent {
   }
 
   navigateToNextPage() {
-    this.router.navigate(['/']); // TODO replace '/' with the actual route later
+    this.router.navigate(['/login']); // TODO replace '/' with the actual route later
   }
 }
 
