@@ -1,27 +1,37 @@
 # MalaygetawayAngular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.1.
+This repository contains the source code for the Malaygetaway application, a platform for listing businesses, built with Angular.
 
-## Development server
+## Project Overview
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+The Malaygetaway application provides a platform for merchants to register and list their businesses. The application is built using Angular and follows a modular structure with each feature encapsulated in its own module.
 
-## Code scaffolding
+## Getting Started
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To get started with the development:
 
-## Build
+1. Clone the repository
+2. Install the dependencies using `bun install`
+3. Start the development server using [ng serve](file:///Users/mylo/Code/university/malaygetaway-angular/README.md#7%2C6-7%2C6). The application will be available at [http://localhost:4200/](file:///Users/mylo/Code/university/malaygetaway-angular/src/testing/merchantregistration.ts#8%2C23-8%2C23) and will automatically reload if you change any of the source files.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Project Structure
 
-## Running unit tests
+The project follows a modular structure with each feature encapsulated in its own module. The main modules include:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Registration: Handles the merchant registration flow.
+- Login: Handles the login functionality.
+- Dashboard: Provides the main interface for merchants to manage their businesses.
 
-## Running end-to-end tests
+## Testing
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Unit tests can be run using [ng test](file:///Users/mylo/Code/university/malaygetaway-angular/README.md#19%2C6-19%2C6) which executes the unit tests via [Karma](https://karma-runner.github.io).
 
-## Further help
+End-to-end tests can be run using [ng e2e](file:///Users/mylo/Code/university/malaygetaway-angular/README.md#23%2C6-23%2C6). Before running the command, you need to first add a package that implements end-to-end testing capabilities.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Contributing
+
+Contributions are welcome. Please make sure to read the [contribution guidelines](CONTRIBUTING.md) before making a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for details.
