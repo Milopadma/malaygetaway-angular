@@ -65,7 +65,7 @@ export class MerchantAddProductsComponent {
   }
 
   navigateToNextPage() {
-    this.router.navigate(['/merchant/register/complete']); // replace '/nextPage' with the actual route
+    this.router.navigate(['/merchant/home']); // replace '/nextPage' with the actual route
   }
 }
 
