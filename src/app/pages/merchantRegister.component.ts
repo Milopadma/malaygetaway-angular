@@ -17,7 +17,9 @@ import { TopNavbarModule } from '../components/topnavbar.component';
         [labels]="['Business name', 'Details', 'Documents', 'Done']"
         [current]="'Business name'"
       />
-      <router-outlet></router-outlet>
+      <div class="flex w-full">
+        <router-outlet></router-outlet>
+      </div>
     </main>
   `,
 })

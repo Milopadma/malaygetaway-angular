@@ -28,7 +28,7 @@ import { MerchantAddProductsComponent } from './pages/merchant/addproducts.compo
 export const routes: Routes = [
   {
     path: '',
-    component: landing,
+    component: MerchantRegisterCTA,
   },
   {
     path: 'login',
@@ -98,11 +98,11 @@ export const routes: Routes = [
   },
   {
     path: 'review',
-    component: landing,
+    component: MerchantRegisterCTA,
   },
   {
     path: 'manage',
-    component: landing,
+    component: MerchantRegisterCTA,
   },
   // epic 4
   {
@@ -127,7 +127,7 @@ export const routes: Routes = [
   },
   {
     path: 'analytics',
-    component: landing,
+    component: MerchantRegisterCTA,
   },
   // 404
   {
