@@ -17,14 +17,19 @@ import { HugeButtonModule } from '../../components/huge-button.component';
       <div class="h-4" id="spacer"></div>
       <!-- huge buttons -->
       <div class="flex flex-row w-full">
-        <huge-button label="View Products"></huge-button>
+        <huge-button label="View Products" (click)="navigateToPage('merchant/products')"></huge-button>
         <div class="w-12" id="spacer"></div>
-        <huge-button label="View Reports"></huge-button>
+        <huge-button label="View Reports" (click)="navigateToPage('merchant/reports')"></huge-button>
       </div>
     </div>
   `,
 })
-export class MerchantHomeComponent {}
+export class MerchantHomeComponent {
+    constructor(private router: Router) {}
+    navigateToPage(page: string) {
+        this.router.navigate([page]);
+    }
+}
 
 @NgModule({
   declarations: [MerchantHomeComponent],

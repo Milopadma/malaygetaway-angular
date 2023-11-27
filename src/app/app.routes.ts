@@ -24,11 +24,12 @@ import { Login } from './pages/login.component';
 import { MerchantHomeComponent } from './pages/merchant/home.component';
 import { MerchantViewProductsComponent } from './pages/merchant/viewproducts.component';
 import { MerchantAddProductsComponent } from './pages/merchant/addproducts.component';
+import { Home } from './pages/home/home.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: MerchantRegisterCTA,
+    component: Home,
   },
   {
     path: 'login',
