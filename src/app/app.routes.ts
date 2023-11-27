@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { landing } from './landing.component';
-import { MerchantRegister } from './merchantRegister.component';
+
+// purchase tourism
 import { purchase1 } from './purchase.component';
 import { purchase2 } from './purchase2.componen';
 import { purchase3 } from './purchase3.component';
@@ -13,16 +13,33 @@ import { reviewAquaria } from './reviewAquaria.component';
 import { reviewGenting } from './reviewGenting.component';
 import { send } from './send.component';
 
+// merchant registration flow
+import { landing } from './pages/registrationform/landing.component';
+import { MerchantRegister } from './pages/merchantRegister.component';
+import { BusinessNameFormComponent } from './pages/registrationform/businessname.component';
+import { NotFoundComponent } from './pages/notfound/notfound.component';
+import { BusinessDetailsFormComponent } from './pages/registrationform/businessdetails.component';
+import { BusinessFilesFormComponent } from './pages/registrationform/businessfiles.component';
+import { CompletedFormComponent } from './pages/registrationform/formcomplete.component';
+import { OfficerLayout } from './pages/applicationReview/officerlayout.component';
+import { OfficerHomeComponent } from './pages/applicationReview/home.component';
+import { OfficerApplicationsComponent } from './pages/applicationReview/applicationslist.component';
+import { OfficerMerchantApplicationsComponent } from './pages/applicationReview/merchantapplication.component';
 
 export const routes: Routes = [
+  {
+    path: '',
+    component: landing,
+  },
+  {
+    path: 'merchant/register',
+    component: MerchantRegister,
+    children: [
     {
         path: '',
         component: landing,
     },
-    {
-        path: 'merchant/register',
-        component: MerchantRegister,
-    },
+
  
     {
         path: 'manage',
@@ -40,13 +57,11 @@ export const routes: Routes = [
     {
         path: 'purchase3',
         component: purchase3,
-    }
-    ,
+    },
     {
         path: 'purchase4',
         component: purchase4,
-    }
-    ,
+    },
     {
         path: 'purchase5',
         component: purchase5,
@@ -70,6 +85,7 @@ export const routes: Routes = [
     {
         path: 'order',
         component: order,
-    }
-
-];
+    },
+    ]
+  }
+]

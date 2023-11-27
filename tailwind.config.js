@@ -3,12 +3,13 @@ module.exports = {
   content: ["./src/**/*.{html,ts}"],
   theme: {
     extend: {
-      fontSize: {
-        titles: ["3rem", "1"], // 48px
-        subtitles: ["1.875rem", "2.25rem"], // 30px
-        paragraph: ["1.5rem", "2rem"], // 24px
-        small: ["1rem", "1.5rem"], // 16px
-      },
+      // see styles.css for global styles instead
+      // fontSize: {
+      //   titles: ["3rem", "1"], // 48px
+      //   subtitles: ["1.875rem", "2.25rem"], // 30px
+      //   paragraph: ["1.5rem", "2rem"], // 24px
+      //   small: ["1rem", "1.5rem"], // 16px
+      // },
       colors: {
         softblack: "#2C2C2C",
         softwhite: "#F5F5F5",
