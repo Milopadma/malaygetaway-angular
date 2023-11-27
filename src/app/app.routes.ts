@@ -35,57 +35,55 @@ export const routes: Routes = [
     path: 'merchant/register',
     component: MerchantRegister,
     children: [
-    {
+      {
         path: '',
         component: landing,
-    },
-
- 
-    {
-        path: 'manage',
-        component: landing,
-    },
-    // epic 4
-    {
-        path: 'purchase1',
-        component: purchase1,
-    },
-    {
-        path: 'purchase2',
-        component: purchase2,
-    },
-    {
-        path: 'purchase3',
-        component: purchase3,
-    },
-    {
-        path: 'purchase4',
-        component: purchase4,
-    },
-    {
-        path: 'purchase5',
-        component: purchase5,
-    },
-    {
-        path: 'reviewGenting',
-        component: reviewGenting,
-    },
-    {
-        path: 'reviewKL',
-        component: reviewKL,
-    },
-    {
-        path: 'reviewAquaria',
-        component: reviewAquaria,
-    },
-    {
-        path: 'send',
-        component: send,
-    },
-    {
-        path: 'order',
-        component: order,
-    },
-    ]
-  }
-]
+      },
+    ],
+  },
+  {
+    path: 'manage',
+    component: landing,
+  },
+  // epic 4
+  {
+    path: 'purchase1',
+    component: purchase1,
+  },
+  {
+    path: 'purchase2',
+    component: purchase2,
+  },
+  {
+    path: 'purchase3',
+    component: purchase3,
+  },
+  {
+    path: 'purchase4',
+    component: purchase4,
+  },
+  {
+    path: 'purchase5',
+    component: purchase5,
+  },
+  {
+    path: 'reviewGenting',
+    component: reviewGenting,
+  },
+  {
+    path: 'reviewKL',
+    component: reviewKL,
+  },
+  {
+    path: 'reviewAquaria',
+    component: reviewAquaria,
+  },
+  {
+    path: 'send',
+    component: send,
+  },
+  {
+    path: 'order',
+    component: order,
+  },
+];
