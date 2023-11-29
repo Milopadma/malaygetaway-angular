@@ -1,13 +1,13 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
-import { ProgressBarComponentModule } from "./components/form/progressbar.component";
-import { buttonwIconModule } from "./components/button.component";
+import { ProgressBarComponentModule } from "../../components/form/progressbar.component";
+import { buttonwIconModule } from "../../components/button.component";
 import { Router } from '@angular/router';
 
 @Component({
-  selector: "purchase2",
-  template: `
+    selector: "purchase3",
+    template: `
     <section>
         <br>
         <br>
@@ -16,25 +16,26 @@ import { Router } from '@angular/router';
         <br>
         <main class="container mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 font-sans text-softblack bg-softwhite py-10 rounded-lg shadow-2xl">
             <div class="justify-center items-center flex flex-col py-5 px-20 max-md:px-10">
-                <progress-bar [labels]="['Personal Detail', 'Billing Address', 'Payment Method', 'Done']" [current]="'Personal Detail'"></progress-bar>
+                <progress-bar [labels]="['Personal Detail', 'Billing Address', 'Payment Method', 'Done']" [current]="'Billing Address'"></progress-bar>
                 <br>
                 <div class="flex flex-col">
+                    </div>
                 </div>
-            </div>
-            <div> 
-                <div class="bg-white p-6 rounded-lg"> 
-                    <h2 class="text-subtitles font-bold mb-4">Personal Detail</h2>
-                    <form action="#" method="POST">
-                        <div class="grid gap-6 mb-1 lg:grid-cols-2">
-                            <div>
-                                <label for="first_name" class="block mb-2 text-small font-medium text-softblack">First Name</label>
-                                <input type="text" id="first_name" name="first_name" class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                <div> 
+                    <div class="bg-white p-6 rounded-lg"> 
+                        <h2 class="text-subtitles font-bold mb-4">Billing Address</h2>
+                        <p class="text-small text-softblack mb-6">The billing address must match the address associated with the payment method</p>
+                        <form action="#" method="POST">
+                            <div class="grid gap-6 mb-1 lg:grid-cols-2">
+                                <div>
+                                    <label for="first_name" class="block mb-2 text-small font-medium text-softblack">First Name</label>
+                                    <input type="text" id="first_name" name="first_name" class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                                </div>
+                                <div>
+                                    <label for="last_name" class="block mb-1 text-small font-medium text-softblack">Last Name</label>
+                                    <input type="text" id="last_name" name="last_name" class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                                </div>
                             </div>
-                            <div>
-                                <label for="last_name" class="block mb-1 text-small font-medium text-softblack">Last Name</label>
-                                <input type="text" id="last_name" name="last_name" class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-                            </div>
-                        </div>
                         <div class="mb-1">
                             <label for="address" class="block mb-1 text-small font-medium text-softblack">Address</label>
                             <input type="text" id="address" name="address" class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
@@ -70,13 +71,13 @@ import { Router } from '@angular/router';
     </section>
   `,
 })
-export class purchase2  {
+export class purchase3  {
     constructor(private router: Router) {}
     navButton1() {
         this.router.navigate(['purchase1']);
       }
     navButton2() {
-        this.router.navigate(['purchase3']);
+        this.router.navigate(['purchase4']);
     }
     formatZipCode(event: any) {
         let value = event.target.value.replace(/\D/g, '');
@@ -88,8 +89,8 @@ export class purchase2  {
 }
 
 @NgModule({
-    declarations: [purchase2],
-    exports: [purchase2],
+    declarations: [purchase3],
+    exports: [purchase3],
     imports: [CommonModule, ProgressBarComponentModule, buttonwIconModule]
 })
-export class purchaseModule2 {}
+export class purchaseModule3 {}

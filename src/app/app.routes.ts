@@ -2,11 +2,11 @@ import { Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 // purchase tourism
-import { purchase1 } from './purchase.component';
-import { purchase2 } from './purchase2.componen';
-import { purchase3 } from './purchase3.component';
-import { purchase4 } from './purchase4.component';
-import { purchase5 } from './purchase5.component';
+import { purchase1 } from './pages/customer/purchase.component';
+import { purchase2 } from './pages/customer/purchase2.componen';
+import { purchase3 } from './pages/customer/purchase3.component';
+import { purchase4 } from './pages/customer/purchase4.component';
+import { purchase5 } from './pages/customer/purchase5.component';
 
 // merchant registration flow
 import { MerchantRegisterCTA } from './pages/registrationform/registercta.component';
@@ -37,29 +37,7 @@ export const routes: Routes = [
     component: Login,
   },
   {
-    path: 'merchant',
-    component: MerchantLayout,
-    children: [
-      {
-        path: '',
-        component: MerchantHomeComponent,
-      },
-      {
-        path: 'home',
-        component: MerchantHomeComponent,
-      },
-      {
-        path: 'products',
-        component: MerchantViewProductsComponent,
-      },
-      {
-        path: 'addproduct',
-        component: MerchantAddProductsComponent,
-      },
-    ],
-  },
-  {
-    path: 'merchant/register',
+    path: 'merchant/register', //localhost:4200/merchant/register
     component: MerchantRegister,
     children: [
       {
@@ -85,6 +63,28 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'merchant',
+    component: MerchantLayout,
+    children: [
+      {
+        path: '',
+        component: MerchantHomeComponent,
+      },
+      {
+        path: 'home',
+        component: MerchantHomeComponent,
+      },
+      {
+        path: 'products',
+        component: MerchantViewProductsComponent,
+      },
+      {
+        path: 'addproduct',
+        component: MerchantAddProductsComponent,
+      },
+    ],
+  },
+  {
     path: 'officer',
     component: OfficerLayout,
     children: [
@@ -106,6 +106,40 @@ export const routes: Routes = [
       },
     ],
   },
+  //   {
+  //     path: 'customer'
+  //     // component: CustomerLayout,
+  //     children: [
+  //     {
+  //       path: 'home',
+  //       // component: CustomerHomeComponent,
+  //     },
+  //     {
+  //       path: 'product/:id'
+  //       // component: CustomerProductComponent,
+  //     },
+    //     {
+  //       path: 'personaldetail/:id'
+  //       // component: CustomerPersonalDetailComponent,
+  //     },
+    //     {
+  //       path: 'billingaddress/:id'
+  //       // component: CustomerBillingAddressComponent,
+  //     },
+    //     {
+  //       path: 'paymentmethod/:id'
+  //       // component: CustomerPaymentMethodComponent,
+  //     },
+    //     {
+  //       path: 'pastorders/:id'
+  //       // component: CustomerProductComponent,
+  //     },
+    //     {
+  //       path: 'review/:id'
+  //       // component: CustomerProductComponent,
+  //     },
+
+  // ]},
   {
     path: 'review',
     component: MerchantRegisterCTA,
