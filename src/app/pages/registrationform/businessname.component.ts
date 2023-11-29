@@ -16,9 +16,9 @@ import { Router, RouterOutlet } from '@angular/router';
       </h1>
       <input
         type="text"
-        class="text-stone-300 text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full mt-4 px-5 py-2 border-2 border-solid max-md:pl-1"
+        class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full mt-4 px-5 py-2 border-2 border-solid max-md:pl-1"
         placeholder="business name"
-      />
+        />
       <div class="h-32" id="spacer"></div>
       <div class="flex flex-col items-end">
         <buttonwicon
