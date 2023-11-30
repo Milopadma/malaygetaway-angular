@@ -11,31 +11,22 @@ import { IconComponentModule } from '../../components/icon.component';
 import { DialogueBoxModule } from '../../components/dialoguebox.component';
 import { TopNavbarModule } from '../../components/topnavbar.component';
 import { ButtonBorderedModule } from '../../components/buttonbordered.component';
+import { FooterModule } from './footer.component';
 @Component({
   selector: 'about',
   template: `
     <topnavbar class="sticky top-0 z-50" />
-    <div>
-      <div>
-        <h1>Why choose MalayGetaway?</h1>
-        <p>Discover the benefits of listing your products with us.</p>
-      </div>
-      <div>
-        <div>
-          <div>
-            <img src="https://via.placeholder.com/150" alt="placeholder" />
-          </div>
-          <div class="flex flex-col">
-            <h2>Benefit 1</h2>
-            <p>Benefit 1 description</p>
-            <div class="flex flex-row">
-              <small>label 1</small>
-              <small>label 1</small>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="flex flex-col justify-center items-center ">
+      <div class="h-16" id="spacer"></div>
+      <h1>About Us</h1>
+      <div class="h-4" id="spacer"></div>
+      <p class="max-w-xl">
+        MalayGetaway is a platform for local businesses to list their products
+        and services. We aim to promote local businesses and encourage
+        Malaysians to support local products and services.
+      </p>
     </div>
+    <app-footer></app-footer>
   `,
 })
 export class About {
@@ -60,6 +51,7 @@ export class About {
     DialogueBoxModule,
     TopNavbarModule,
     ButtonBorderedModule,
+    FooterModule,
   ],
 })
 export class AboutModule {}
