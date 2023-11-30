@@ -6,7 +6,7 @@ import { IconComponentModule } from './icon.component';
 @Component({
   selector: 'topnavbar',
   template: `
-    <header class="bg-white flex flex-col items-stretch">
+    <header class="bg-white flex flex-col items-stretch bg-opacity-50 backdrop-filter backdrop-blur-lg">
       <div
         class="self-center flex w-full max-w-[1141px] items-stretch justify-between gap-5 mt-7 px-5 max-md:max-w-full max-md:flex-wrap"
       >
