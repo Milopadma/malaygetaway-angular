@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
           class="items-center flex justify-between gap-12 self-start max-md:justify-center"
         >
           <a
-            (click)="navigateToNextPage('home')" 
+            (click)="navigateToNextPage('')" 
             class="text-black text-base font-light leading-5 tracking-tighter cursor-pointer hover:underline transition-all duration-200"
             >Home</a
           >
