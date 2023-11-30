@@ -12,6 +12,7 @@ import { reviewKL } from './reviewKL.component';
 import { reviewAquaria } from './reviewAquaria.component';
 import { reviewGenting } from './reviewGenting.component';
 import { send } from './send.component';
+import { analytic1 } from './analytic1.component';
 
 // merchant registration flow
 import { landing } from './pages/registrationform/landing.component';
@@ -25,6 +26,7 @@ import { OfficerLayout } from './pages/applicationReview/officerlayout.component
 import { OfficerHomeComponent } from './pages/applicationReview/home.component';
 import { OfficerApplicationsComponent } from './pages/applicationReview/applicationslist.component';
 import { OfficerMerchantApplicationsComponent } from './pages/applicationReview/merchantapplication.component';
+import { homepurchase } from './homePurchase.componment';
 
 export const routes: Routes = [
   {
@@ -86,4 +88,12 @@ export const routes: Routes = [
     path: 'order',
     component: order,
   },
+  {
+    path: 'analytic1',
+    component: analytic1,
+  },
+  {
+    path: 'homepurchase',
+    component: homepurchase,
+  }
 ];
