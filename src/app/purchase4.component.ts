@@ -86,7 +86,7 @@ import { Router } from '@angular/router';
     </section>
   `
 })
-export class purchase4 {
+export class CustomerPaymentMethodComponent {
     selectedMethod: string = 'credit';
     currentStep: string = 'Payment Method';
     selectMethod(method: string): void {
@@ -97,13 +97,13 @@ export class purchase4 {
     }
     constructor(private router: Router) {}
     navButton1() {
-        this.router.navigate(['purchase1']);
+        this.router.navigate(['product/:id']);
       }
     navButton2() {
-        this.router.navigate(['purchase5']);
+        this.router.navigate(['successfuly/:id']);
     }
     navButton3() {
-        this.router.navigate(['purchase5']);
+        this.router.navigate(['successfuly/:id']);
     }
     formatCardNumber(event: any) {
         let value = event.target.value.split(' ').join('');
@@ -131,8 +131,8 @@ export class purchase4 {
     }
 }
 @NgModule({
-    declarations: [purchase4],
-    exports: [purchase4],
+    declarations: [CustomerPaymentMethodComponent],
+    exports: [CustomerPaymentMethodComponent],
     imports: [CommonModule, ProgressBarComponentModule, buttonwIconModule]
 })
 export class purchaseModule4 {}

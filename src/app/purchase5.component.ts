@@ -42,15 +42,15 @@ import { Router } from '@angular/router';
     </section>
   `,
 })
-export class purchase5  {
+export class CustomerSuccessfulyPurchase  {
     constructor(private router: Router) {}
     navButton1() {
-        this.router.navigate(['purchase1']);
+        this.router.navigate(['home']);
       }
 }
 @NgModule({
-    declarations: [purchase5],
-    exports: [purchase5],
+    declarations: [CustomerSuccessfulyPurchase],
+    exports: [CustomerSuccessfulyPurchase],
     imports: [CommonModule, ProgressBarComponentModule, buttonwIconModule]
 })
 export class purchaseModule5 {}

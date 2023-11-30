@@ -13,11 +13,9 @@ import { AfterViewInit } from '@angular/core';
     template: `
           <section class="py-16 bg-gray-100">
   <div class="container mx-auto">
-    <!-- Box for Home -->
     <div class="text-box">
       <h1 class="text-6xl font-bold mb-3">Home</h1>
     </div>
-    <!-- Box for Substext -->
     <div class="text-box">
       <h1 class="text-2xl font-medium mb-8">Welcome</h1>
     </div>
@@ -74,7 +72,7 @@ import { AfterViewInit } from '@angular/core';
         </section>
     `,
 })
-export class homepurchase implements AfterViewInit {
+export class CustomerHomeComponent implements AfterViewInit {
     constructor(private router: Router) {}
         locations = [
             { id: 1, name: 'Genting Highland', imageUrl: 'https://media.gettyimages.com/id/565233223/photo/pagoda-of-the-chin-swee-caves-temple-malaysia.jpg?s=612x612&w=0&k=20&c=i7TBrIafjyK8AnAXt_aYinaKBONtu_NLuVxpq4DqQ8o=', description: 'Nestled in the mountains near Kuala Lumpur, Genting Highlands is a popular hill resort known for its cool climate and entertainment options. It features indoor and outdoor theme parks, a bustling casino, luxury hotels, and a cable car system offering breathtaking views of the surrounding area.' },
@@ -101,14 +99,14 @@ export class homepurchase implements AfterViewInit {
             // Initialization logic
         }
         navButton1() {
-            this.router.navigate(['purchase1']);
+            this.router.navigate(['product/:id']);
           }
     }
     
 
 @NgModule({
-    declarations: [homepurchase],
-    exports: [homepurchase],
+    declarations: [CustomerHomeComponent],
+    exports: [CustomerHomeComponent],
     imports: [CommonModule, ProgressBarComponentModule, buttonwIconModule]
 })
 export class homepurchaseModule1{}

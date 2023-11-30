@@ -71,13 +71,13 @@ import { Router } from '@angular/router';
     </section>
   `,
 })
-export class purchase3  {
+export class CustomerBillingAddressComponent  {
     constructor(private router: Router) {}
     navButton1() {
-        this.router.navigate(['purchase1']);
+        this.router.navigate(['product/:id']);
       }
     navButton2() {
-        this.router.navigate(['purchase4']);
+        this.router.navigate(['paymentmethod/:id']);
     }
     formatZipCode(event: any) {
         let value = event.target.value.replace(/\D/g, '');
@@ -89,8 +89,8 @@ export class purchase3  {
 }
 
 @NgModule({
-    declarations: [purchase3],
-    exports: [purchase3],
+    declarations: [CustomerBillingAddressComponent],
+    exports: [CustomerBillingAddressComponent],
     imports: [CommonModule, ProgressBarComponentModule, buttonwIconModule]
 })
 export class purchaseModule3 {}
