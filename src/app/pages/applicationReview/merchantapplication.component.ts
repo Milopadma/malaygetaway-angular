@@ -14,7 +14,10 @@ import { IconComponentModule } from '../../components/icon.component';
     <div class="flex flex-col h-full">
       <div class="h-12" id="spacer"></div>
       <div class="w-full flex items-start">
-        <button class="text-small underline flex flex-row items-center gap-2">
+        <button
+          class="text-small flex flex-row items-center gap-2 hover:cursor-pointer hover:underline"
+          (click)="navigateToPage('officer/applications')"
+        >
           <icon iconName="LeftArrow" />Back
         </button>
       </div>
@@ -47,7 +50,12 @@ import { IconComponentModule } from '../../components/icon.component';
     </div>
   `,
 })
-export class OfficerMerchantApplicationsComponent {}
+export class OfficerMerchantApplicationsComponent {
+  constructor(private router: Router) {}
+  navigateToPage(page: string) {
+    this.router.navigate([page]);
+  }
+}
 
 @NgModule({
   declarations: [OfficerMerchantApplicationsComponent],

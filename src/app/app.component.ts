@@ -8,7 +8,7 @@ import { RouterOutlet } from '@angular/router';
   imports: [CommonModule, RouterOutlet],
   // templateUrl: './app.component.html',
   template: `
-    <div class="h-screen">
+    <div>
       <router-outlet></router-outlet>
     </div>
   `,
