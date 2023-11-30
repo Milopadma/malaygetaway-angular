@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   selector: 'merchantregistercta',
   template: `
     <div class="h-32" id="spacer"></div>
-    <div class="flex flex-row justify-between w-screen">
+    <div class="flex flex-row justify-center">
       <div class="w-12" id="spacer"></div>
       <div class="w-1/2 ">
         <div class="max-w-lg">
