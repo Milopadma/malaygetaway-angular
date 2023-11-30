@@ -1,14 +1,6 @@
 import { Routes } from '@angular/router';
-import { NgModule } from '@angular/core';
 
-// purchase tourism
-import { purchase1 } from './pages/customer/purchase.component';
-import { purchase2 } from './pages/customer/purchase2.componen';
-import { purchase3 } from './pages/customer/purchase3.component';
-import { purchase4 } from './pages/customer/purchase4.component';
-import { purchase5 } from './pages/customer/purchase5.component';
-
-// merchant registration flow
+// Epic 1-3 (milo e2000426)
 import { MerchantRegisterCTA } from './pages/registrationform/registercta.component';
 import { MerchantRegister } from './pages/merchantRegister.component';
 import { BusinessNameFormComponent } from './pages/registrationform/businessname.component';
@@ -29,6 +21,22 @@ import { MerchantLayout } from './pages/merchant/merchantlayout.component';
 import { Benefits } from './pages/home/benefits.component';
 import { About } from './pages/home/about.component';
 import { MerchantEditProductsComponent } from './pages/merchant/editproduct.component';
+
+
+// Epic 4-6 (adit e2000427)
+import { NgModule } from '@angular/core';
+import { order } from './order.component';
+import { reviewKL } from './reviewKL.component';
+import { reviewAquaria } from './reviewAquaria.component';
+import { reviewGenting } from './reviewGenting.component';
+import { send } from './send.component';
+
+import { purchase1 } from './pages/customer/purchase.component';
+import { purchase2 } from './pages/customer/purchase2.componen';
+import { purchase3 } from './pages/customer/purchase3.component';
+import { purchase4 } from './pages/customer/purchase4.component';
+import { purchase5 } from './pages/customer/purchase5.component';
+
 
 export const routes: Routes = [
   {
@@ -160,13 +168,18 @@ export const routes: Routes = [
 
   // ]},
   {
-    path: 'review',
+    path: 'review', // todo! unimplemented!
     component: MerchantRegisterCTA,
   },
   {
-    path: 'manage',
+    path: 'manage', // todo! unimplemented!
     component: MerchantRegisterCTA,
   },
+  {
+    path: 'analytics', // todo! unimplemented!
+    component: MerchantRegisterCTA,
+  },
+  
   // epic 4
   {
     path: 'purchase1',
@@ -188,13 +201,26 @@ export const routes: Routes = [
     path: 'purchase5',
     component: purchase5,
   },
+  
+  // epic 5
   {
-    path: 'analytics',
-    component: MerchantRegisterCTA,
+    path: 'reviewGenting',
+    component: reviewGenting,
   },
-  // 404
   {
-    path: '**',
-    component: NotFoundComponent,
+    path: 'reviewKL',
+    component: reviewKL,
+  },
+  {
+    path: 'reviewAquaria',
+    component: reviewAquaria,
+  },
+  {
+    path: 'send',
+    component: send,
+  },
+  {
+    path: 'order',
+    component: order,
   },
 ];
