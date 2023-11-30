@@ -2,6 +2,7 @@ import { Input, NgModule, ContentChild, AfterContentInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { IconComponentModule } from './icon.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'topnavbar',
@@ -17,24 +18,24 @@ import { IconComponentModule } from './icon.component';
           class="items-center flex justify-between gap-12 self-start max-md:justify-center"
         >
           <a
-            href="#"
-            class="text-black text-base font-light leading-5 tracking-tighter"
+            (click)="navigateToNextPage('home')" 
+            class="text-black text-base font-light leading-5 tracking-tighter cursor-pointer"
             >Home</a
           >
           <a
-            href="#"
-            class="text-black text-base font-light leading-5 tracking-tighter"
+            (click)="navigateToNextPage('benefits')"
+            class="text-black text-base font-light leading-5 tracking-tighter cursor-pointer"
             >Benefits</a
           >
           <a
-            href="#"
-            class="text-black text-base font-light leading-5 tracking-tighter"
+            (click)="navigateToNextPage('about')"
+            class="text-black text-base font-light leading-5 tracking-tighter cursor-pointer"
             >About</a
           >
           <a
-            href="#"
-            class="text-base font-light leading-5 tracking-tighter whitespace-nowrap bg-softblack text-white px-6 py-2"
-            >Register</a
+            (click)="navigateToNextPage('merchant/register')"
+            class="text-base font-light leading-5 tracking-tighter whitespace-nowrap bg-softblack text-white px-6 py-2 cursor-pointer"
+            >Join Us</a
           >
         </nav>
       </div>
@@ -49,6 +50,13 @@ export class TopNavbar implements AfterContentInit {
   ngAfterContentInit() {
     // console.log("icon:", this.icon);
   }
+
+  // routing
+    constructor(private router: Router) {}
+
+    navigateToNextPage(page: string) {
+      this.router.navigate([page]); // replace '/nextPage' with the actual route
+    }
 }
 
 @NgModule({
