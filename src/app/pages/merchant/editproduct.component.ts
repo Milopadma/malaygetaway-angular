@@ -10,9 +10,9 @@ import { FileInputComponentModule } from '../../components/form/fileinput.compon
   template: `
     <div class="h-12" id="spacer"></div>
     <div class="flex flex-col w-full">
-      <h1 class="text-titles">Add Products</h1>
+      <h1 class="text-titles">Edit Product</h1>
       <div class="h-4" id="spacer"></div>
-      <span class="text-paragraph">Add a new product to your catalogue</span>
+      <span class="text-paragraph">Edit a product in your catalogue</span>
       <div id="spacer" class="h-4"></div>
       <div class="flex flex-col md:flex-row gap-6">
         <div class="flex flex-col gap-4">
@@ -50,7 +50,7 @@ import { FileInputComponentModule } from '../../components/form/fileinput.compon
       <div class="flex flex-col items-end">
         <buttonwicon
           (click)="navigateToNextPage()"
-          label="Save Product"
+          label="Save Edit"
         ></buttonwicon>
         <p
           class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
@@ -61,7 +61,7 @@ import { FileInputComponentModule } from '../../components/form/fileinput.compon
     </div>
   `,
 })
-export class MerchantAddProductsComponent {
+export class MerchantEditProductsComponent {
   constructor(private router: Router) {}
 
   @HostListener('document:keydown.enter', ['$event'])
@@ -75,8 +75,8 @@ export class MerchantAddProductsComponent {
 }
 
 @NgModule({
-  declarations: [MerchantAddProductsComponent],
-  exports: [MerchantAddProductsComponent],
+  declarations: [MerchantEditProductsComponent],
+  exports: [MerchantEditProductsComponent],
   imports: [
     CommonModule,
     buttonwIconModule,
@@ -85,4 +85,4 @@ export class MerchantAddProductsComponent {
     FileInputComponentModule,
   ],
 })
-export class MerchantAddProductsComponentModule {}
+export class MerchantEditProductsComponentModule {}

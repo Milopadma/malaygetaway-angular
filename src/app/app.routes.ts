@@ -26,11 +26,26 @@ import { MerchantViewProductsComponent } from './pages/merchant/viewproducts.com
 import { MerchantAddProductsComponent } from './pages/merchant/addproducts.component';
 import { Home } from './pages/home/home.component';
 import { MerchantLayout } from './pages/merchant/merchantlayout.component';
+import { Benefits } from './pages/home/benefits.component';
+import { About } from './pages/home/about.component';
+import { MerchantEditProductsComponent } from './pages/merchant/editproduct.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: Home,
+  },
+  {
+    path: 'home',
+    component: Home,
+  },
+  {
+    path: 'benefits',
+    component: Benefits,
+  },
+  {
+    path: 'about',
+    component: About,
   },
   {
     path: 'login',
@@ -82,6 +97,10 @@ export const routes: Routes = [
         path: 'addproduct',
         component: MerchantAddProductsComponent,
       },
+      {
+        path: 'editproduct/:id',
+        component: MerchantEditProductsComponent,
+      }
     ],
   },
   {
