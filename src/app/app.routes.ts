@@ -24,11 +24,6 @@ import { MerchantEditProductsComponent } from './pages/merchant/editproduct.comp
 
 
 // Epic 4-6 (adit e2000427)
-import { purchase1 } from './purchase.component';
-import { purchase2 } from './purchase2.componen';
-import { purchase3 } from './purchase3.component';
-import { purchase4 } from './purchase4.component';
-import { purchase5 } from './purchase5.component';
 import { NgModule } from '@angular/core';
 import { order } from './order.component';
 import { reviewKL } from './reviewKL.component';
