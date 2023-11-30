@@ -44,22 +44,43 @@ type Product = {
         <div class="h-4" id="spacer"></div>
         <!--  -->
         @for (product of products; track product.id){
-        <div class="flex flex-row border-t-2 border-fadedgray pt-4 pb-6">
-          <div>
-            <img src="{{ product.image }}" class="w-24 h-24" />
+        <div
+          class="flex flex-row border-t-2 border-fadedgray pt-4 pb-6 justify-between"
+        >
+          <div class="flex flex-row">
+            <div>
+              <img src="{{ product.image }}" class="w-24 h-24" />
+            </div>
+            <div class="w-12" id="spacer"></div>
+            <div class="flex flex-col">
+              <div class="text-subtitles text-softblack">
+                {{ product.name }}
+              </div>
+              <div class="flex flex-row gap-4">
+                <div class="text-small text-softgray">
+                  RM {{ product.price }}
+                </div>
+                <div class="text-small text-softgray">
+                  {{ product.quantity }} pcs
+                </div>
+                <div class="text-small text-softgray">{{ product.type }}</div>
+              </div>
+              <div class="h-4" id="spacer"></div>
+              <div class="text-small text-softblack">
+                {{ product.description }}
+              </div>
+            </div>
           </div>
-          <div class="w-12" id="spacer"></div>
-          <div class="flex flex-col">
-            <div class="text-subtitles text-softblack">{{ product.name }}</div>
-            <div class="flex flex-row gap-4">
-              <div class="text-small text-softgray">RM {{ product.price }}</div>
-              <div class="text-small text-softgray">{{ product.quantity }} pcs</div>
-              <div class="text-small text-softgray">{{ product.type}}</div>
-            </div>
-            <div class="h-4" id="spacer"></div>
-            <div class="text-small text-softblack">
-              {{ product.description }}
-            </div>
+          <div class="flex flex-row gap-4">
+            <button
+              (click)="navigateToPage('merchant/editproduct/' + product.id)"
+              class="text-small text-softblack hover:underline"
+            >
+              Edit
+            </button>
+            <button class="text-reject hover:underline">
+              Delete
+            </button>
           </div>
         </div>
         }

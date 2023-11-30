@@ -28,6 +28,7 @@ import { Home } from './pages/home/home.component';
 import { MerchantLayout } from './pages/merchant/merchantlayout.component';
 import { Benefits } from './pages/home/benefits.component';
 import { About } from './pages/home/about.component';
+import { MerchantEditProductsComponent } from './pages/merchant/editproduct.component';
 
 export const routes: Routes = [
   {
@@ -96,6 +97,10 @@ export const routes: Routes = [
         path: 'addproduct',
         component: MerchantAddProductsComponent,
       },
+      {
+        path: 'editproduct/:id',
+        component: MerchantEditProductsComponent,
+      }
     ],
   },
   {
