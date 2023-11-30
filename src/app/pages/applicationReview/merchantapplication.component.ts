@@ -47,7 +47,11 @@ import { IconComponentModule } from '../../components/icon.component';
     </div>
   `,
 })
-export class OfficerMerchantApplicationsComponent {}
+export class OfficerMerchantApplicationsComponent {
+    // take the url as input
+    // call api
+
+}
 
 @NgModule({
   declarations: [OfficerMerchantApplicationsComponent],

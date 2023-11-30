@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'merchantregistercta',
   template: `
-  <div class="h-32" id="spacer"></div>
+    <div class="h-32" id="spacer"></div>
     <div class="flex flex-row justify-between w-screen">
       <div class="w-12" id="spacer"></div>
       <div class="w-1/2 ">
@@ -35,7 +35,7 @@ import { Router } from '@angular/router';
         <div class="bg-blue-500 w-24 h-48 absolute"></div>
         <div class="bg-blue-300 w-24 h-48 absolute ml-6 mt-4"></div>
       </div>
-</div>
+    </div>
   `,
 })
 export class MerchantRegisterCTA {

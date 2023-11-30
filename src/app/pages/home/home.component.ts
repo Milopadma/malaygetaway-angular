@@ -9,50 +9,37 @@ import { ButtonUnborderedModule } from '../../components/buttonunbordered.compon
 import { ButtonNoIconModule } from '../../components/buttonnoicon.component';
 import { IconComponentModule } from '../../components/icon.component';
 import { DialogueBoxModule } from '../../components/dialoguebox.component';
+import { TopNavbarModule } from '../../components/topnavbar.component';
+import { ButtonBorderedModule } from '../../components/buttonbordered.component';
 @Component({
   selector: 'home',
   template: `
-    <div class="flex flex-row h-full justify-center items-center px-48">
+    <topnavbar class="sticky top-0 z-50"></topnavbar>
+    <div class="flex flex-row h-full justify-center px-24 gap-64">
       <div>
-        <div class="flex flex-col">
-          <div class="flex flex-col text-subtitles">Home</div>
-          <div class="flex flex-col text-titles">
-            This Page is a placeholder, for now, it only displays the major UI
-            flows starting points.
-          </div>
-        </div>
-        <div class="h-12"></div>
-        <div class="flex flex-col gap-12">
-          <div>
-            <button
-              class="text-small underline flex flex-row items-center gap-2"
-              (click)="navigateToPage('/merchant/register')"
-            >
-              > Merchant Registration Flow
-            </button>
-          </div>
-          <div>
-            <button
-              class="text-small underline flex flex-row items-center gap-2"
-              (click)="navigateToPage('/officer')"
-            >
-              > Officer Application Review Flow
-            </button>
-          </div>
-          <div>
-            <button
-              class="text-small underline flex flex-row items-center gap-2"
-              (click)="navigateToPage('/login')"
-            >
-              > Merchant Manage Tourism Products Flow
-            </button>
-          </div>
-        </div>
+        <div class="h-64" id="spacer"></div>
+        <h1 class="text-titles">Discover Malaysia</h1>
+        <div class="h-4" id="spacer"></div>
+        <span class="text-subtitles">
+          Explore the best local products and services <br />
+          Malaysia has to offer.
+        </span>
+        <div class="h-12" id="spacer"></div>
+        <form class="flex flex-col gap-4">
+          <input
+            class="text-paragraph border border-softblack p-2 py-4"
+            type="text"
+            placeholder="Search for products or services"
+          />
+          <buttonbordered
+            label="Search"
+            class="flex flex-grow-0 self-end"
+          ></buttonbordered>
+        </form>
       </div>
-      <div class="w-12" id="spacer"></div>
-      <div class="">
-        <!-- placeholder image -->
-        <img src="https://via.placeholder.com/600x600" />
+      <div>
+      <div class="h-48" id="spacer"></div>
+        <img src="https://via.placeholder.com/500x500" alt="placeholder" />
       </div>
     </div>
   `,
@@ -77,6 +64,8 @@ export class Home {
     ButtonNoIconModule,
     IconComponentModule,
     DialogueBoxModule,
+    TopNavbarModule,
+    ButtonBorderedModule,
   ],
 })
 export class HomeModule {}
