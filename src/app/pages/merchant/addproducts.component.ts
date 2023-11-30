@@ -34,6 +34,11 @@ import { FileInputComponentModule } from '../../components/form/fileinput.compon
           <input
             type="text"
             class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
+            placeholder="stock amount"
+          />
+          <input
+            type="text"
+            class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
             placeholder="product description"
           />
         </div>
@@ -45,7 +50,7 @@ import { FileInputComponentModule } from '../../components/form/fileinput.compon
       <div class="flex flex-col items-end">
         <buttonwicon
           (click)="navigateToNextPage()"
-          label="Continue"
+          label="Save Product"
         ></buttonwicon>
         <p
           class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
@@ -65,7 +70,7 @@ export class MerchantAddProductsComponent {
   }
 
   navigateToNextPage() {
-    this.router.navigate(['/merchant/home']); // replace '/nextPage' with the actual route
+    this.router.navigate(['/merchant/products']); // replace '/nextPage' with the actual route
   }
 }
 
