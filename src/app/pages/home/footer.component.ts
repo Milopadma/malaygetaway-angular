@@ -16,37 +16,36 @@ import { ButtonBorderedModule } from '../../components/buttonbordered.component'
   template: `
     <div class="h-64" id="spacer"></div>
     <!-- footer -->
-    <div class="flex flex-col items-center justify-center">
+    <div class="flex flex-col items-center justify-center w-full">
       <div>
-        <div class="flex flex-row gap-8">
+        <div class="flex flex-row gap-32">
           <div>
             <h1>Discover Malaysia</h1>
             <div class="h-4" id="spacer"></div>
             <p>
-              Discover the best local products and services Malaysia has to
-              offer.
+              Discover the best local products and services <br />Malaysia has
+              to offer.
             </p>
           </div>
           <div>
             <h1>Explore</h1>
             <div class="h-4" id="spacer"></div>
-            <p>Home</p>
-            <p>Benefits</p>
-            <p>About</p>
+            <p class="hover:underline cursor-pointer" (click)="navigateToPage('home')">Home</p>
+            <p class="hover:underline cursor-pointer" (click)="navigateToPage('benefits')">Benefits</p>
+            <p class="hover:underline cursor-pointer" (click)="navigateToPage('about')">About Us</p>
           </div>
           <div>
             <h1>Legal</h1>
             <div class="h-4" id="spacer"></div>
-            <p>Terms & Conditions</p>
-            <p>Privacy Policy</p>
+            <p class="hover:underline cursor-pointer" (click)="navigateToPage('terms')">Terms & Conditions</p>
+            <p class="hover:underline cursor-pointer" (click)="navigateToPage('privacy')">Privacy Policy</p>
           </div>
-          <div>
+          <div class="flex flex-col">
             <h1>Connect</h1>
             <div class="h-4" id="spacer"></div>
-            <p>Instagram</p>
-            <p>Facebook</p>
-            <p>Twitter</p>
-            <p>LinkedIn</p>
+            <a class="hover:underline cursor-pointer text-paragraph" href="https://instagram.com">Instagram</a>
+            <a class="hover:underline cursor-pointer text-paragraph" href="https://linkedin.com">LinkedIn</a>
+            <a class="hover:underline cursor-pointer text-paragraph" href="https://X.com">X</a>
           </div>
         </div>
         <div class="h-24" id="spacer"></div>
@@ -55,7 +54,7 @@ import { ButtonBorderedModule } from '../../components/buttonbordered.component'
             <p>© 2023 MalayGetaway</p>
           </div>
           <div>
-            <p>Powered by Coffee</p>
+            <p>Powered by ☕</p>
           </div>
         </div>
         <div class="h-8" id="spacer"></div>

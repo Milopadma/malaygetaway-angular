@@ -30,7 +30,7 @@ import { FooterModule } from "./footer.component";
           <div class="h-12" id="spacer"></div>
           <form class="flex flex-col gap-4">
             <input
-              class="text-paragraph border border-softblack p-2 py-4"
+              class="text-paragraph border-black border-2 p-2 py-4"
               type="text"
               placeholder="Search for products or services"
             />
@@ -93,7 +93,7 @@ import { FooterModule } from "./footer.component";
               Malaysian merchants.</span
             >
             <div class="h-4" id="spacer"></div>
-            <div class="flex flex-row">
+            <div class="flex flex-row gap-4">
               <buttonunbordered label="Browse Categories"></buttonunbordered>
               <buttonbordered label="View All Services"></buttonbordered>
             </div>
@@ -164,7 +164,7 @@ import { FooterModule } from "./footer.component";
             See what our customers have to say about their experiences
           </span>
           <div class="h-4" id="spacer"></div>
-          <div class="flex flex-row">
+          <div class="flex flex-row gap-4">
             <buttonunbordered label="View All Reviews"></buttonunbordered>
             <buttonbordered label="Write a Review"></buttonbordered>
           </div>
@@ -202,9 +202,9 @@ import { FooterModule } from "./footer.component";
               <div class="h-4" id="spacer"></div>
               <p>Discover the best local merchants in Malaysia</p>
               <div class="h-4" id="spacer"></div>
-              <div class="flex flex-row">
+              <div class="flex flex-row gap-4">
                 <buttonunbordered label="View All Merchants"></buttonunbordered>
-                <buttonbordered label="Become a Merchant"></buttonbordered>
+                <buttonbordered label="Become a Merchant" (click)="navigateToPage('merchant/register')"></buttonbordered>
               </div>
               <div class="h-12" id="spacer"></div>
               <div>
