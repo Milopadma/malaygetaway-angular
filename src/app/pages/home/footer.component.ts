@@ -16,9 +16,9 @@ import { ButtonBorderedModule } from '../../components/buttonbordered.component'
   template: `
     <div class="h-64" id="spacer"></div>
     <!-- footer -->
-    <div class="flex flex-col items-center justify-center w-full">
+    <div class="flex flex-col items-center justify-center w-full px-8">
       <div>
-        <div class="flex flex-row gap-32">
+        <div class="flex flex-wrap md:flex-row gap-32">
           <div>
             <h1>Discover Malaysia</h1>
             <div class="h-4" id="spacer"></div>
