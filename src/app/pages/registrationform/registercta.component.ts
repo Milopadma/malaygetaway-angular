@@ -8,10 +8,10 @@ import { Router } from '@angular/router';
   selector: 'merchantregistercta',
   template: `
     <div class="h-32" id="spacer"></div>
-    <div class="flex flex-row justify-center">
-      <div class="w-12" id="spacer"></div>
-      <div class="w-1/2 ">
-        <div class="max-w-lg">
+    <div class="flex flex-row justify-between w-screen">
+      <div class="w-24" id="spacer"></div>
+      <div>
+        <div class="flex flex-grow flex-col w-full">
           <div class="text-titles">
             Register <br />
             as merchant
@@ -30,8 +30,7 @@ import { Router } from '@angular/router';
           ></buttonwicon>
         </div>
       </div>
-      <div class="w-12" id="spacer"></div>
-      <div class="w-1/2">
+      <div class="w-1/3">
         <div class="bg-blue-500 w-24 h-48 absolute"></div>
         <div class="bg-blue-300 w-24 h-48 absolute ml-6 mt-4"></div>
       </div>

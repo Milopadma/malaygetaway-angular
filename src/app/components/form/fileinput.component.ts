@@ -8,10 +8,10 @@ import { IconComponentModule } from '../icon.component';
     <div class="flex flex-row items-center">
       <label
         for="file-upload"
-        class="flex flex-row text-softblack text-2xl font-light leading-7 tracking-tighter border-softblack border-2 border-solid cursor-pointer items-center gap-3 px-9 py-12"
+        class="group flex flex-row text-softblack text-2xl font-light leading-7 tracking-tighter border-softblack border-2 border-solid cursor-pointer items-center gap-3 px-9 py-12 hover:bg-softblack hover:text-white transition-all duration-200"
       >
         {{ label }}
-        <icon iconName="Upload"></icon>
+        <icon iconName="Upload" class="group-hover:invert transition-all duration-200"></icon>
       </label>
       <input id="file-upload" type="file" class="hidden" />
     </div>
