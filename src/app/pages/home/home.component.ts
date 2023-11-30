@@ -41,7 +41,7 @@ import { ButtonBorderedModule } from '../../components/buttonbordered.component'
         </div>
         <div>
           <div class="h-48" id="spacer"></div>
-          <img src="https://via.placeholder.com/500x500" alt="placeholder" />
+          <img src="../../assets/petronastwintowers.webp" alt="" class="w-auto" />
         </div>
       </div>
       <div class="h-64" id="spacer"></div>
@@ -328,7 +328,7 @@ import { ButtonBorderedModule } from '../../components/buttonbordered.component'
             <p>LinkedIn</p>
           </div>
         </div>
-        <div class="h-4" id="spacer"></div>
+        <div class="h-24" id="spacer"></div>
         <div class="flex flex-row justify-between">
           <div>
             <p>© 2023 MalayGetaway</p>
@@ -337,6 +337,7 @@ import { ButtonBorderedModule } from '../../components/buttonbordered.component'
             <p>Powered by Coffee</p>
           </div>
         </div>
+        <div class="h-8" id="spacer"></div>
       </div>
     </div>
   `,

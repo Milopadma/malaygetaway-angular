@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   template: `
     <header class="bg-white flex flex-col items-stretch bg-opacity-50 backdrop-filter backdrop-blur-lg">
       <div
-        class="self-center flex w-full max-w-[1141px] items-stretch justify-between gap-5 mt-7 px-5 max-md:max-w-full max-md:flex-wrap"
+        class="self-center flex w-full items-stretch justify-between gap-5 mt-7 px-24 max-md:max-w-full max-md:flex-wrap"
       >
         <h1 class="text-black text-3xl font-light leading-10 tracking-tighter">
           <icon iconName="Logo"></icon>
@@ -19,28 +19,28 @@ import { Router } from '@angular/router';
         >
           <a
             (click)="navigateToNextPage('home')" 
-            class="text-black text-base font-light leading-5 tracking-tighter cursor-pointer"
+            class="text-black text-base font-light leading-5 tracking-tighter cursor-pointer hover:underline transition-all duration-200"
             >Home</a
           >
           <a
             (click)="navigateToNextPage('benefits')"
-            class="text-black text-base font-light leading-5 tracking-tighter cursor-pointer"
+            class="text-black text-base font-light leading-5 tracking-tighter cursor-pointer hover:underline transition-all duration-200"
             >Benefits</a
           >
           <a
             (click)="navigateToNextPage('about')"
-            class="text-black text-base font-light leading-5 tracking-tighter cursor-pointer"
+            class="text-black text-base font-light leading-5 tracking-tighter cursor-pointer hover:underline transition-all duration-200"
             >About</a
           >
           <a
             (click)="navigateToNextPage('merchant/register')"
-            class="text-base font-light leading-5 tracking-tighter whitespace-nowrap bg-softblack text-white px-6 py-2 cursor-pointer"
+            class="text-base font-light leading-5 tracking-tighter whitespace-nowrap bg-softblack text-white px-6 py-2 cursor-pointer hover:underline transition-all duration-200"
             >Join Us</a
           >
         </nav>
       </div>
+      <div class="h-4" id="spacer"></div>
     </header>
-    <div class="h-4" id="spacer"></div>
   `,
 })
 export class TopNavbar implements AfterContentInit {
