@@ -35,6 +35,7 @@ import { FooterModule } from "./footer.component";
               placeholder="Search for products or services"
             />
             <buttonbordered
+              (click)="navigateToPage('customer/home')"
               label="Search"
               class="flex flex-grow-0 self-end"
             ></buttonbordered>
@@ -94,8 +95,8 @@ import { FooterModule } from "./footer.component";
             >
             <div class="h-4" id="spacer"></div>
             <div class="flex flex-row gap-4">
-              <buttonunbordered label="Browse Categories"></buttonunbordered>
-              <buttonbordered label="View All Services"></buttonbordered>
+              <buttonunbordered label="Browse Categories (placeholder)"></buttonunbordered>
+              <buttonbordered label="View All Services" (click)="navigateToPage('customer/home')"></buttonbordered>
             </div>
             <div class="h-12" id="spacer"></div>
             <div class="flex flex-col gap-4">
@@ -165,8 +166,8 @@ import { FooterModule } from "./footer.component";
           </span>
           <div class="h-4" id="spacer"></div>
           <div class="flex flex-row gap-4">
-            <buttonunbordered label="View All Reviews"></buttonunbordered>
-            <buttonbordered label="Write a Review"></buttonbordered>
+            <buttonunbordered label="View All Reviews (placeholder)"></buttonunbordered>
+            <buttonbordered label="Write a Review" (click)="navigateToPage('customer/pastorders')"></buttonbordered>
           </div>
           <div class="h-12" id="spacer"></div>
           <div class="flex flex-row gap-12">
@@ -203,7 +204,7 @@ import { FooterModule } from "./footer.component";
               <p>Discover the best local merchants in Malaysia</p>
               <div class="h-4" id="spacer"></div>
               <div class="flex flex-row gap-4">
-                <buttonunbordered label="View All Merchants"></buttonunbordered>
+                <buttonunbordered label="View All Merchants (placeholder)"></buttonunbordered>
                 <buttonbordered label="Become a Merchant" (click)="navigateToPage('merchant/register')"></buttonbordered>
               </div>
               <div class="h-12" id="spacer"></div>

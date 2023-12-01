@@ -7,25 +7,25 @@ import { Router, RouterOutlet } from '@angular/router';
 import { FileInputComponentModule } from '../../components/form/fileinput.component';
 import { SidebarModule } from '../sidebar.component';
 @Component({
-  selector: 'officer-layout',
+  selector: 'customer-layout',
   template: `
-    <main class="flex flex-row">
+    <main class="h-fit min-h-screen flex flex-row">
       <div class="flex flex-shrink-0">
-        <sidebar type="officer"></sidebar>
+        <sidebar id="sidebar" type="customer" class="sticky top-2"></sidebar>
       </div>
       <div class="w-12" id="spacer"></div>
-      <div class="w-full h-screen">
+      <div class="w-full min-h-screen max-h-fit">
         <router-outlet></router-outlet>
       </div>
       <div class="w-12" id="spacer"></div>
     </main>
   `,
 })
-export class OfficerLayout {}
+export class CustomerLayout {}
 
 @NgModule({
-  declarations: [OfficerLayout],
-  exports: [OfficerLayout],
+  declarations: [CustomerLayout],
+  exports: [CustomerLayout],
   imports: [
     CommonModule,
     buttonwIconModule,
@@ -35,4 +35,4 @@ export class OfficerLayout {}
     SidebarModule,
   ],
 })
-export class OfficerLayoutModule {}
+export class CustomerLayoutModule {}
