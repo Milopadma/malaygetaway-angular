@@ -5,13 +5,14 @@ import { buttonwIconModule } from '../components/button.component';
 import { ProgressBarComponentModule } from '../components/form/progressbar.component';
 import { Router, RouterOutlet } from '@angular/router';
 import { ButtonUnborderedModule } from '../components/buttonunbordered.component';
+import { IconComponentModule } from '../components/icon.component';
 @Component({
   selector: 'sidebar',
   template: `
     <nav
       class="flex flex-col py-12 px-4 border-softblack border-r-[1px] sticky top-0 h-screen max-h-screen overflow-y-auto"
     >
-      <div class="px-6 text-small">header</div>
+      <div class="px-6 text-small"><icon iconName="Logo"></icon></div>
       <div class="h-6" id="spacer"></div>
       <div class="flex flex-col justify-between h-screen">
         <div class="flex flex-col">
@@ -40,8 +41,8 @@ import { ButtonUnborderedModule } from '../components/buttonunbordered.component
             (click)="navigateToPage('customer/home')"
           ></buttonunbordered>
           <buttonunbordered
-          label="Review"
-          (click)="navigateToPage('customer/pastorders')"
+            label="Review"
+            (click)="navigateToPage('customer/pastorders')"
           ></buttonunbordered>
           <buttonunbordered
             label="Account"
@@ -97,6 +98,7 @@ export class Sidebar {
     ProgressBarComponentModule,
     RouterOutlet,
     ButtonUnborderedModule,
+    IconComponentModule,
   ],
 })
 export class SidebarModule {}
