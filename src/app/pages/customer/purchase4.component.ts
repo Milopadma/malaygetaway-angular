@@ -135,4 +135,4 @@ export class CustomerPaymentMethodComponent {
     exports: [CustomerPaymentMethodComponent],
     imports: [CommonModule, ProgressBarComponentModule, buttonwIconModule]
 })
-export class purchaseModule4 {}
+export class CustomerPaymentMethodModule {}

@@ -53,4 +53,4 @@ export class CustomerSuccessfulyPurchase  {
     exports: [CustomerSuccessfulyPurchase],
     imports: [CommonModule, ProgressBarComponentModule, buttonwIconModule]
 })
-export class purchaseModule5 {}
+export class CustomerSuccessfulyPurchaseModule {}

@@ -87,4 +87,4 @@ export class CustomerProductComponent {
   exports: [CustomerProductComponent],
   imports: [CommonModule, buttonwIconModule, ProgressBarComponentModule],
 })
-export class purchaseModule {}
+export class CustomerProductModule {}

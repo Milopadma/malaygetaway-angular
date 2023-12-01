@@ -32,6 +32,19 @@ import { ButtonUnborderedModule } from '../components/buttonunbordered.component
             label="Account"
             (click)="navigateToPage('merchant/account')"
           ></buttonunbordered>
+          } @if (type === "customer") {
+          <buttonunbordered
+            label="Home"
+            (click)="navigateToPage('customer/home')"
+          ></buttonunbordered>
+          <buttonunbordered
+            label="Review"
+            (click)="navigateToPage('customer/review')"
+          ></buttonunbordered>
+          <buttonunbordered
+            label="Account"
+            (click)="navigateToPage('merchant/account')"
+          ></buttonunbordered>
           } @else {
           <buttonunbordered
             label="Home"

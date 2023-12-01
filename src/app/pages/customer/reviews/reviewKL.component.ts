@@ -1,12 +1,12 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
-import { ProgressBarComponentModule } from "./components/form/progressbar.component";
-import { buttonwIconModule } from "./components/button.component";
+import { ProgressBarComponentModule } from "../../../components/form/progressbar.component";
+import { buttonwIconModule } from "../../../components/button.component";
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'review-genting',
+    selector: 'review-KL',
     template: `
       <section class="py-20">
         <div class="max-w-4xl mx-auto px-4">
@@ -16,19 +16,19 @@ import { Router } from '@angular/router';
             <div class="mb-8">
                 <div class="flex justify-between items-center mb-4">
                 <div class="flex items-center">
-                    <img src="https://media.gettyimages.com/id/565233223/photo/pagoda-of-the-chin-swee-caves-temple-malaysia.jpg?s=612x612&w=0&k=20&c=i7TBrIafjyK8AnAXt_aYinaKBONtu_NLuVxpq4DqQ8o=" alt="Pagoda of the Chin Swee Caves Temple in Malaysia" class="w-full h-full object-cover transform hover:scale-105 transition duration-300 ease-in-out" alt="Genting Highlands" class="h-14 w-14 rounded-full mr-3">
+                    <img src="https://th.bing.com/th/id/R.d909e94ca5d9a7337c39a30e9f3067ab?rik=f4GftoJd57v0yw&riu=http%3a%2f%2f1.bp.blogspot.com%2f-iPOEn16pts0%2fUAlO0TDwvlI%2fAAAAAAAAAEg%2f0h72JIuIkLY%2fs1600%2fPetronas-Towers-01.jpg&ehk=us5opYDRyfbzgpvVRIrMwWyRY4Q7nCeKUM8QKwzzY3s%3d&risl=&pid=ImgRaw&r=0" alt="Genting Highlands" class="h-14 w-14 rounded-full mr-3">
                     <div class="flex flex-col">
-                    <span class="font-bold text-lg text-gray-800">Genting Highlands</span>
-                    <span class="text-sm text-gray-500">Hill Station In Malaysia</span>
+                    <span class="font-bold text-lg text-gray-800">KL Tower Kuala Lumpur</span>
+                    <span class="text-sm text-gray-500">Petronas Twin Tower</span>
                     <div class="flex items-center mt-2">
-                        <span class="text-yellow-400 text-lg mr-1">4.6</span>
-                        <span class="text-gray-600 text-sm ml-1">(5K+ Reviews)</span>
+                        <span class="text-yellow-400 text-lg mr-1">4.9</span>
+                        <span class="text-gray-600 text-sm ml-1">(10K+ Reviews)</span>
                         <span class="flex items-center ml-2">
                         <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 15L5.172 17.09l0.857-4.987-3.617-3.527 4.998-0.727L9.049 3l2.238 4.85 4.998 0.727-3.617 3.527 0.857 4.987-3.877-2.09z"/></svg>
                         <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 15L5.172 17.09l0.857-4.987-3.617-3.527 4.998-0.727L9.049 3l2.238 4.85 4.998 0.727-3.617 3.527 0.857 4.987-3.877-2.09z"/></svg>
                         <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 15L5.172 17.09l0.857-4.987-3.617-3.527 4.998-0.727L9.049 3l2.238 4.85 4.998 0.727-3.617 3.527 0.857 4.987-3.877-2.09z"/></svg>
                         <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 15L5.172 17.09l0.857-4.987-3.617-3.527 4.998-0.727L9.049 3l2.238 4.85 4.998 0.727-3.617 3.527 0.857 4.987-3.877-2.09z"/></svg>
-                        <svg class="w-5 h-5 text-fadedgray" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 15L5.172 17.09l0.857-4.987-3.617-3.527 4.998-0.727L9.049 3l2.238 4.85 4.998 0.727-3.617 3.527 0.857 4.987-3.877-2.09z"/></svg>
+                        <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 15L5.172 17.09l0.857-4.987-3.617-3.527 4.998-0.727L9.049 3l2.238 4.85 4.998 0.727-3.617 3.527 0.857 4.987-3.877-2.09z"/></svg>
                       </span>
                     </div>
                   </div>
@@ -42,12 +42,12 @@ import { Router } from '@angular/router';
                     <div class="flex flex-col items-start mb-1">
                         <div class="flex items-center mb-2">
                         <span class="text-softblack text-paragraph ml-2 mr-2 font-bold">Reviews</span>
-                        <span class="text-yellow-400 text-lg mr-1">4.6</span>
+                        <span class="text-yellow-400 text-lg mr-1">4.9</span>
                         <span class="flex items-center">
                             <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 15L5.172 17.09l0.857-4.987-3.617-3.527 4.998-0.727L9.049 3l2.238 4.85 4.998 0.727-3.617 3.527 0.857 4.987-3.877-2.09z"/></svg>
                         </span>
                     </div>
-                    <span class="text-sm text-gray-500 ml-2">5,427 Total</span>
+                    <span class="text-sm text-gray-500 ml-2">10,271 Total</span>
                         <br>
                         <div class="flex items-center">
                         <span class="text-softblack text-small font-semibold ml-2 w-[8rem] ">Order</span>
@@ -172,7 +172,7 @@ import { Router } from '@angular/router';
     styles: []
   })
   
-export class reviewGenting  {
+export class reviewKL  {
     constructor(private router: Router) {}
     rating1 = 0;
     rating2 = 0;
@@ -202,8 +202,8 @@ export class reviewGenting  {
   }
 }
 @NgModule({
-    declarations: [reviewGenting],
-    exports: [reviewGenting],
+    declarations: [reviewKL],
+    exports: [reviewKL],
     imports: [CommonModule, ProgressBarComponentModule, buttonwIconModule]
 })
 export class reviewGModule {}

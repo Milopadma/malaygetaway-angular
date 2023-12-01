@@ -93,4 +93,4 @@ export class CustomerBillingAddressComponent  {
     exports: [CustomerBillingAddressComponent],
     imports: [CommonModule, ProgressBarComponentModule, buttonwIconModule]
 })
-export class purchaseModule3 {}
+export class CustomerBillingAddressModule {}

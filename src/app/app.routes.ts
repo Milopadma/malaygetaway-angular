@@ -1,26 +1,7 @@
 import { Routes } from '@angular/router';
 
-<<<<<<< HEAD
-// purchase tourism
-import { purchase1 } from './purchase.component';
-import { purchase2 } from './purchase2.componen';
-import { purchase3 } from './purchase3.component';
-import { purchase4 } from './purchase4.component';
-import { purchase5 } from './purchase5.component';
-import { NgModule } from '@angular/core';
-import { order } from './order.component';
-import { reviewKL } from './reviewKL.component';
-import { reviewAquaria } from './reviewAquaria.component';
-import { reviewGenting } from './reviewGenting.component';
-import { send } from './send.component';
-import { analytic1 } from './analytic1.component';
-
-// merchant registration flow
-import { landing } from './pages/registrationform/landing.component';
-=======
 // Epic 1-3 (milo e2000426)
 import { MerchantRegisterCTA } from './pages/registrationform/registercta.component';
->>>>>>> 07437afeda6d13d2d78bce776815361d56e79711
 import { MerchantRegister } from './pages/merchantRegister.component';
 import { BusinessNameFormComponent } from './pages/registrationform/businessname.component';
 import { NotFoundComponent } from './pages/notfound/notfound.component';
@@ -31,9 +12,6 @@ import { OfficerLayout } from './pages/applicationReview/officerlayout.component
 import { OfficerHomeComponent } from './pages/applicationReview/home.component';
 import { OfficerApplicationsComponent } from './pages/applicationReview/applicationslist.component';
 import { OfficerMerchantApplicationsComponent } from './pages/applicationReview/merchantapplication.component';
-<<<<<<< HEAD
-import { homepurchase } from './homePurchase.componment';
-=======
 import { Login } from './pages/login.component';
 import { MerchantHomeComponent } from './pages/merchant/home.component';
 import { MerchantViewProductsComponent } from './pages/merchant/viewproducts.component';
@@ -44,22 +22,17 @@ import { Benefits } from './pages/home/benefits.component';
 import { About } from './pages/home/about.component';
 import { MerchantEditProductsComponent } from './pages/merchant/editproduct.component';
 
-
 // Epic 4-6 (adit e2000427)
 import { NgModule } from '@angular/core';
 import { order } from './order.component';
-import { reviewKL } from './reviewKL.component';
-import { reviewAquaria } from './reviewAquaria.component';
-import { reviewGenting } from './reviewGenting.component';
-import { send } from './send.component';
-
-import { purchase1 } from './pages/customer/purchase.component';
-import { purchase2 } from './pages/customer/purchase2.componen';
-import { purchase3 } from './pages/customer/purchase3.component';
-import { purchase4 } from './pages/customer/purchase4.component';
-import { purchase5 } from './pages/customer/purchase5.component';
-
->>>>>>> 07437afeda6d13d2d78bce776815361d56e79711
+import { reviewKL } from './pages/customer/reviews/reviewKL.component';
+import { reviewAquaria } from './pages/customer/reviews/reviewAquaria.component';
+import { reviewGenting } from './pages/customer/reviews/reviewGenting.component';
+import { send } from './pages/customer/reviews/send.component';
+import { CustomerProductComponent } from './pages/customer/purchase.component';
+import { CustomerLayout } from './pages/customer/customerlayout.component';
+import { HomePurchase } from './pages/customer/homePurchase.component';
+import { analytic1 } from './analytic1.component';
 
 export const routes: Routes = [
   {
@@ -131,7 +104,7 @@ export const routes: Routes = [
       {
         path: 'editproduct/:id',
         component: MerchantEditProductsComponent,
-      }
+      },
     ],
   },
   {
@@ -168,23 +141,23 @@ export const routes: Routes = [
   //       path: 'product/:id'
   //       // component: CustomerProductComponent,
   //     },
-    //     {
+  //     {
   //       path: 'personaldetail/:id'
   //       // component: CustomerPersonalDetailComponent,
   //     },
-    //     {
+  //     {
   //       path: 'billingaddress/:id'
   //       // component: CustomerBillingAddressComponent,
   //     },
-    //     {
+  //     {
   //       path: 'paymentmethod/:id'
   //       // component: CustomerPaymentMethodComponent,
   //     },
-    //     {
+  //     {
   //       path: 'pastorders/:id'
   //       // component: CustomerProductComponent,
   //     },
-    //     {
+  //     {
   //       path: 'review/:id'
   //       // component: CustomerProductComponent,
   //     },
@@ -202,29 +175,31 @@ export const routes: Routes = [
     path: 'analytics', // todo! unimplemented!
     component: MerchantRegisterCTA,
   },
-  
+
   // epic 4
   {
-    path: 'purchase1',
-    component: purchase1,
+    path: 'customer',
+    component: CustomerLayout,
+    children: [
+      {
+        path: '',
+        component: HomePurchase,
+      },
+      {
+        path: 'home',
+        component: HomePurchase,
+      },
+      {
+        path: 'review',
+        component: reviewAquaria,
+      },
+      {
+        path: 'product/:id',
+        component: CustomerProductComponent,
+      },
+    ],
   },
-  {
-    path: 'purchase2',
-    component: purchase2,
-  },
-  {
-    path: 'purchase3',
-    component: purchase3,
-  },
-  {
-    path: 'purchase4',
-    component: purchase4,
-  },
-  {
-    path: 'purchase5',
-    component: purchase5,
-  },
-  
+
   // epic 5
   {
     path: 'reviewGenting',
@@ -250,8 +225,4 @@ export const routes: Routes = [
     path: 'analytic1',
     component: analytic1,
   },
-  {
-    path: 'homepurchase',
-    component: homepurchase,
-  }
 ];
