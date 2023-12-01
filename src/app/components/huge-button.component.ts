@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   selector: 'huge-button',
   template: `
     <div
-      class="text-titles flex flex-col text-softblack max-w-full cursor-pointer py-32 border-2 border-softblack px-20"
+      class="text-titles flex flex-col text-softblack max-w-full cursor-pointer py-32 border-2 border-softblack px-20 hover:bg-softblack hover:text-white transition-all duration-200"
     >
       <button type="submit">
         <span class="line-clamp-2 text-left">{{ label.split(' ')[0] }}</span>

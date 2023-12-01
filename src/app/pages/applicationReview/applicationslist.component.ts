@@ -8,6 +8,16 @@ import { FileInputComponentModule } from '../../components/form/fileinput.compon
 import { ButtonUnborderedModule } from '../../components/buttonunbordered.component';
 import { ButtonNoIconModule } from '../../components/buttonnoicon.component';
 import { IconComponentModule } from '../../components/icon.component';
+
+type status = 'Pending' | 'Accepted' | 'Rejected';
+
+type MerchantApplication = {
+  id: number;
+  status: status;
+  merchantName: string;
+  description: string;
+};
+
 @Component({
   selector: 'officer-applications-list',
   template: `
@@ -28,93 +38,112 @@ import { IconComponentModule } from '../../components/icon.component';
       ></buttonunbordered>
       <div class="flex flex-col">
         <table>
-          <tr>
-            <th class="text-small text-left text-softgray">ID</th>
-            <th class="text-small text-left text-softgray">Status</th>
-            <th class="text-small text-left text-softgray">Merchant Name</th>
-            <th class="text-small"></th>
-          </tr>
+          <tbody>
+            <tr>
+              <th class="text-small text-left text-softgray">ID</th>
+              <th class="text-small text-left text-softgray">Status</th>
+              <th class="text-small text-left text-softgray">Merchant Name</th>
+              <th class="text-small"></th>
+            </tr>
 
-          <tr class="border-t-[1px] border-softblack">
-            <td class="text-paragraph">1</td>
-            <td class="text-paragraph uppercase text-warning">Pending</td>
-            <td class="flex flex-col py-4">
-              <span class="text-paragraph">Acme</span
-              ><span class="text-small text-softgray">Descriptions</span>
-            </td>
-            <td>
-              <button class="text-small underline text-softblack">
-                See Details
-              </button>
-            </td>
-          </tr>
-
-          <tr class="border-t-[1px] border-softblack">
-            <td class="text-paragraph">1</td>
-            <td class="text-paragraph uppercase text-warning">Pending</td>
-            <td class="flex flex-col py-4">
-              <span class="text-paragraph">Acme</span
-              ><span class="text-small text-softgray">Descriptions</span>
-            </td>
-            <td>
-              <button class="text-small underline text-softblack">
-                See Details
-              </button>
-            </td>
-          </tr>
-
-          <tr class="border-t-[1px] border-softblack">
-            <td class="text-paragraph">1</td>
-            <td class="text-paragraph uppercase text-warning">Pending</td>
-            <td class="flex flex-col py-4">
-              <span class="text-paragraph">Acme</span
-              ><span class="text-small text-softgray">Descriptions</span>
-            </td>
-            <td>
-              <button class="text-small underline text-softblack">
-                See Details
-              </button>
-            </td>
-          </tr>
-
-          <tr class="border-t-[1px] border-softblack">
-            <td class="text-paragraph">1</td>
-            <td class="text-paragraph uppercase text-reject">Rejected</td>
-            <td class="flex flex-col py-4">
-              <span class="text-paragraph">Acme</span
-              ><span class="text-small text-softgray">Descriptions</span>
-            </td>
-            <td>
-              <button class="text-small underline text-softblack">
-                See Details
-              </button>
-            </td>
-          </tr>
-
-          <tr class="border-t-[1px] border-softblack">
-            <td class="text-paragraph">1</td>
-            <td class="text-paragraph uppercase text-confirm">Accepted</td>
-            <td class="flex flex-col py-4">
-              <span class="text-paragraph">Acme</span
-              ><span class="text-small text-softgray">Descriptions</span>
-            </td>
-            <td>
-              <button class="text-small underline text-softblack">
-                See Details
-              </button>
-            </td>
-          </tr>
+            @for (application of applications; track application.id){
+            <tr class="border-t-[1px] border-softblack">
+              <td class="text-paragraph">{{ application.id }}</td>
+              @if (application.status == 'Pending') {
+              <td class="text-paragraph uppercase text-warning">
+                {{ application.status }}
+              </td>
+              } @else if (application.status == 'Accepted') {
+              <td class="text-paragraph uppercase text-confirm">
+                {{ application.status }}
+              </td>
+              } @else if (application.status == 'Rejected') {
+              <td class="text-paragraph uppercase text-reject">
+                {{ application.status }}
+              </td>
+              }
+              <td class="flex flex-col py-4">
+                <span class="text-paragraph">{{
+                  application.merchantName
+                }}</span
+                ><span class="text-small text-softgray">{{
+                  application.description
+                }}</span>
+              </td>
+              <td>
+                <button
+                  class="text-small hover:underline text-softblack"
+                  (click)="
+                    navigateToPage('officer/applications/' + application.id)
+                  "
+                >
+                  See Details
+                </button>
+              </td>
+            </tr>
+            }
+          </tbody>
         </table>
-        <div class="flex flex-row w-full justify-end">
-          <buttonnoicon label="<"></buttonnoicon>
-          <div class="w-4" id="spacer"></div>
-          <buttonnoicon label=">"></buttonnoicon>
+        <div class="flex flex-col w-full items-end">
+          <div class="flex flex-col items-center">
+            <div class="flex flex-row">
+              <buttonnoicon label="<"></buttonnoicon>
+              <div class="w-4" id="spacer"></div>
+              <buttonnoicon label=">"></buttonnoicon>
+            </div>
+            <span class="text-paragraph">
+              {{ currentPage }} of {{ totalPages }}
+            </span>
+          </div>
         </div>
       </div>
     </div>
   `,
 })
-export class OfficerApplicationsComponent {}
+export class OfficerApplicationsComponent {
+  constructor(private router: Router) {}
+  navigateToPage(page: string) {
+    this.router.navigate([page]);
+  }
+
+  // placeholder data
+  applications: MerchantApplication[] = [
+    {
+      id: 1,
+      status: 'Pending',
+      merchantName: 'Acme',
+      description: 'We are a company that focuses on this and that.',
+    },
+    {
+      id: 2,
+      status: 'Pending',
+      merchantName: 'Acme',
+      description: 'We are a company that focuses on this and that.',
+    },
+    {
+      id: 3,
+      status: 'Pending',
+      merchantName: 'Acme',
+      description: 'We are a company that focuses on this and that.',
+    },
+    {
+      id: 4,
+      status: 'Rejected',
+      merchantName: 'Acme',
+      description: 'We are a company that focuses on this and that.',
+    },
+    {
+      id: 5,
+      status: 'Accepted',
+      merchantName: 'Acme',
+      description: 'We are a company that focuses on this and that.',
+    },
+  ];
+
+  // pagination data
+  currentPage: number = 1;
+  totalPages: number = 5;
+}
 
 @NgModule({
   declarations: [OfficerApplicationsComponent],
