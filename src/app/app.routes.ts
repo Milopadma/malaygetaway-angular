@@ -223,4 +223,10 @@ export const routes: Routes = [
     path: 'order',
     component: order,
   },
+
+  // 404
+  {
+    path: '**',
+    component: NotFoundComponent,
+  },
 ];
