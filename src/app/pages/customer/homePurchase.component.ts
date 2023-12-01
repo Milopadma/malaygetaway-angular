@@ -15,7 +15,7 @@ type TouristLocation = {
 @Component({
   selector: 'HomePurchase',
   template: `
-    <section class="py-16 bg-gray-100">
+    <section class="py-16">
       <div class="container mx-auto">
         <div class="text-box">
           <h1 class="text-6xl font-bold mb-3">Home</h1>
@@ -35,7 +35,7 @@ type TouristLocation = {
             id="featuredSlider"
             class="grid grid-cols-3 gap-4 overflow-hidden transition-transform duration-500"
           >
-          <!-- the cards -->
+            <!-- the cards -->
             @for (location of locations; track location.id){
             <div
               class="flex-none p-4"
@@ -48,11 +48,14 @@ type TouristLocation = {
                   [src]="location.imageUrl"
                   alt="{{ location.name }}"
                   class="w-full h-[250px] object-cover"
-                  (click)="navButton1()"
+                  (click)="navigateToProductPage(location.id)"
                 />
                 <div class="p-6">
                   <h2 class="text-2xl font-bold mb-4">{{ location.name }}</h2>
-                  <p class="text-gray-700 line-clamp-3" [ngClass]="{ 'line-clamp-none': readMore[location.id] }">
+                  <p
+                    class="text-gray-700 line-clamp-3"
+                    [ngClass]="{ 'line-clamp-none': readMore[location.id] }"
+                  >
                     {{ location.description }}
                   </p>
                   <button
@@ -73,6 +76,52 @@ type TouristLocation = {
         >
           ›
         </button>
+      </div>
+    </section>
+    <section class="py-16">
+      <div class="container mx-auto">
+        <h1 class="text-4xl font-bold mb-8">Trending</h1>
+        <div class="grid grid-cols-3 gap-8">
+          <div
+            class="border p-8 rounded-lg transition-transform transform hover:scale-105"
+            (click)="navigateToProductPage(1)"
+          >
+            <h2 class="text-2xl font-bold mb-4">Petronas Kuala Lumpur</h2>
+            <img
+              src="https://img.peapix.com/25ba9477a6e74715aadefcd92e93abbd_480.jpg"
+              alt="Petronas Kuala Lumpur"
+            />
+            <p class="text-gray-700">
+              The Petronas Towers, also known as the Petronas Twin Towers, are
+              iconic skyscrapers in Kuala Lumpur...
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16">
+      <div class="container mx-auto ">
+        <h1 class="text-4xl font-bold mb-8">Place To Review</h1>
+        <div class="grid grid-cols-3 gap-8">
+          <div
+            class="border border-gray-200 p-8 rounded-lg transition-transform transform hover:scale-105"
+            (click)="navigateToProductPage(2)"
+          >
+            <h2 class="text-2xl font-bold mb-4">Genting Highland</h2>
+            <img
+              src="https://media.gettyimages.com/id/565233223/photo/pagoda-of-the-chin-swee-caves-temple-malaysia.jpg?s=612x612&w=0&k=20&c=i7TBrIafjyK8AnAXt_aYinaKBONtu_NLuVxpq4DqQ8o="
+              alt="Petronas Kuala Lumpur"
+            />
+            <p class="text-gray-700">
+              Nestled in the mountains near Kuala Lumpur, Genting Highlands is a
+              popular hill resort known for its cool climate and entertainment
+              options. It features indoor and outdoor theme parks, a bustling
+              casino, luxury hotels, and a cable car system offering
+              breathtaking views of the surrounding area.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   `,
@@ -136,8 +185,9 @@ export class CustomerHomeComponent {
   ngAfterViewInit(): void {
     // Initialization logic
   }
-  navButton1() {
-    this.router.navigate(['product/:id']);
+
+  navigateToProductPage(id: number): void {
+    this.router.navigate(['/customer/purchase', id]);
   }
 }
 

@@ -36,6 +36,7 @@ import { CustomerPersonalDetailComponent } from './pages/customer/personaldetail
 import { CustomerBillingAddressComponent } from './pages/customer/billingaddress.component';
 import { CustomerPaymentMethodComponent } from './pages/customer/paymentmethod.component';
 import { CustomerHomeComponent } from './pages/customer/homePurchase.component';
+import { CustomerSuccessfulyPurchase } from './pages/customer/purchasesuccess.component';
 
 export const routes: Routes = [
   {
@@ -155,7 +156,11 @@ export const routes: Routes = [
         component: CustomerHomeComponent,
       },
       {
-        path: 'product/:id',
+        path: 'purchase/:id',
+        component: CustomerProductComponent,
+      },
+      {
+        path: 'pastorders',
         component: Orders,
       },
       {
@@ -171,8 +176,8 @@ export const routes: Routes = [
         component: CustomerPaymentMethodComponent,
       },
       {
-        path: 'pastorders/:id',
-        component: Orders,
+        path: 'paymentsuccess/:id',
+        component: CustomerSuccessfulyPurchase,
       },
       {
         path: 'review/:id',
@@ -185,10 +190,6 @@ export const routes: Routes = [
     ],
   },
 
-  {
-    path: 'custhome',
-    component: CustomerHomeComponent,
-  },
 
   // 404 
   {

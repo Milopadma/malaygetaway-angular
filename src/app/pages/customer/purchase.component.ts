@@ -4,6 +4,14 @@ import { Component } from '@angular/core';
 import { buttonwIconModule } from '../../components/button.component';
 import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
 import { Router } from '@angular/router';
+import { ButtonBorderedModule } from "../../components/buttonbordered.component";
+
+type TouristLocation = {
+  id: number;
+  name: string;
+  imageUrl: string;
+  description: string;
+};
 
 @Component({
   selector: 'purchase-page',
@@ -65,9 +73,7 @@ import { Router } from '@angular/router';
                                 <span class="text-paragraph text-gray-400 line-through ml-2">RM 350.20</span>
                             </div>
                             <a routerLink="personal"></a>
-                                <button (click)="navButton1()" class="text-lg bg-softblack text-white font-semibold py-3 px-20 rounded-lg border hover:bg-orange-600 transition ease-in-out duration-300">
-                                Save
-                            </button>
+                            <buttonbordered label="Purchase" (click)="navigateToPage('customer/personaldetail/:id')"></buttonbordered>
                         </div>
                     </div>
                 </div>
@@ -77,14 +83,14 @@ import { Router } from '@angular/router';
 })
 export class CustomerProductComponent {
     constructor(private router: Router) {}
-    navButton1() {
-      this.router.navigate(['personaldetail/:id']);
+    navigateToPage(pageName: string) {
+        this.router.navigate([pageName]);
     }
 }
 
 @NgModule({
-  declarations: [CustomerProductComponent],
-  exports: [CustomerProductComponent],
-  imports: [CommonModule, buttonwIconModule, ProgressBarComponentModule],
+    declarations: [CustomerProductComponent],
+    exports: [CustomerProductComponent],
+    imports: [CommonModule, buttonwIconModule, ProgressBarComponentModule, ButtonBorderedModule]
 })
 export class CustomerProductModule {}
