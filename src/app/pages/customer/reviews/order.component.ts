@@ -263,13 +263,13 @@ import { Router } from '@angular/router';
 export class Orders {
   constructor(private router: Router) {}
   navButton1() {
-    this.router.navigate(['reviewGenting']);
+    this.router.navigate(['customer/review/reviewGenting']);
   }
   navButton2() {
-    this.router.navigate(['reviewKL']);
+    this.router.navigate(['customer/review/reviewKL']);
   }
   navButton3() {
-    this.router.navigate(['reviewAquaria']);
+    this.router.navigate(['customer/review/reviewAquaria']);
   }
 }
 @NgModule({

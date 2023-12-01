@@ -48,7 +48,7 @@ import { ButtonUnborderedModule } from '../components/buttonunbordered.component
             (click)="navigateToPage('merchant/account')"
           ></buttonunbordered>
           <!-- officer view -->
-          } @else {
+          } @else if (type === "officer"){
           <buttonunbordered
             label="Home"
             (click)="navigateToPage('officer/home')"

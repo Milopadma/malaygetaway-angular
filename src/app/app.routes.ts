@@ -110,7 +110,7 @@ export const routes: Routes = [
         component: MerchantEditProductsComponent,
       },
       {
-        path: 'analyticreports',
+        path: 'reports',
         component: analytic1,
       },
     ],
@@ -136,7 +136,7 @@ export const routes: Routes = [
         component: OfficerMerchantApplicationsComponent,
       },
       {
-        path: 'analyticreports',
+        path: 'reports',
         component: analytic1,
       },
     ],
@@ -179,8 +179,20 @@ export const routes: Routes = [
         path: 'paymentsuccess/:id',
         component: CustomerSuccessfulyPurchase,
       },
+      // {
+      //   path: 'review/:id',
+      //   component: reviewAquaria,
+      // },
       {
-        path: 'review/:id',
+        path: 'review/reviewKL',
+        component: reviewKL,
+      },
+      {
+        path: 'review/reviewGenting',
+        component: reviewGenting,
+      },
+      {
+        path: 'review/reviewAquaria',
         component: reviewAquaria,
       },
       {
