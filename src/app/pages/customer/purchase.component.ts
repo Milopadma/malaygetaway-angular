@@ -6,7 +6,7 @@ import { ProgressBarComponentModule } from '../../components/form/progressbar.co
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'PurchasePage',
+  selector: 'purchase-page',
   template: `
     <section class="font-sans text-softblack bg-white">
         <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">

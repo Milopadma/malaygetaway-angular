@@ -6,7 +6,7 @@ import { buttonwIconModule } from "../../components/button.component";
 import { Router } from '@angular/router';
 
 @Component({
-    selector: "purchase5",
+    selector: "purchase-success",
     template: `
     <section>
         <br>

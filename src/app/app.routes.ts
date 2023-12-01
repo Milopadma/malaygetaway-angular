@@ -24,15 +24,18 @@ import { MerchantEditProductsComponent } from './pages/merchant/editproduct.comp
 
 // Epic 4-6 (adit e2000427)
 import { NgModule } from '@angular/core';
-import { order } from './order.component';
+import { Orders } from './pages/customer/reviews/order.component';
 import { reviewKL } from './pages/customer/reviews/reviewKL.component';
 import { reviewAquaria } from './pages/customer/reviews/reviewAquaria.component';
 import { reviewGenting } from './pages/customer/reviews/reviewGenting.component';
 import { send } from './pages/customer/reviews/send.component';
 import { CustomerProductComponent } from './pages/customer/purchase.component';
 import { CustomerLayout } from './pages/customer/customerlayout.component';
-import { HomePurchase } from './pages/customer/homePurchase.component';
 import { analytic1 } from './analytic1.component';
+import { CustomerPersonalDetailComponent } from './pages/customer/personaldetails.component';
+import { CustomerBillingAddressComponent } from './pages/customer/billingaddress.component';
+import { CustomerPaymentMethodComponent } from './pages/customer/paymentmethod.component';
+import { CustomerHomeComponent } from './pages/customer/homePurchase.component';
 
 export const routes: Routes = [
   {
@@ -105,6 +108,10 @@ export const routes: Routes = [
         path: 'editproduct/:id',
         component: MerchantEditProductsComponent,
       },
+      {
+        path: 'analyticreports',
+        component: analytic1,
+      },
     ],
   },
   {
@@ -127,102 +134,65 @@ export const routes: Routes = [
         path: 'applications/:id',
         component: OfficerMerchantApplicationsComponent,
       },
+      {
+        path: 'analyticreports',
+        component: analytic1,
+      },
     ],
   },
-  //   {
-  //     path: 'customer'
-  //     // component: CustomerLayout,
-  //     children: [
-  //     {
-  //       path: 'home',
-  //       // component: CustomerHomeComponent,
-  //     },
-  //     {
-  //       path: 'product/:id'
-  //       // component: CustomerProductComponent,
-  //     },
-  //     {
-  //       path: 'personaldetail/:id'
-  //       // component: CustomerPersonalDetailComponent,
-  //     },
-  //     {
-  //       path: 'billingaddress/:id'
-  //       // component: CustomerBillingAddressComponent,
-  //     },
-  //     {
-  //       path: 'paymentmethod/:id'
-  //       // component: CustomerPaymentMethodComponent,
-  //     },
-  //     {
-  //       path: 'pastorders/:id'
-  //       // component: CustomerProductComponent,
-  //     },
-  //     {
-  //       path: 'review/:id'
-  //       // component: CustomerProductComponent,
-  //     },
 
-  // ]},
-  {
-    path: 'review', // todo! unimplemented!
-    component: MerchantRegisterCTA,
-  },
-  {
-    path: 'manage', // todo! unimplemented!
-    component: MerchantRegisterCTA,
-  },
-  {
-    path: 'analytics', // todo! unimplemented!
-    component: MerchantRegisterCTA,
-  },
-
-  // epic 4
+  // epic 4 and 5
   {
     path: 'customer',
     component: CustomerLayout,
     children: [
       {
         path: '',
-        component: HomePurchase,
+        component: CustomerHomeComponent,
       },
       {
         path: 'home',
-        component: HomePurchase,
-      },
-      {
-        path: 'review',
-        component: reviewAquaria,
+        component: CustomerHomeComponent,
       },
       {
         path: 'product/:id',
-        component: CustomerProductComponent,
+        component: Orders,
+      },
+      {
+        path: 'personaldetail/:id',
+        component: CustomerPersonalDetailComponent,
+      },
+      {
+        path: 'billingaddress/:id',
+        component: CustomerBillingAddressComponent,
+      },
+      {
+        path: 'paymentmethod/:id',
+        component: CustomerPaymentMethodComponent,
+      },
+      {
+        path: 'pastorders/:id',
+        component: Orders,
+      },
+      {
+        path: 'review/:id',
+        component: reviewAquaria,
+      },
+      {
+        path: 'review/sent',
+        component: send,
       },
     ],
   },
 
-  // epic 5
   {
-    path: 'reviewGenting',
-    component: reviewGenting,
+    path: 'custhome',
+    component: CustomerHomeComponent,
   },
+
+  // 404 
   {
-    path: 'reviewKL',
-    component: reviewKL,
-  },
-  {
-    path: 'reviewAquaria',
-    component: reviewAquaria,
-  },
-  {
-    path: 'send',
-    component: send,
-  },
-  {
-    path: 'order',
-    component: order,
-  },
-  {
-    path: 'analytic1',
-    component: analytic1,
+    path: '**',
+    component: NotFoundComponent,
   },
 ];

@@ -38,8 +38,8 @@ import { ButtonUnborderedModule } from '../components/buttonunbordered.component
             (click)="navigateToPage('customer/home')"
           ></buttonunbordered>
           <buttonunbordered
-            label="Review"
-            (click)="navigateToPage('customer/review')"
+          label="Review"
+          (click)="navigateToPage('customer/orders')"
           ></buttonunbordered>
           <buttonunbordered
             label="Account"
