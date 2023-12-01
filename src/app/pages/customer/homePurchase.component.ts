@@ -25,21 +25,21 @@ type TouristLocation = {
         </div>
         <h1 class="text-4xl font-bold mb-1">Featured Locations</h1>
         <div class="relative">
-          <button
+          <!-- <button
             (click)="scrollLeft()"
             class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 bg-white text-black text-2xl p-2 rounded-full shadow-lg hover:bg-gray-200 focus:outline-none z-10"
           >
             ‹
-          </button>
+          </button> -->
           <div
             id="featuredSlider"
-            class="grid grid-cols-3 gap-4 overflow-hidden transition-transform duration-500"
+            class="grid grid-cols-3 gap-4 transition-transform duration-500"
           >
             <!-- the cards -->
             @for (location of locations; track location.id){
             <div
-              class="flex-none p-4"
-              [ngClass]="{
+            class="flex-none p-4 hover:scale-110 z-50 transition-all duration-300"
+            [ngClass]="{
                 'w-full': location.id === 1,
               }"
             >
@@ -47,7 +47,7 @@ type TouristLocation = {
                 <img
                   [src]="location.imageUrl"
                   alt="{{ location.name }}"
-                  class="w-full h-[250px] object-cover"
+                  class="w-full h-[250px] object-cover cursor-pointer"
                   (click)="navigateToProductPage(location.id)"
                 />
                 <div class="p-6">
@@ -70,12 +70,12 @@ type TouristLocation = {
             }
           </div>
         </div>
-        <button
+        <!-- <button
           (click)="scrollRight()"
           class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 bg-white text-black text-2xl p-2 rounded-full shadow-lg hover:bg-gray-200 focus:outline-none z-10"
         >
-          ›
-        </button>
+          › -->
+        <!-- </button> -->
       </div>
     </section>
     <section class="py-16">
