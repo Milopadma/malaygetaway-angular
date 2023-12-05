@@ -8,27 +8,30 @@ import { FileInputComponentModule } from '../../components/form/fileinput.compon
 @Component({
   selector: 'businessfiles-form',
   template: `
-    <div id="spacer" class="h-64"></div>
-    <div class="flex flex-col">
-      <h1 class="text-zinc-800 text-subtitles leading-10 tracking-tighter">
+    <div class="flex flex-col items-start">
+      <h1
+        class="text-zinc-800 text-subtitles leading-10 tracking-tighter max-w-[313px] mt-20 max-md:mt-10"
+      >
         Upload your business documents
       </h1>
       <div id="spacer" class="h-4"></div>
-      <div class="flex flex-col md:flex-row gap-6">
+      <div class="flex flex-row gap-4">
         <fileinput label="Licenses"></fileinput>
         <fileinput label="Testimonials"></fileinput>
       </div>
       <div class="h-32" id="spacer"></div>
-      <div class="flex flex-col items-end">
-        <buttonwicon
-          (click)="navigateToNextPage()"
-          label="Continue"
-        ></buttonwicon>
-        <p
-          class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
-        >
-          or press Enter
-        </p>
+      <div class="flex w-full items-end justify-end">
+        <div class="flex flex-col items-end">
+          <buttonwicon
+            (click)="navigateToNextPage()"
+            label="Continue"
+          ></buttonwicon>
+          <p
+            class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
+          >
+            or press Enter
+          </p>
+        </div>
       </div>
     </div>
   `,
@@ -42,7 +45,7 @@ export class BusinessFilesFormComponent {
   }
 
   navigateToNextPage() {
-    this.router.navigate(['/merchant/register/complete']); // replace '/nextPage' with the actual route
+    this.router.navigate(['merchant/register/merchantdata']); // replace '/nextPage' with the actual route
   }
 }
 

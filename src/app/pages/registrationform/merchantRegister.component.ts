@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { buttonwIconModule } from '../components/button.component';
-import { ProgressBarComponentModule } from '../components/form/progressbar.component';
+import { buttonwIconModule } from '../../components/button.component';
+import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
 import { RouterOutlet } from '@angular/router';
-import { TopNavbarModule } from '../components/topnavbar.component';
+import { TopNavbarModule } from '../../components/topnavbar.component';
 @Component({
   selector: 'merchant-register, MerchantRegister',
   template: `
@@ -23,7 +23,8 @@ import { TopNavbarModule } from '../components/topnavbar.component';
     </main>
   `,
 })
-export class MerchantRegister {}
+export class MerchantRegister {
+}
 
 @NgModule({
   declarations: [MerchantRegister],
