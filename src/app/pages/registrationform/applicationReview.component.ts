@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { buttonwIconModule } from '../components/button.component';
-import { ProgressBarComponentModule } from '../components/form/progressbar.component';
+import { buttonwIconModule } from '../../components/button.component';
+import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
 import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'merchant-register, MerchantRegister',

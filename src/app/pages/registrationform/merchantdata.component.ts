@@ -16,6 +16,7 @@ import {
 } from '@angular/router';
 import { FormsModule, NgForm, Validators } from '@angular/forms';
 import { Merchant } from '../../types/merchant';
+import { MerchantRegistrationService } from './merchantregistration.service';
 
 @Component({
   selector: 'merchantdata-form',
@@ -23,7 +24,7 @@ import { Merchant } from '../../types/merchant';
     <form
       #merchantDataForm="ngForm"
       (ngSubmit)="onSubmit(merchantDataForm)"
-      (ngModelChange)="onFormChange(merchantDataForm.value)"
+      (ngModelChange)="onFormChange(merchantDataForm)"
     >
       <div class="flex flex-col">
         <h1
@@ -137,15 +138,16 @@ import { Merchant } from '../../types/merchant';
   `,
 })
 export class MerchantDataFormComponent implements OnChanges {
-  // init empty merchant object
-  merchant: Merchant = new Merchant(0, '', '', 0, '');
+
   @ViewChild('merchantDataForm') merchantDataForm: NgForm;
   hidePassword: boolean;
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(private router: Router, private route: ActivatedRoute, private mrs: MerchantRegistrationService) {
     this.merchantDataForm = new NgForm([], []);
     this.hidePassword = true;
   }
+
+  merchant = this.mrs.merchant;
 
   ngOnChanges(changes: SimpleChanges) {
     for (const inputName in changes) {

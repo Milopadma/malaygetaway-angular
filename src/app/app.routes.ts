@@ -31,7 +31,7 @@ import { reviewGenting } from './pages/customer/reviews/reviewGenting.component'
 import { send } from './pages/customer/reviews/send.component';
 import { CustomerProductComponent } from './pages/customer/purchase.component';
 import { CustomerLayout } from './pages/customer/customerlayout.component';
-import { analytic1 } from './analytic1.component';
+import { analytic1 } from './pages/analytic1.component';
 import { CustomerPersonalDetailComponent } from './pages/customer/personaldetails.component';
 import { CustomerBillingAddressComponent } from './pages/customer/billingaddress.component';
 import { CustomerPaymentMethodComponent } from './pages/customer/paymentmethod.component';
