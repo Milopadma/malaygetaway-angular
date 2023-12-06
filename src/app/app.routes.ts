@@ -207,8 +207,7 @@ export const routes: Routes = [
     ],
   },
 
-
-  // 404 
+  // 404
   {
     path: '**',
     component: NotFoundComponent,

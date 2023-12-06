@@ -11,12 +11,12 @@ import { IconComponentModule } from '../../components/icon.component';
 
 type status = 'Pending' | 'Accepted' | 'Rejected';
 
-type MerchantApplication = {
+export interface MerchantApplication {
   id: number;
   status: status;
   merchantName: string;
   description: string;
-};
+}
 
 @Component({
   selector: 'officer-applications-list',
