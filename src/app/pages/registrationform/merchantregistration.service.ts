@@ -13,6 +13,7 @@ export class MerchantRegistrationService {
     }
     // set merchant data
     setMerchant(merchant: Merchant) {
+        console.log(merchant)
         this.merchant = merchant;
     }
 }

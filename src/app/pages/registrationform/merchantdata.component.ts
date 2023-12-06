@@ -57,6 +57,7 @@ import { MerchantRegistrationService } from './merchantregistration.service';
               [type]="hidePassword ? 'password' : 'text'"
               name="password"
               [(ngModel)]="merchant.password"
+              (ngModelChange)="onFormChange('password', $event)"
               #password="ngModel"
               required
               pattern="^(?=.*[A-Za-z])(?=.*d).{8,}$"
@@ -155,25 +156,16 @@ export class MerchantDataFormComponent {
     this.hidePassword = true;
   }
 
-  ngOnInit() {
-    this.merchantDataForm.valueChanges?.subscribe((formValue) => {
-      console.log('Form value:', formValue);
-      this.router.navigate(['/new-url', formValue]);
-    });
-  }
-
+  // we store form state in the url 
   onFormChange(fieldName: string, newValue: any) {
     this.merchant[fieldName] = newValue;
-    const navigationExtras: NavigationExtras = {
-     queryParams: { [fieldName]: newValue },
-     replaceUrl: true,
-    };
-    this.router.navigate([], navigationExtras);
+    this.mrs.setMerchant(this.merchant);
    }
 
   onSubmit(form: NgForm) {
     if (form.valid) {
       this.merchant = form.value;
+      this.mrs.setMerchant(this.merchant);
       console.log('Form data:', this.merchant);
       this.navigateToNextPage();
     } else {
