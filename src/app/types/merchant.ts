@@ -5,7 +5,7 @@ export class Merchant {
     public id: number,
     public username: string,
     public password: string,
-    public phoneNumber: string,
+    public phoneNumber: number,
     public email: string,
     public business?: Business
   ) {}
