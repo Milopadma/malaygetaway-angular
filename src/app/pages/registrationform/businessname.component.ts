@@ -19,7 +19,7 @@ import { MerchantRegistrationService } from './merchantregistration.service';
         </h1>
         <input
           type="text"
-          id="businesname"
+          id="businessname"
           required
           [(ngModel)]="business.name"
           (ngModelChange)="onFormChange()"
@@ -34,10 +34,7 @@ import { MerchantRegistrationService } from './merchantregistration.service';
         </div>
         <div class="h-32" id="spacer"></div>
         <div class="flex flex-col items-end" type="submit">
-          <buttonwicon
-            (click)="navigateToNextPage()"
-            label="Continue"
-          ></buttonwicon>
+          <buttonwicon label="Continue"></buttonwicon>
           <p
             class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
           >
@@ -49,21 +46,20 @@ import { MerchantRegistrationService } from './merchantregistration.service';
   `,
 })
 export class BusinessNameFormComponent {
-  @ViewChild('merchantDataForm') merchantDataForm: NgForm;
-
   // init new business from global state
   business = this.mrs.getBusiness();
+  merchantDataForm: NgForm;
 
   constructor(
     private router: Router,
     private mrs: MerchantRegistrationService
   ) {
+    // init new business from global state
     this.merchantDataForm = new NgForm([], []);
   }
 
   // update global state on form change
   onFormChange() {
-    console.log('Form changed');
     this.mrs.setBusiness(this.business);
   }
 
@@ -80,8 +76,7 @@ export class BusinessNameFormComponent {
 
   @HostListener('document:keydown.enter', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
-    // TODO! need to check if user is currently in an input field
-    this.navigateToNextPage();
+    this.onSubmit(this.merchantDataForm);
   }
 
   navigateToNextPage() {
