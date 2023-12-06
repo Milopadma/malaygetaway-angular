@@ -3,6 +3,7 @@ import {
   NgModule,
   SimpleChanges,
   OnChanges,
+  Input,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
@@ -24,7 +25,6 @@ import { MerchantRegistrationService } from './merchantregistration.service';
     <form
       #merchantDataForm="ngForm"
       (ngSubmit)="onSubmit(merchantDataForm)"
-      (ngModelChange)="onFormChange(merchantDataForm)"
     >
       <div class="flex flex-col">
         <h1
@@ -40,6 +40,7 @@ import { MerchantRegistrationService } from './merchantregistration.service';
               id="name"
               required
               [(ngModel)]="merchant.username"
+              (ngModelChange)="onFormChange('username', $event)"
               name="name"
               #name="ngModel"
               class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-2 border-2 border-solid max-md:pl-1"
@@ -90,6 +91,7 @@ import { MerchantRegistrationService } from './merchantregistration.service';
               type="tel"
               name="contactNumber"
               [(ngModel)]="merchant.phoneNumber"
+              (ngModelChange)="onFormChange('phoneNumber', $event)"
               #contactNumber="ngModel"
               required
               pattern="^[0-9]*$"
@@ -109,6 +111,7 @@ import { MerchantRegistrationService } from './merchantregistration.service';
               type="email"
               name="contactEmail"
               [(ngModel)]="merchant.email"
+              (ngModelChange)="onFormChange('email', $event)"
               #contactEmail="ngModel"
               required
               pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
@@ -137,35 +140,36 @@ import { MerchantRegistrationService } from './merchantregistration.service';
     </form>
   `,
 })
-export class MerchantDataFormComponent implements OnChanges {
-
+export class MerchantDataFormComponent {
   @ViewChild('merchantDataForm') merchantDataForm: NgForm;
-  hidePassword: boolean;
 
-  constructor(private router: Router, private route: ActivatedRoute, private mrs: MerchantRegistrationService) {
+  hidePassword: boolean;
+  merchant = this.mrs.merchant;
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private mrs: MerchantRegistrationService
+  ) {
     this.merchantDataForm = new NgForm([], []);
     this.hidePassword = true;
   }
 
-  merchant = this.mrs.merchant;
-
-  ngOnChanges(changes: SimpleChanges) {
-    for (const inputName in changes) {
-      const inputValues = changes[inputName];
-      console.log(`Previous ${inputName} == ${inputValues.previousValue}`);
-      console.log(`Current ${inputName} == ${inputValues.currentValue}`);
-      console.log(`Is first ${inputName} change == ${inputValues.firstChange}`);
-    }
+  ngOnInit() {
+    this.merchantDataForm.valueChanges?.subscribe((formValue) => {
+      console.log('Form value:', formValue);
+      this.router.navigate(['/new-url', formValue]);
+    });
   }
 
-  onFormChange(formValue: any) {
-    console.log('Form value:', formValue);
+  onFormChange(fieldName: string, newValue: any) {
+    this.merchant[fieldName] = newValue;
     const navigationExtras: NavigationExtras = {
-      queryParams: formValue,
-      replaceUrl: true,
+     queryParams: { [fieldName]: newValue },
+     replaceUrl: true,
     };
     this.router.navigate([], navigationExtras);
-  }
+   }
 
   onSubmit(form: NgForm) {
     if (form.valid) {

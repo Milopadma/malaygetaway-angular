@@ -7,6 +7,9 @@ export class Merchant {
     public password: string,
     public phoneNumber: number,
     public email: string,
-    public business?: Business
+    public business?: Business,
   ) {}
+
+  [key: string]: any;
+
 }
