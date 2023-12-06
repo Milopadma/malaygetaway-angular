@@ -1,31 +1,16 @@
-import {
-  HostListener,
-  NgModule,
-  SimpleChanges,
-  OnChanges,
-  Input,
-} from '@angular/core';
+import { HostListener, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { buttonwIconModule } from '../../components/button.component';
 import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
-import {
-  ActivatedRoute,
-  Router,
-  RouterOutlet,
-  NavigationExtras,
-} from '@angular/router';
-import { FormsModule, NgForm, Validators } from '@angular/forms';
-import { Merchant } from '../../types/merchant';
+import { Router, RouterOutlet } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
 import { MerchantRegistrationService } from './merchantregistration.service';
 
 @Component({
   selector: 'merchantdata-form',
   template: `
-    <form
-      #merchantDataForm="ngForm"
-      (ngSubmit)="onSubmit(merchantDataForm)"
-    >
+    <form #merchantDataForm="ngForm" (ngSubmit)="onSubmit(merchantDataForm)">
       <div class="flex flex-col">
         <h1
           class="text-zinc-800 text-subtitles leading-10 tracking-tighter max-w-[313px] mt-20 max-md:mt-10"
@@ -149,18 +134,15 @@ export class MerchantDataFormComponent {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private mrs: MerchantRegistrationService
   ) {
     this.merchantDataForm = new NgForm([], []);
     this.hidePassword = true;
   }
 
-  // we store form state in the url 
   onFormChange(fieldName: string, newValue: any) {
-    this.merchant[fieldName] = newValue;
     this.mrs.setMerchant(this.merchant);
-   }
+  }
 
   onSubmit(form: NgForm) {
     if (form.valid) {

@@ -1,5 +1,3 @@
-import { Merchant } from './merchant';
-
 export class Business {
   constructor(
     public id: number,
@@ -8,6 +6,5 @@ export class Business {
     public address: string,
     public contactNumber: string,
     public contactEmail: string,
-    public merchant: Merchant
   ) {}
 }
