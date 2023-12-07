@@ -122,6 +122,9 @@ import { MerchantRegistrationService } from './merchantregistration.service';
             </p>
           </div>
         </div>
+        <div>
+          <button (onclick)="sendData()">send</button>
+        </div>
       </div>
     </form>
   `,
@@ -153,6 +156,10 @@ export class MerchantDataFormComponent {
     } else {
       console.log('Form is not valid');
     }
+  }
+
+  sendData() {
+    this.mrs.sendData();
   }
 
   navigateToNextPage() {
