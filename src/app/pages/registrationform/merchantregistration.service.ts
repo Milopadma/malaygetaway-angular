@@ -32,19 +32,27 @@ export class MerchantRegistrationService {
 
   // send the data to backend
   sendData() {
-    console.log('Sending data to backend...');
-    return this.http.post('http://localhost:3000/merchant/register', {
-      merchant: this.merchant,
-      business: this.business,
-    });
+    console.log('Sending data to backend...', this.merchant, this.business);
+    return this.http.post(
+      'http://localhost:3000/merchant/register',
+      {
+        merchant: JSON.stringify(this.merchant),
+        business: JSON.stringify(this.business),
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
   }
 }
 
 @NgModule({
-    imports: [
-      HttpClientModule,
-      // other imports here
-    ],
-    // other metadata here
-  })
-  export class AppModule { }
+  imports: [
+    HttpClientModule,
+    // other imports here
+  ],
+  // other metadata here
+})
+export class AppModule {}

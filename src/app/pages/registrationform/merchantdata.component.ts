@@ -122,11 +122,11 @@ import { MerchantRegistrationService } from './merchantregistration.service';
             </p>
           </div>
         </div>
-        <div>
-          <button (onclick)="sendData()">send</button>
-        </div>
       </div>
     </form>
+    <div>
+      <button (click)="sendData()">send</button>
+    </div>
   `,
 })
 export class MerchantDataFormComponent {
@@ -159,7 +159,11 @@ export class MerchantDataFormComponent {
   }
 
   sendData() {
-    this.mrs.sendData();
+    console.log('Sending data to backend...');
+    this.mrs.sendData().subscribe({
+      next: (response) => console.log(response),
+      error: (error) => console.error('There was an error!', error),
+    });
   }
 
   navigateToNextPage() {
