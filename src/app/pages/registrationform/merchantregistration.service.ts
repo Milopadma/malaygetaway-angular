@@ -46,6 +46,16 @@ export class MerchantRegistrationService {
       }
     );
   }
+
+  // send files
+  sendFiles(files: FileList) {
+    console.log('Sending files to backend...', files);
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i]);
+    }
+    return this.http.post('http://localhost:3000/sendFiles', formData);
+  }
 }
 
 @NgModule({

@@ -5,6 +5,7 @@ import { buttonwIconModule } from '../../components/button.component';
 import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
 import { Router, RouterOutlet } from '@angular/router';
 import { FileInputComponentModule } from '../../components/form/fileinput.component';
+import { MerchantRegistrationService } from './merchantregistration.service';
 @Component({
   selector: 'businessfiles-form',
   template: `
@@ -16,8 +17,14 @@ import { FileInputComponentModule } from '../../components/form/fileinput.compon
       </h1>
       <div id="spacer" class="h-4"></div>
       <div class="flex flex-row gap-4">
-        <fileinput label="Licenses"></fileinput>
-        <fileinput label="Testimonials"></fileinput>
+        <fileinput
+          (fileChanged)="handleFileChange($event)"
+          label="Licenses"
+        ></fileinput>
+        <fileinput
+          (fileChanged)="handleFileChange($event)"
+          label="Testimonials"
+        ></fileinput>
       </div>
       <div class="h-32" id="spacer"></div>
       <div class="flex w-full items-end justify-end">
@@ -31,13 +38,21 @@ import { FileInputComponentModule } from '../../components/form/fileinput.compon
           >
             or press Enter
           </p>
+          <div>
+            <!-- <button (click)="sendFiles()" class="text-black font-black test">
+              send
+            </button> -->
+          </div>
         </div>
       </div>
     </div>
   `,
 })
 export class BusinessFilesFormComponent {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private mrs: MerchantRegistrationService
+  ) {}
 
   @HostListener('document:keydown.enter', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
@@ -46,6 +61,12 @@ export class BusinessFilesFormComponent {
 
   navigateToNextPage() {
     this.router.navigate(['merchant/register/merchantdata']); // replace '/nextPage' with the actual route
+  }
+
+  handleFileChange(fileData: FileList) {
+    this.mrs.sendFiles(fileData).subscribe((res) => {
+      console.log(res);
+    });
   }
 }
 
