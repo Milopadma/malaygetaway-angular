@@ -1,13 +1,10 @@
-import { HostListener, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { buttonwIconModule } from '../../components/button.component';
-import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
 import { Router, RouterOutlet } from '@angular/router';
-import { FileInputComponentModule } from '../../components/form/fileinput.component';
-import { HugeButtonModule } from '../../components/huge-button.component';
+import { HugeButton } from '../../components/huge-button.component';
 @Component({
   selector: 'merchant-home',
+  standalone: true,
+  imports: [HugeButton],
   template: `
     <div class="h-12" id="spacer"></div>
     <div class="flex flex-col w-full">
@@ -36,17 +33,3 @@ export class MerchantHomeComponent {
     this.router.navigate([page]);
   }
 }
-
-@NgModule({
-  declarations: [MerchantHomeComponent],
-  exports: [MerchantHomeComponent],
-  imports: [
-    CommonModule,
-    buttonwIconModule,
-    ProgressBarComponentModule,
-    RouterOutlet,
-    FileInputComponentModule,
-    HugeButtonModule,
-  ],
-})
-export class MerchantHomeComponentModule {}

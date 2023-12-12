@@ -1,12 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { buttonwIconModule } from '../../components/button.component';
-import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
 import { RouterOutlet } from '@angular/router';
-import { TopNavbarModule } from '../../components/topnavbar.component';
+import { TopNavbar } from '../../components/topnavbar.component';
+import { progressbar } from '../../components/form/progressbar.component';
 @Component({
   selector: 'merchant-register, MerchantRegister',
+  standalone: true,
+  imports: [RouterOutlet, TopNavbar, progressbar],
   template: `
     <topnavbar></topnavbar>
 
@@ -23,18 +22,4 @@ import { TopNavbarModule } from '../../components/topnavbar.component';
     </main>
   `,
 })
-export class MerchantRegister {
-}
-
-@NgModule({
-  declarations: [MerchantRegister],
-  exports: [MerchantRegister],
-  imports: [
-    CommonModule,
-    buttonwIconModule,
-    ProgressBarComponentModule,
-    RouterOutlet,
-    TopNavbarModule,
-  ],
-})
-export class MerchantRegisterModule {}
+export class MerchantRegister {}

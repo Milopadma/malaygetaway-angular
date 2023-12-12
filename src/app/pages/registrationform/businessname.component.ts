@@ -1,13 +1,12 @@
-import { HostListener, NgModule, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { buttonwIconModule } from '../../components/button.component';
-import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
+import { Component, HostListener } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MerchantRegistrationService } from './merchantregistration.service';
+import { ButtonwIcon } from '../../components/button.component';
 @Component({
   selector: 'businessname-form',
+  standalone: true,
+  imports: [RouterOutlet, FormsModule, ButtonwIcon],
   template: `
     <form #merchantDataForm="ngForm" (ngSubmit)="onSubmit(merchantDataForm)">
       <div class="flex flex-col">
@@ -83,16 +82,3 @@ export class BusinessNameFormComponent {
     this.router.navigate(['/merchant/register/details']); // replace '/nextPage' with the actual route
   }
 }
-
-@NgModule({
-  declarations: [BusinessNameFormComponent],
-  exports: [BusinessNameFormComponent],
-  imports: [
-    CommonModule,
-    buttonwIconModule,
-    ProgressBarComponentModule,
-    RouterOutlet,
-    FormsModule,
-  ],
-})
-export class BusinessNameFormComponentModule {}

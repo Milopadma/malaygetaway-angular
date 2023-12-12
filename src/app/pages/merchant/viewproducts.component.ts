@@ -1,14 +1,8 @@
-import { HostListener, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { buttonwIconModule } from '../../components/button.component';
-import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
-import { Router, RouterOutlet } from '@angular/router';
-import { FileInputComponentModule } from '../../components/form/fileinput.component';
-import { ButtonUnborderedModule } from '../../components/buttonunbordered.component';
-import { ButtonNoIconModule } from '../../components/buttonnoicon.component';
-import { IconComponentModule } from '../../components/icon.component';
-import { ButtonBorderedModule } from '../../components/buttonbordered.component';
+import { ButtonUnbordered } from '../../components/buttonunbordered.component';
+import { Router } from '@angular/router';
+import { ButtonBordered } from '../../components/buttonbordered.component';
+import { IconComponent } from '../../components/icon.component';
 
 type Product = {
   id: number;
@@ -23,6 +17,8 @@ type Product = {
 
 @Component({
   selector: 'merchant-products-list',
+  standalone: true,
+  imports: [ButtonUnbordered, ButtonBordered, IconComponent],
   template: `
     <div class="h-12" id="spacer"></div>
     <div class="flex flex-col w-full">
@@ -78,9 +74,7 @@ type Product = {
             >
               Edit
             </button>
-            <button class="text-reject hover:underline">
-              Delete
-            </button>
+            <button class="text-reject hover:underline">Delete</button>
           </div>
         </div>
         }
@@ -138,20 +132,3 @@ export class MerchantViewProductsComponent {
     },
   ] as Product[];
 }
-
-@NgModule({
-  declarations: [MerchantViewProductsComponent],
-  exports: [MerchantViewProductsComponent],
-  imports: [
-    CommonModule,
-    buttonwIconModule,
-    ProgressBarComponentModule,
-    RouterOutlet,
-    FileInputComponentModule,
-    ButtonUnborderedModule,
-    ButtonNoIconModule,
-    IconComponentModule,
-    ButtonBorderedModule,
-  ],
-})
-export class MerchantViewProductsComponentModule {}

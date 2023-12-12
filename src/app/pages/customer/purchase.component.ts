@@ -1,10 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { buttonwIconModule } from '../../components/button.component';
-import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
 import { Router } from '@angular/router';
-import { ButtonBorderedModule } from '../../components/buttonbordered.component';
+import { ButtonBordered } from '../../components/buttonbordered.component';
 
 type TouristImage = {
   id: number;
@@ -24,6 +21,8 @@ type TouristLocation = {
 
 @Component({
   selector: 'purchase-page',
+  standalone: true,
+  imports: [CommonModule, ButtonBordered],
   template: `
     <section class="font-sans text-softblack bg-white">
       <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
@@ -79,14 +78,14 @@ type TouristLocation = {
           <div class="flex justify-center items-center">
             <div class="bg-white p-10 rounded-lg shadow-lg max-w-xs mx-auto">
               <div class="text-center mb-1">
-                <span class="text-4xl font-bold text-gray-800">RM {{
-                  price
-                }}</span>
+                <span class="text-4xl font-bold text-gray-800"
+                  >RM {{ price }}</span
+                >
               </div>
               <div class="text-center mb-2">
-                <span class="text-paragraph text-gray-400 line-through ml-2">Was RM {{
-                  price + 120
-                }}</span>
+                <span class="text-paragraph text-gray-400 line-through ml-2"
+                  >Was RM {{ price + 120 }}</span
+                >
               </div>
               <a routerLink="personal"></a>
               <buttonbordered
@@ -224,46 +223,33 @@ export class CustomerProductComponent {
   // get the url parameter
   locationId = this.router.url.split('/')[3];
   // set the states
-//   address = 'hello';
-//   imageUrl = 'hello';
-//   price = this.locationId;
-//   images = [
-//     {
-//       id: 1,
-//       description: 'The majestic front view of Istana Negara',
-//       url: 'https://example.com/images/istana_negara_front.jpg',
-//     },
-//     {
-//       id: 2,
-//       description: 'The royal guard on duty at Istana Negara',
-//       url: 'https://example.com/images/istana_negara_guard.jpg',
-//     },
-//     {
-//       id: 3,
-//       description: 'Istana Negara during a national event',
-//       url: 'https://example.com/images/istana_negara_event.jpg',
-//     },
-//   ];
-//   description = 'hello';
-  
+  //   address = 'hello';
+  //   imageUrl = 'hello';
+  //   price = this.locationId;
+  //   images = [
+  //     {
+  //       id: 1,
+  //       description: 'The majestic front view of Istana Negara',
+  //       url: 'https://example.com/images/istana_negara_front.jpg',
+  //     },
+  //     {
+  //       id: 2,
+  //       description: 'The royal guard on duty at Istana Negara',
+  //       url: 'https://example.com/images/istana_negara_guard.jpg',
+  //     },
+  //     {
+  //       id: 3,
+  //       description: 'Istana Negara during a national event',
+  //       url: 'https://example.com/images/istana_negara_event.jpg',
+  //     },
+  //   ];
+  //   description = 'hello';
 
-    name = this.touristLocations[parseInt(this.locationId) - 1].name;
-    address = this.touristLocations[parseInt(this.locationId) - 1].address;
-    imageUrl = this.touristLocations[parseInt(this.locationId) - 1].heroimage;
-    price = this.touristLocations[parseInt(this.locationId) - 1].price;
-    images = this.touristLocations[parseInt(this.locationId) - 1].images;
-    description =
-      this.touristLocations[parseInt(this.locationId) - 1].description;
+  name = this.touristLocations[parseInt(this.locationId) - 1].name;
+  address = this.touristLocations[parseInt(this.locationId) - 1].address;
+  imageUrl = this.touristLocations[parseInt(this.locationId) - 1].heroimage;
+  price = this.touristLocations[parseInt(this.locationId) - 1].price;
+  images = this.touristLocations[parseInt(this.locationId) - 1].images;
+  description =
+    this.touristLocations[parseInt(this.locationId) - 1].description;
 }
-
-@NgModule({
-  declarations: [CustomerProductComponent],
-  exports: [CustomerProductComponent],
-  imports: [
-    CommonModule,
-    buttonwIconModule,
-    ProgressBarComponentModule,
-    ButtonBorderedModule,
-  ],
-})
-export class CustomerProductModule {}

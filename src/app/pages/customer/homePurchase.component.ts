@@ -1,8 +1,5 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
-import { buttonwIconModule } from '../../components/button.component';
 import { Router } from '@angular/router';
 
 type TouristLocation = {
@@ -14,6 +11,8 @@ type TouristLocation = {
 
 @Component({
   selector: 'HomePurchase',
+  standalone: true,
+  imports: [CommonModule],
   template: `
     <section class="py-16">
       <div class="container mx-auto">
@@ -38,8 +37,8 @@ type TouristLocation = {
             <!-- the cards -->
             @for (location of locations; track location.id){
             <div
-            class="flex-none p-4 hover:scale-110 z-50 transition-all duration-300"
-            [ngClass]="{
+              class="flex-none p-4 hover:scale-110 z-50 transition-all duration-300"
+              [ngClass]="{
                 'w-full': location.id === 1,
               }"
             >
@@ -190,10 +189,3 @@ export class CustomerHomeComponent {
     this.router.navigate(['/customer/purchase', id]);
   }
 }
-
-@NgModule({
-  declarations: [CustomerHomeComponent],
-  exports: [CustomerHomeComponent],
-  imports: [CommonModule, ProgressBarComponentModule, buttonwIconModule],
-})
-export class HomePurchaseModule {}

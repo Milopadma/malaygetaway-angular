@@ -1,16 +1,14 @@
-import { Component, Input, NgModule } from '@angular/core';
-import { buttonwIconModule } from '../button.component';
-import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'progress-bar',
+  standalone: true,
   template: `
     <div class="flex justify-between items-center">
       <div
         class="w-full flex-row border-t-2 border-gray-200 relative flex justify-between"
       >
         @for (label of labels; track label ){ @if (label == current) {
-
         <div
           class="-bottom-5 text-small after:content-['*'] after:text-accent text-softgray
             after:relative after:bottom-1/2 after:right-1/2 after:transform 
@@ -36,10 +34,3 @@ export class progressbar {
   @Input() labels: string[] = [];
   @Input() current: string = '';
 }
-
-@NgModule({
-  declarations: [progressbar],
-  exports: [progressbar],
-  imports: [CommonModule, buttonwIconModule],
-})
-export class ProgressBarComponentModule {}

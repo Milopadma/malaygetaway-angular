@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
-import { buttonwIconModule } from '../../components/button.component';
 import { Router } from '@angular/router';
+import { progressbar } from '../../components/form/progressbar.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'purchase4',
+  standalone: true,
+  imports: [progressbar, CommonModule],
   template: `
     <section>
       <br />
@@ -232,9 +232,3 @@ export class CustomerPaymentMethodComponent {
     event.target.value = value;
   }
 }
-@NgModule({
-  declarations: [CustomerPaymentMethodComponent],
-  exports: [CustomerPaymentMethodComponent],
-  imports: [CommonModule, ProgressBarComponentModule, buttonwIconModule],
-})
-export class CustomerPaymentMethodModule {}

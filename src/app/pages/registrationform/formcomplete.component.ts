@@ -1,12 +1,10 @@
-import { HostListener, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { buttonwIconModule } from '../../components/button.component';
-import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
+import { Component, HostListener } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { FileInputComponentModule } from '../../components/form/fileinput.component';
+import { ButtonwIcon } from '../../components/button.component';
 @Component({
   selector: 'completed-form',
+  standalone: true,
+  imports: [RouterOutlet, ButtonwIcon],
   template: `
     <div id="spacer" class="h-64"></div>
     <div class="flex flex-col">
@@ -45,16 +43,3 @@ export class CompletedFormComponent {
     this.router.navigate(['/login']); // TODO replace '/' with the actual route later
   }
 }
-
-@NgModule({
-  declarations: [CompletedFormComponent],
-  exports: [CompletedFormComponent],
-  imports: [
-    CommonModule,
-    buttonwIconModule,
-    ProgressBarComponentModule,
-    RouterOutlet,
-    FileInputComponentModule,
-  ],
-})
-export class CompletedFormComponentModule {}

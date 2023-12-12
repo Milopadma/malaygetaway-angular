@@ -1,19 +1,14 @@
-import { HostListener, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { buttonwIconModule } from '../../components/button.component';
-import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
-import { Router, RouterOutlet } from '@angular/router';
-import { FileInputComponentModule } from '../../components/form/fileinput.component';
-import { ButtonUnborderedModule } from '../../components/buttonunbordered.component';
-import { ButtonNoIconModule } from '../../components/buttonnoicon.component';
-import { IconComponentModule } from '../../components/icon.component';
-import { DialogueBoxModule } from '../../components/dialoguebox.component';
-import { TopNavbarModule } from '../../components/topnavbar.component';
-import { ButtonBorderedModule } from '../../components/buttonbordered.component';
-import { FooterModule } from "./footer.component";
+import { Router } from '@angular/router';
+import { TopNavbar } from '../../components/topnavbar.component';
+import { ButtonBordered } from '../../components/buttonbordered.component';
+import { ButtonUnbordered } from '../../components/buttonunbordered.component';
+import { Footer } from './footer.component';
+
 @Component({
   selector: 'home',
+  standalone: true,
+  imports: [TopNavbar, ButtonBordered, ButtonUnbordered, Footer],
   template: `
     <topnavbar class="sticky top-0 z-50" />
     <div>
@@ -43,7 +38,11 @@ import { FooterModule } from "./footer.component";
         </div>
         <div>
           <div class="h-48" id="spacer"></div>
-          <img src="../../assets/petronastwintowers.webp" alt="" class="w-auto" />
+          <img
+            src="../../assets/petronastwintowers.webp"
+            alt=""
+            class="w-auto"
+          />
         </div>
       </div>
       <div class="h-64" id="spacer"></div>
@@ -95,8 +94,13 @@ import { FooterModule } from "./footer.component";
             >
             <div class="h-4" id="spacer"></div>
             <div class="flex flex-row gap-4">
-              <buttonunbordered label="Browse Categories (placeholder)"></buttonunbordered>
-              <buttonbordered label="View All Services" (click)="navigateToPage('customer/home')"></buttonbordered>
+              <buttonunbordered
+                label="Browse Categories (placeholder)"
+              ></buttonunbordered>
+              <buttonbordered
+                label="View All Services"
+                (click)="navigateToPage('customer/home')"
+              ></buttonbordered>
             </div>
             <div class="h-12" id="spacer"></div>
             <div class="flex flex-col gap-4">
@@ -166,8 +170,13 @@ import { FooterModule } from "./footer.component";
           </span>
           <div class="h-4" id="spacer"></div>
           <div class="flex flex-row gap-4">
-            <buttonunbordered label="View All Reviews (placeholder)"></buttonunbordered>
-            <buttonbordered label="Write a Review" (click)="navigateToPage('customer/pastorders')"></buttonbordered>
+            <buttonunbordered
+              label="View All Reviews (placeholder)"
+            ></buttonunbordered>
+            <buttonbordered
+              label="Write a Review"
+              (click)="navigateToPage('customer/pastorders')"
+            ></buttonbordered>
           </div>
           <div class="h-12" id="spacer"></div>
           <div class="flex flex-row gap-12">
@@ -204,8 +213,13 @@ import { FooterModule } from "./footer.component";
               <p>Discover the best local merchants in Malaysia</p>
               <div class="h-4" id="spacer"></div>
               <div class="flex flex-row gap-4">
-                <buttonunbordered label="View All Merchants (placeholder)"></buttonunbordered>
-                <buttonbordered label="Become a Merchant" (click)="navigateToPage('merchant/register')"></buttonbordered>
+                <buttonunbordered
+                  label="View All Merchants (placeholder)"
+                ></buttonunbordered>
+                <buttonbordered
+                  label="Become a Merchant"
+                  (click)="navigateToPage('merchant/register')"
+                ></buttonbordered>
               </div>
               <div class="h-12" id="spacer"></div>
               <div>
@@ -304,23 +318,3 @@ export class Home {
     this.router.navigate([page]);
   }
 }
-
-@NgModule({
-    declarations: [Home],
-    exports: [Home],
-    imports: [
-        CommonModule,
-        buttonwIconModule,
-        ProgressBarComponentModule,
-        RouterOutlet,
-        FileInputComponentModule,
-        ButtonUnborderedModule,
-        ButtonNoIconModule,
-        IconComponentModule,
-        DialogueBoxModule,
-        TopNavbarModule,
-        ButtonBorderedModule,
-        FooterModule
-    ]
-})
-export class HomeModule {}

@@ -1,13 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
-import { buttonwIconModule } from '../../components/button.component';
-import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
-import { Router, RouterOutlet } from '@angular/router';
-import { FileInputComponentModule } from '../../components/form/fileinput.component';
+import { Router } from '@angular/router';
 import { MerchantRegistrationService } from './merchantregistration.service';
+import { FileInputComponent } from '../../components/form/fileinput.component';
+import { ButtonwIcon } from '../../components/button.component';
 @Component({
   selector: 'businessfiles-form',
+  standalone: true,
+  imports: [ButtonwIcon, FileInputComponent],
   template: `
     <div class="flex flex-col items-start">
       <h1
@@ -17,14 +16,8 @@ import { MerchantRegistrationService } from './merchantregistration.service';
       </h1>
       <div id="spacer" class="h-4"></div>
       <div class="flex flex-row gap-4">
-        <fileinput
-          (fileChanged)="handleFileChange($event)"
-          label="Licenses"
-        ></fileinput>
-        <fileinput
-          (fileChanged)="handleFileChange($event)"
-          label="Testimonials"
-        ></fileinput>
+        <fileinput label="Licenses"></fileinput>
+        <fileinput label="Testimonials"></fileinput>
       </div>
       <div class="h-32" id="spacer"></div>
       <div class="flex w-full items-end justify-end">
@@ -63,22 +56,9 @@ export class BusinessFilesFormComponent {
     this.router.navigate(['merchant/register/merchantdata']); // replace '/nextPage' with the actual route
   }
 
-  handleFileChange(fileData: FileList) {
-    this.mrs.sendFiles(fileData).subscribe((res) => {
-      console.log(res);
-    });
-  }
+  // handleFileChange(fileData: FileList) {
+  //   this.mrs.sendFiles(fileData).subscribe((res) => {
+  //     console.log(res);
+  //   });
+  // }
 }
-
-@NgModule({
-  declarations: [BusinessFilesFormComponent],
-  exports: [BusinessFilesFormComponent],
-  imports: [
-    CommonModule,
-    buttonwIconModule,
-    ProgressBarComponentModule,
-    RouterOutlet,
-    FileInputComponentModule,
-  ],
-})
-export class BusinessFilesFormComponentModule {}

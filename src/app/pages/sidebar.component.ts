@@ -1,13 +1,13 @@
-import { Input, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Input } from '@angular/core';
 import { Component } from '@angular/core';
-import { buttonwIconModule } from '../components/button.component';
-import { ProgressBarComponentModule } from '../components/form/progressbar.component';
-import { Router, RouterOutlet } from '@angular/router';
-import { ButtonUnborderedModule } from '../components/buttonunbordered.component';
-import { IconComponentModule } from '../components/icon.component';
+import { Router } from '@angular/router';
+import { ButtonUnbordered } from '../components/buttonunbordered.component';
+import { IconComponent } from '../components/icon.component';
+
 @Component({
   selector: 'sidebar',
+  standalone: true,
+  imports: [ButtonUnbordered, IconComponent],
   template: `
     <nav
       class="flex flex-col py-12 px-4 border-softblack border-r-[1px] sticky top-0 h-screen max-h-screen overflow-y-auto"
@@ -88,17 +88,3 @@ export class Sidebar {
     this.router.navigate([page]);
   }
 }
-
-@NgModule({
-  declarations: [Sidebar],
-  exports: [Sidebar],
-  imports: [
-    CommonModule,
-    buttonwIconModule,
-    ProgressBarComponentModule,
-    RouterOutlet,
-    ButtonUnborderedModule,
-    IconComponentModule,
-  ],
-})
-export class SidebarModule {}

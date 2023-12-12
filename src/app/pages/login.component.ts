@@ -1,16 +1,12 @@
-import { HostListener, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { buttonwIconModule } from '../components/button.component';
-import { ProgressBarComponentModule } from '../components/form/progressbar.component';
-import { Router, RouterOutlet } from '@angular/router';
-import { FileInputComponentModule } from '../components/form/fileinput.component';
-import { ButtonUnborderedModule } from '../components/buttonunbordered.component';
-import { ButtonNoIconModule } from '../components/buttonnoicon.component';
-import { IconComponentModule } from '../components/icon.component';
-import { DialogueBoxModule } from '../components/dialoguebox.component';
+import { Router } from '@angular/router';
+import { ButtonwIcon } from '../components/button.component';
+import { DialogueBoxComponent } from '../components/dialoguebox.component';
+
 @Component({
   selector: 'login',
+  standalone: true,
+  imports: [ButtonwIcon, DialogueBoxComponent],
   template: `
     <div class="flex flex-row h-full justify-center items-center">
       <div class="flex flex-col">
@@ -33,10 +29,7 @@ import { DialogueBoxModule } from '../components/dialoguebox.component';
             don't have an account? <br />
             <span class="underline">register</span>
           </div>
-          <buttonwicon
-            (click)="showDialogue()"
-            label="Continue"
-          ></buttonwicon>
+          <buttonwicon (click)="showDialogue()" label="Continue"></buttonwicon>
         </div>
       </div>
       <div class="w-12" id="spacer"></div>
@@ -70,20 +63,3 @@ export class Login {
     this.showDialog = true;
   }
 }
-
-@NgModule({
-  declarations: [Login],
-  exports: [Login],
-  imports: [
-    CommonModule,
-    buttonwIconModule,
-    ProgressBarComponentModule,
-    RouterOutlet,
-    FileInputComponentModule,
-    ButtonUnborderedModule,
-    ButtonNoIconModule,
-    IconComponentModule,
-    DialogueBoxModule,
-  ],
-})
-export class LoginModule {}

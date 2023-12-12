@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, NgModule } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 // export enum IconName {
 //   Home = 'home',
@@ -9,6 +8,7 @@ import { Component, Input, NgModule } from '@angular/core';
 
 @Component({
   selector: 'icon',
+  standalone: true,
   template: `
     @if (iconName === "Home") {
     <svg
@@ -129,9 +129,3 @@ export class IconComponent {
   @Input() iconName!: string;
   @Input() size!: string;
 }
-@NgModule({
-  declarations: [IconComponent],
-  exports: [IconComponent],
-  imports: [CommonModule],
-})
-export class IconComponentModule {}

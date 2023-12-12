@@ -1,14 +1,14 @@
-import { HostListener, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
-import { buttonwIconModule } from '../../components/button.component';
-import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MerchantRegistrationService } from './merchantregistration.service';
+import { ButtonwIcon } from '../../components/button.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'merchantdata-form',
+  standalone: true,
+  imports: [RouterOutlet, FormsModule, ButtonwIcon, CommonModule],
   template: `
     <form #merchantDataForm="ngForm" (ngSubmit)="onSubmit(merchantDataForm)">
       <div class="flex flex-col">
@@ -177,16 +177,3 @@ export class MerchantDataFormComponent {
     }
   }
 }
-
-@NgModule({
-  declarations: [MerchantDataFormComponent],
-  exports: [MerchantDataFormComponent],
-  imports: [
-    CommonModule,
-    buttonwIconModule,
-    ProgressBarComponentModule,
-    RouterOutlet,
-    FormsModule,
-  ],
-})
-export class MerchantDataFormComponentModule {}

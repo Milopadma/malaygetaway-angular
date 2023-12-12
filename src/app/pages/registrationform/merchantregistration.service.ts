@@ -1,7 +1,7 @@
-import { Injectable, NgModule } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Merchant } from '../../types/merchant';
 import { Business } from '../../types/business';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 // Handles the global state for the Merchant Registration Form flow data state
 @Injectable({ providedIn: 'root' })
@@ -57,12 +57,3 @@ export class MerchantRegistrationService {
     return this.http.post('http://localhost:3000/sendFiles', formData);
   }
 }
-
-@NgModule({
-  imports: [
-    HttpClientModule,
-    // other imports here
-  ],
-  // other metadata here
-})
-export class AppModule {}

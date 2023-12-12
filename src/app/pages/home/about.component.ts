@@ -1,19 +1,11 @@
-import { HostListener, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { buttonwIconModule } from '../../components/button.component';
-import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
-import { Router, RouterOutlet } from '@angular/router';
-import { FileInputComponentModule } from '../../components/form/fileinput.component';
-import { ButtonUnborderedModule } from '../../components/buttonunbordered.component';
-import { ButtonNoIconModule } from '../../components/buttonnoicon.component';
-import { IconComponentModule } from '../../components/icon.component';
-import { DialogueBoxModule } from '../../components/dialoguebox.component';
-import { TopNavbarModule } from '../../components/topnavbar.component';
-import { ButtonBorderedModule } from '../../components/buttonbordered.component';
-import { FooterModule } from './footer.component';
+import { Router } from '@angular/router';
+import { TopNavbar } from '../../components/topnavbar.component';
+import { Footer } from './footer.component';
 @Component({
   selector: 'about',
+  standalone: true,
+  imports: [TopNavbar, Footer],
   template: `
     <topnavbar class="sticky top-0 z-50" />
     <div class="flex flex-col justify-center items-center ">
@@ -35,23 +27,3 @@ export class About {
     this.router.navigate([page]);
   }
 }
-
-@NgModule({
-  declarations: [About],
-  exports: [About],
-  imports: [
-    CommonModule,
-    buttonwIconModule,
-    ProgressBarComponentModule,
-    RouterOutlet,
-    FileInputComponentModule,
-    ButtonUnborderedModule,
-    ButtonNoIconModule,
-    IconComponentModule,
-    DialogueBoxModule,
-    TopNavbarModule,
-    ButtonBorderedModule,
-    FooterModule,
-  ],
-})
-export class AboutModule {}

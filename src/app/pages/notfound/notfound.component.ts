@@ -1,9 +1,11 @@
-import { Component, NgModule } from '@angular/core';
-import { IconComponentModule } from '../../components/icon.component';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { IconComponent } from '../../components/icon.component';
 
 @Component({
   selector: 'app-notfound',
+  standalone: true,
+  imports: [IconComponent],
   template: `
     <div class="flex justify-center flex-col items-center">
       <div class="h-24"></div>
@@ -23,15 +25,8 @@ import { Router } from '@angular/router';
   `,
 })
 export class NotFoundComponent {
-    constructor(private router: Router) {}
-    navigateToPage(page: string) {
-        this.router.navigate([page]);
-    }
+  constructor(private router: Router) {}
+  navigateToPage(page: string) {
+    this.router.navigate([page]);
+  }
 }
-
-@NgModule({
-  declarations: [NotFoundComponent],
-  exports: [NotFoundComponent],
-  imports: [IconComponentModule],
-})
-export class NotFoundComponentModule {}
