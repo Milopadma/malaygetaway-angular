@@ -4,7 +4,6 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { MerchantRegistrationService } from './merchantregistration.service';
 import { ButtonwIcon } from '../../components/button.component';
 import { z } from 'zod';
-import { animate, style, transition, trigger } from '@angular/animations';
 @Component({
   selector: 'businessname-form',
   standalone: true,
