@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { MerchantRegistrationService } from './merchantregistration.service';
 import { ButtonwIcon } from '../../components/button.component';
 import { z } from 'zod';
+import { animate, style, transition, trigger } from '@angular/animations';
 @Component({
   selector: 'businessname-form',
   standalone: true,
@@ -30,9 +31,13 @@ import { z } from 'zod';
         />
         <!-- errors -->
         <div
-          [class.opacity-100]="nameError.status"
-          [class.translate-y-0]="nameError.status"
-          [class.h-0]="!nameError.status"
+          [class.opacity-100]="
+            (name.touched || formSubmitted) && nameError.status
+          "
+          [class.translate-y-0]="
+            (name.touched || formSubmitted) && nameError.status
+          "
+          [class.h-0]="!(name.touched || formSubmitted) || !nameError.status"
           class="text-reject transition-all ease-in-out duration-500 opacity-0 -translate-y-3/4 block h-8"
         >
           {{ nameError.message }}
@@ -61,8 +66,9 @@ export class BusinessNameFormComponent {
   // for the errors
   nameError: { status: boolean; message: string | null } = {
     status: true,
-    message: null,
+    message: 'Required',
   };
+  formSubmitted: boolean = false;
 
   // zod schema for validating business name
   BusinessSchema = z.object({
@@ -97,6 +103,7 @@ export class BusinessNameFormComponent {
   }
 
   onSubmit(form: NgForm) {
+    this.formSubmitted = true;
     try {
       const validatedData = this.BusinessSchema.parse(form.value);
       this.business.name = validatedData.name;
