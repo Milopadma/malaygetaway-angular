@@ -1,5 +1,4 @@
-import { HostListener, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { HostListener } from '@angular/core';
 import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -11,7 +10,7 @@ import { ButtonwIcon } from '../../components/button.component';
   imports: [RouterOutlet, FormsModule, ButtonwIcon],
   template: `
     <form #merchantDataForm="ngForm" (ngSubmit)="onSubmit(merchantDataForm)">
-      <div class="flex flex-col">
+      <div class="flex flex-col transition-all duration-500 ease-in-out">
         <h1
           class="text-zinc-800 text-subtitles leading-10 tracking-tighter max-w-[313px] mt-20 max-md:mt-10"
         >
@@ -24,14 +23,17 @@ import { ButtonwIcon } from '../../components/button.component';
           [(ngModel)]="business.contactNumber"
           (ngModelChange)="onFormChange()"
           name="contactNumber"
+          pattern="^[0-9]*$"
           #contactNumber="ngModel"
           class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full mt-4 px-5 py-2 border-2 border-solid max-md:pl-1"
           placeholder="contact number"
         />
         <!-- errors -->
         <div
-          [hidden]="contactNumber.valid || contactNumber.pristine"
-          class="text-reject"
+          [class.opacity-100]="!contactNumber.valid && contactNumber.touched"
+          [class.translate-y-0]="!contactNumber.valid && contactNumber.touched"
+          [class.h-0]="contactNumber.valid || !contactNumber.touched"
+          class="text-reject transition-all ease-in-out duration-500 opacity-0 -translate-y-3/4 block h-8"
         >
           Contact Number required.
         </div>
@@ -39,17 +41,20 @@ import { ButtonwIcon } from '../../components/button.component';
           type="email"
           id="contactEmail"
           required
+          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
           [(ngModel)]="business.contactEmail"
           (ngModelChange)="onFormChange()"
           name="contactEmail"
           #contactEmail="ngModel"
-          class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full mt-4 px-5 py-2 border-2 border-solid max-md:pl-1"
+          class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full mt-2 px-5 py-2 border-2 border-solid max-md:pl-1"
           placeholder="contact email"
         />
         <!-- errors -->
         <div
-          [hidden]="contactEmail.valid || contactEmail.pristine"
-          class="text-reject"
+          [class.opacity-100]="!contactEmail.valid && contactEmail.touched"
+          [class.translate-y-0]="!contactEmail.valid && contactEmail.touched"
+          [class.h-0]="contactEmail.valid || !contactEmail.touched"
+          class="text-reject transition-all ease-in-out duration-500 opacity-0 -translate-y-3/4 block h-8"
         >
           Contact Email required.
         </div>
@@ -62,7 +67,7 @@ import { ButtonwIcon } from '../../components/button.component';
           #name="ngModel"
           #textarea
           (input)="autoResize(textarea)"
-          class="text-black placeholder:text-fadedgray  h-32 text-paragraph leading-7 tracking-tighter border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full mt-4 px-5 py-2 border-2 border-solid max-md:pl-1 resize-y"
+          class="text-black placeholder:text-fadedgray  h-32 text-paragraph leading-7 tracking-tighter border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full mt-2 px-5 py-2 border-2 border-solid max-md:pl-1 resize-y"
           placeholder="brief company description"
           rows="1"
         ></textarea>
