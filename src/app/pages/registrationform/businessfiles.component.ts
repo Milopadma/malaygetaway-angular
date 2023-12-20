@@ -16,8 +16,14 @@ import { ButtonwIcon } from '../../components/button.component';
       </h1>
       <div id="spacer" class="h-4"></div>
       <div class="flex flex-row gap-4">
-        <fileinput label="Licenses"></fileinput>
-        <fileinput label="Testimonials"></fileinput>
+        <fileinput
+          (fileChanged)="handleFileChange($event)"
+          label="Licenses"
+        ></fileinput>
+        <fileinput
+          (fileChanged)="handleFileChange($event)"
+          label="Testimonials"
+        ></fileinput>
       </div>
       <div class="h-32" id="spacer"></div>
       <div class="flex w-full items-end justify-end">
@@ -56,9 +62,9 @@ export class BusinessFilesFormComponent {
     this.router.navigate(['merchant/register/merchantdata']); // replace '/nextPage' with the actual route
   }
 
-  // handleFileChange(fileData: FileList) {
-  //   this.mrs.sendFiles(fileData).subscribe((res) => {
-  //     console.log(res);
-  //   });
-  // }
+  handleFileChange(fileData: FileList) {
+    this.mrs.sendFiles(fileData).subscribe((res) => {
+      console.log(res);
+    });
+  }
 }

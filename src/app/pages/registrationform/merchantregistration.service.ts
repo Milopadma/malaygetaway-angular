@@ -34,7 +34,7 @@ export class MerchantRegistrationService {
   sendData() {
     console.log('Sending data to backend...', this.merchant, this.business);
     return this.http.post(
-      'http://localhost:3000/merchant/register',
+      'http://localhost:3003/api/merchant/register',
       {
         merchant: JSON.stringify(this.merchant),
         business: JSON.stringify(this.business),
@@ -54,6 +54,9 @@ export class MerchantRegistrationService {
     for (let i = 0; i < files.length; i++) {
       formData.append('files', files[i]);
     }
-    return this.http.post('http://localhost:3000/sendFiles', formData);
+    return this.http.post(
+      'http://localhost:3003/api/files/upload/multiple',
+      formData
+    );
   }
 }
