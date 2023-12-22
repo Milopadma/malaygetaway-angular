@@ -53,8 +53,8 @@ import { ButtonwIcon } from '../../components/button.component';
         <div
           [class.opacity-100]="!contactEmail.valid && contactEmail.touched"
           [class.translate-y-0]="!contactEmail.valid && contactEmail.touched"
-          [class.h-0]="contactEmail.valid || !contactEmail.touched"
-          class="text-reject transition-all ease-in-out duration-500 opacity-0 -translate-y-3/4 block h-8"
+          [class.h-8]="contactEmail.valid || !contactEmail.touched"
+          class="text-reject transition-all ease-in-out duration-500 opacity-0 -translate-y-3/4 block h-0"
         >
           Contact Email required.
         </div>
