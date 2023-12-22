@@ -41,11 +41,7 @@ import { FormError } from '../../types';
       </div>
       <div class="h-32" id="spacer"></div>
       <div class="flex w-full items-end justify-end">
-        <div
-          class="flex flex-col items-end"
-          type="submit"
-          [ariaDisabled]="!isFormValid"
-        >
+        <div class="flex flex-col items-end" type="submit">
           <buttonwicon label="Continue" [disabled]="!isFormValid"></buttonwicon>
           <p
             class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
@@ -90,6 +86,11 @@ export class BusinessFilesFormComponent {
   onSubmit(form: NgForm) {
     this.formSubmitted = true;
     try {
+      // attempt to send the files to the server and await for the returning URLs
+      for (const file of this.formFiles) {
+        this.mrs.sendFiles(file);
+      }
+
       const validatedData = this.BusinessSchema.parse(form.value);
       // update local form data
       this.business.businessFileURLs = validatedData.files;

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Merchant } from '../../types/merchant';
 import { Business } from '../../types/business';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 // Handles the global state for the Merchant Registration Form flow data state
 @Injectable({ providedIn: 'root' })
@@ -48,13 +49,13 @@ export class MerchantRegistrationService {
   }
 
   // send files
-  sendFiles(files: FileList) {
+  sendFiles(files: FileList): Observable<string[]> {
     console.log('Sending files to backend...', files);
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
       formData.append('files', files[i]);
     }
-    return this.http.post(
+    return this.http.post<string[]>(
       'http://localhost:3003/api/files/upload/multiple',
       formData
     );
