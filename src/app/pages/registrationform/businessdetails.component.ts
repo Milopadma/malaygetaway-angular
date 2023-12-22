@@ -29,14 +29,14 @@ import { ButtonwIcon } from '../../components/button.component';
           placeholder="contact number"
         />
         <!-- errors -->
-        <!-- <div
+        <div
           [class.opacity-100]="!contactNumber.valid && contactNumber.touched"
           [class.translate-y-0]="!contactNumber.valid && contactNumber.touched"
-          [class.h-0]="contactNumber.valid || !contactNumber.touched"
-          class="text-reject transition-all ease-in-out duration-500 opacity-0 -translate-y-3/4 block h-8"
+          [class.h-8]="contactNumber.valid || !contactNumber.touched"
+          class="text-reject transition-all ease-in-out duration-500 opacity-0 -translate-y-3/4 block h-0"
         >
           Contact Number required.
-        </div> -->
+        </div>
         <input
           type="email"
           id="contactEmail"
