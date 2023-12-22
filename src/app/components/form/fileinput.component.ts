@@ -7,6 +7,7 @@ import { IconComponent } from '../icon.component';
   template: `
     <div class="flex flex-row items-center">
       <label
+        [for]="id"
         for="file-upload"
         class="group flex flex-col text-softblack text-2xl font-light leading-7 tracking-tighter border-softblack border-2 border-solid cursor-pointer items-center gap-3 px-9 py-12 hover:bg-softblack hover:text-white transition-all duration-200"
       >
@@ -26,7 +27,7 @@ import { IconComponent } from '../icon.component';
         }
       </label>
       <input
-        id="file-upload"
+        [id]="id"
         type="file"
         class="hidden"
         (change)="onFileChange($event)"
@@ -38,6 +39,8 @@ export class FileInputComponent {
   @Input() label!: string;
   @Output() fileChanged = new EventEmitter<FileList>();
   previewUrl: string | ArrayBuffer | null = null;
+
+  id = `file-upload-${Math.random().toString(36).substr(2, 9)}`;
 
   onFileChange(event: Event) {
     const fileInput = event.target as HTMLInputElement;
