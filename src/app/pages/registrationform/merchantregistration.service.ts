@@ -1,23 +1,33 @@
 import { Injectable } from '@angular/core';
-import { Merchant } from '../../types/merchant';
-import { Business } from '../../types/business';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {
+  Business,
+  MerchantData,
+  MerchantStatus,
+  UserMerchant,
+} from '../../types';
+import { ApiService } from '../../api/api.service';
 
 // Handles the global state for the Merchant Registration Form flow data state
 @Injectable({ providedIn: 'root' })
 export class MerchantRegistrationService {
   // init empty merchant object
-  merchant: Merchant = new Merchant(0, '', '', 0, '');
+  merchant: UserMerchant = new UserMerchant(0, '', '', {
+    merchantId: 0,
+    phoneNumber: 0,
+    email: '',
+    status: MerchantStatus.PENDING,
+  } as MerchantData);
   business: Business = new Business(0, 0, '', '', '', '', '', []);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private apiService: ApiService) {}
   // get merchant data
-  getMerchant(): Merchant {
+  getMerchant(): UserMerchant {
     return this.merchant;
   }
   // set merchant data
-  setMerchant(merchant: Merchant) {
+  setMerchant(merchant: UserMerchant) {
     console.log(merchant);
     this.merchant = merchant;
   }
@@ -34,30 +44,6 @@ export class MerchantRegistrationService {
   // send the data to backend
   sendData() {
     console.log('Sending data to backend...', this.merchant, this.business);
-    return this.http.post(
-      'http://localhost:3003/api/merchant/register',
-      {
-        merchant: JSON.stringify(this.merchant),
-        business: JSON.stringify(this.business),
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-  }
-
-  // send files
-  sendFiles(files: FileList): Observable<string[]> {
-    console.log('Sending files to backend...', files);
-    const formData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      formData.append('files', files[i]);
-    }
-    return this.http.post<string[]>(
-      'http://localhost:3003/api/files/upload/multiple',
-      formData
-    );
+    return this.apiService.setMerchant(this.merchant);
   }
 }

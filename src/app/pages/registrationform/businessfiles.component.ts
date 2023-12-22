@@ -6,6 +6,7 @@ import { ButtonwIcon } from '../../components/button.component';
 import { z } from 'zod';
 import { NgForm } from '@angular/forms';
 import { FormError } from '../../types';
+import { ApiService } from '../../api/api.service';
 @Component({
   selector: 'businessfiles-form',
   standalone: true,
@@ -77,7 +78,8 @@ export class BusinessFilesFormComponent {
   // constructor
   constructor(
     private router: Router,
-    private mrs: MerchantRegistrationService
+    private mrs: MerchantRegistrationService,
+    private apiService: ApiService
   ) {
     this.businessFilesForm = new NgForm([], []);
     this.formFiles = [];
@@ -88,7 +90,7 @@ export class BusinessFilesFormComponent {
     try {
       // attempt to send the files to the server and await for the returning URLs
       for (const file of this.formFiles) {
-        this.mrs.sendFiles(file);
+        this.apiService.sendFiles(file);
       }
 
       const validatedData = this.BusinessSchema.parse(form.value);

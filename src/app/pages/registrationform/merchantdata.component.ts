@@ -76,7 +76,7 @@ import { CommonModule } from '@angular/common';
             <input
               type="tel"
               name="contactNumber"
-              [(ngModel)]="merchant.phoneNumber"
+              [(ngModel)]="merchant.data.phoneNumber"
               (ngModelChange)="onFormChange('phoneNumber', $event)"
               #contactNumber="ngModel"
               required
@@ -96,7 +96,7 @@ import { CommonModule } from '@angular/common';
             <input
               type="email"
               name="contactEmail"
-              [(ngModel)]="merchant.email"
+              [(ngModel)]="merchant.data.email"
               (ngModelChange)="onFormChange('email', $event)"
               #contactEmail="ngModel"
               required

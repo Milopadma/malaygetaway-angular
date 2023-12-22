@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import { UserMerchant } from '../types';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,24 +11,52 @@ export class ApiService {
   private apiUrl: string;
 
   constructor(private http: HttpClient) {
-    this.apiUrl =
-      process.env['ENVIRONMENT'] === 'production'
-        ? 'https://api.example.com'
-        : 'http://localhost:3000';
+    this.apiUrl = environment.apiUrl;
   }
 
   // API methods live here
-  getMerchants() {
-    return this.http.get(`${this.apiUrl}/api/merchants`);
+  // login related APIs
+  public login(username: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/api/login`, {
+      username,
+      password,
+    });
   }
 
-  setMerchant(merchant: MerchantData) {
-    return this.http.post(`${this.apiUrl}/api/merchants`, merchants);
+  // merchant related APIs
+  public getMerchants(): Observable<UserMerchant[]> {
+    return this.http.get<UserMerchant[]>(`${this.apiUrl}/api/merchants`);
   }
 
-  getMerchant(id: string) {
-    return this.http.get(`${this.apiUrl}/api/merchants/${id}`);
+  public setMerchant(merchant: UserMerchant): Observable<UserMerchant> {
+    return this.http.post<UserMerchant>(
+      `${this.apiUrl}/api/merchants`,
+      merchant
+    );
   }
 
+  public getMerchant(id: string): Observable<UserMerchant> {
+    return this.http.get<UserMerchant>(`${this.apiUrl}/api/merchants/${id}`);
+  }
 
+  // send files
+  public sendFiles(files: FileList): Observable<string[]> {
+    console.log('Sending files to backend...', files);
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i]);
+    }
+    return this.http.post<string[]>(
+      `${this.apiUrl}/api/files/upload/multiple`,
+      formData
+    );
+  }
+
+  // personal details related APIs
+  public createPersonalDetail(personalDetail: any): Observable<any> {
+    console.log(personalDetail);
+    return this.http
+      .post(`${this.apiUrl}/api/purchase/personalDetail/create`, personalDetail)
+      .pipe();
+  }
 }
