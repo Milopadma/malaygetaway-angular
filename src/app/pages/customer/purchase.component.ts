@@ -119,18 +119,18 @@ export class CustomerProductComponent {
         {
           id: 1,
           description: 'Pagoda of the Chin Swee Caves Temple in Malaysia',
-          url: 'https://www.malaymail.com/uploads/articles/2020/2020-06/IMG_20200616_104304.jpg',
+          url: 'https://www.holidify.com/images/cmsuploads/compressed/Genting-Highlands_Malaysia_Chin-Swee-Caves-Temple-02_20190802182937.jpg',
         },
         {
           id: 2,
           description: 'First World Hotel in Genting Highlands',
-          url: 'https://www.malaymail.com/uploads/articles/2020/2020-06/IMG_20200616_104304.jpg',
+          url: 'https://1.bp.blogspot.com/-cJIV9HAKwzA/XpcNAhWNVII/AAAAAAAAKLA/6KEXPCnRS-sCXhelE8x5Tem9FJAGTbo7QCLcBGAsYHQ/s1600/first%2BWorld%2BHotel%2BGenting%2BHighlands%2BMalaysia.jpg',
         },
         {
           id: 3,
           description:
             "Aerial view of Resorts World Genting, Malaysia's premier integrated resort destination",
-          url: 'https://www.malaymail.com/uploads/articles/2020/2020-06/IMG_20200616_104304.jpg',
+          url: 'https://allzonelimo.com/wp-content/uploads/2019/08/highland.jpg',
         },
       ],
       description:
