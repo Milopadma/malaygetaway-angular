@@ -1,8 +1,11 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { MerchantRegistrationService } from './merchantregistration.service';
 import { FileInputComponent } from '../../components/form/fileinput.component';
 import { ButtonwIcon } from '../../components/button.component';
+import { z } from 'zod';
+import { NgForm } from '@angular/forms';
+import { FormError } from '../../types';
 @Component({
   selector: 'businessfiles-form',
   standalone: true,
@@ -27,35 +30,75 @@ import { ButtonwIcon } from '../../components/button.component';
       </div>
       <div class="h-32" id="spacer"></div>
       <div class="flex w-full items-end justify-end">
-        <div class="flex flex-col items-end">
-          <buttonwicon
-            (click)="navigateToNextPage()"
-            label="Continue"
-          ></buttonwicon>
+        <div
+          class="flex flex-col items-end"
+          type="submit"
+          [ariaDisabled]="!isFormValid"
+        >
+          <buttonwicon label="Continue" [disabled]="!isFormValid"></buttonwicon>
           <p
             class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
           >
             or press Enter
           </p>
-          <div>
-            <!-- <button (click)="sendFiles()" class="text-black font-black test">
-              send
-            </button> -->
-          </div>
         </div>
       </div>
     </div>
   `,
 })
 export class BusinessFilesFormComponent {
+  // global state
+  business = this.mrs.getBusiness();
+  businessFilesForm: NgForm;
+
+  // form states
+  formSubmitted: boolean = false;
+  isFormValid: boolean = false;
+
+  // error states
+  fileError = signal<FormError>({
+    message: 'Required',
+    isHidden: true,
+  });
+
+  // zod schema for validating business object
+  BusinessSchema = z.object({
+    files: z.array(z.string()).min(1, { message: 'Required' }),
+  });
+
+  // constructor
   constructor(
     private router: Router,
     private mrs: MerchantRegistrationService
-  ) {}
+  ) {
+    this.businessFilesForm = new NgForm([], []);
+  }
+
+  onSubmit(form: NgForm) {
+    this.formSubmitted = true;
+    try {
+      const validatedData = this.BusinessSchema.parse(form.value);
+      // update local form data
+      this.business.businessFileURLs = validatedData.files;
+      // then update global state with that form data
+      this.mrs.setBusiness(this.business);
+      console.log('Form data:', this.business);
+      this.navigateToNextPage();
+    } catch (error) {
+      console.log('Form is not valid');
+      console.log(error);
+      if (error instanceof z.ZodError) {
+        this.fileError.set({
+          message: error.errors[0].message,
+          isHidden: false,
+        });
+      }
+    }
+  }
 
   @HostListener('document:keydown.enter', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
-    this.navigateToNextPage();
+    this.onSubmit(this.businessFilesForm);
   }
 
   navigateToNextPage() {
@@ -63,8 +106,9 @@ export class BusinessFilesFormComponent {
   }
 
   handleFileChange(fileData: FileList) {
-    this.mrs.sendFiles(fileData).subscribe((res) => {
-      console.log(res);
-    });
+    // validate
+
+
   }
 }
+

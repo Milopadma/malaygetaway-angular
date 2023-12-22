@@ -5,11 +5,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { MerchantRegistrationService } from './merchantregistration.service';
 import { ButtonwIcon } from '../../components/button.component';
 import { z } from 'zod';
-
-interface FormError {
-  message: string | null;
-  isHidden: boolean;
-}
+import { FormError } from '../../types';
 
 @Component({
   selector: 'businessdetails-form',

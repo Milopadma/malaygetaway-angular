@@ -42,10 +42,30 @@ export class FileInputComponent {
   onFileChange(event: Event) {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files[0]) {
+      console.log(fileInput.files[0]);
+      if (!validateFile(fileInput.files[0])) {
+        this.fileChanged.emit(undefined);
+        alert('Invalid file type or size');
+        return;
+      }
+
       this.fileChanged.emit(fileInput.files);
       const reader = new FileReader();
       reader.onload = (e) => (this.previewUrl = reader.result);
       reader.readAsDataURL(fileInput.files[0]);
     }
   }
+}
+
+// separate function to validate File Type and Size before uploading to backend
+function validateFile(file: File): boolean {
+  const validTypes = ['application/pdf'];
+  const validSize = 1024 * 1024 * 5; // 5MB
+  if (!validTypes.includes(file.type)) {
+    return false;
+  }
+  if (file.size > validSize) {
+    return false;
+  }
+  return true;
 }

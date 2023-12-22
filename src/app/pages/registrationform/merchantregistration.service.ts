@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class MerchantRegistrationService {
   // init empty merchant object
   merchant: Merchant = new Merchant(0, '', '', 0, '');
-  business: Business = new Business(0, '', '', '', '', '');
+  business: Business = new Business(0, 0, '', '', '', '', '', []);
 
   constructor(private http: HttpClient) {}
   // get merchant data
