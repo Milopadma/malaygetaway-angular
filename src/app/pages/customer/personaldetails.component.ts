@@ -217,12 +217,15 @@ export class CustomerPersonalDetailComponent {
     this.router.navigate(['product/:id']);
   }
 
-  formatZipCode(event: any) {
-    let value = event.target.value.replace(/\D/g, '');
+  formatZipCode(event: Event) {
+    const input = event.target as HTMLInputElement;
+    let value = input.value.replace(/\D/g, '');
+  
     if (value.length > 5) {
       value = value.substring(0, 5);
     }
     this.personalDetail.postalCode = value;
+    input.value = value;
   }
 
   updatePersonalDetail(

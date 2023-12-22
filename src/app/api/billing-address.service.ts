@@ -6,14 +6,14 @@ import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class PersonalDetailService {
-  private apiBaseUrl = 'http://localhost:8080/api/purchase/personalDetail';
+export class BillingAddressService {
+  private apiBaseUrl = 'http://localhost:8080/api/purchase/billingAddress';
 
   constructor(private http: HttpClient) {}
 
-  createPersonalDetail(personalDetail: any): Observable<any> {
-    console.log(personalDetail);
-    return this.http.post(`${this.apiBaseUrl}/create`, personalDetail).pipe(
+  createBillingAddress(billingAddress: any): Observable<any> {
+    console.log(billingAddress);
+    return this.http.post(`${this.apiBaseUrl}/create`, billingAddress).pipe(
     );
   }
 
