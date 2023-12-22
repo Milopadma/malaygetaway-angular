@@ -1,11 +1,12 @@
-import { Input, NgModule, ContentChild, AfterContentInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Input, AfterContentInit } from '@angular/core';
 import { Component } from '@angular/core';
-import { IconComponentModule } from './icon.component';
 import { Router } from '@angular/router';
+import { IconComponent } from './icon.component';
 
 @Component({
   selector: 'topnavbar',
+  standalone: true,
+  imports: [IconComponent],
   template: `
     <header
       class="bg-white flex flex-col items-stretch bg-opacity-50 backdrop-filter backdrop-blur-lg"
@@ -65,10 +66,3 @@ export class TopNavbar implements AfterContentInit {
     this.router.navigate([page]); // replace '/nextPage' with the actual route
   }
 }
-
-@NgModule({
-  declarations: [TopNavbar],
-  exports: [TopNavbar],
-  imports: [CommonModule, IconComponentModule],
-})
-export class TopNavbarModule {}

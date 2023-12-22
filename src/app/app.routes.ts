@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 // Epic 1-3 (milo e2000426)
 import { MerchantRegisterCTA } from './pages/registrationform/registercta.component';
-import { MerchantRegister } from './pages/merchantRegister.component';
+import { MerchantRegister } from './pages/registrationform/merchantRegister.component';
 import { BusinessNameFormComponent } from './pages/registrationform/businessname.component';
 import { NotFoundComponent } from './pages/notfound/notfound.component';
 import { BusinessDetailsFormComponent } from './pages/registrationform/businessdetails.component';
@@ -31,12 +31,13 @@ import { reviewGenting } from './pages/customer/reviews/reviewGenting.component'
 import { send } from './pages/customer/reviews/send.component';
 import { CustomerProductComponent } from './pages/customer/purchase.component';
 import { CustomerLayout } from './pages/customer/customerlayout.component';
-import { analytic1 } from './analytic1.component';
+import { analytic1 } from './pages/analytic1.component';
 import { CustomerPersonalDetailComponent } from './pages/customer/personaldetails.component';
 import { CustomerBillingAddressComponent } from './pages/customer/billingaddress.component';
 import { CustomerPaymentMethodComponent } from './pages/customer/paymentmethod.component';
 import { CustomerHomeComponent } from './pages/customer/homePurchase.component';
 import { CustomerSuccessfulyPurchase } from './pages/customer/purchasesuccess.component';
+import { MerchantDataFormComponent } from './pages/registrationform/merchantdata.component';
 
 export const routes: Routes = [
   {
@@ -78,6 +79,10 @@ export const routes: Routes = [
       {
         path: 'documents',
         component: BusinessFilesFormComponent,
+      },
+      {
+        path: 'merchantdata',
+        component: MerchantDataFormComponent,
       },
       {
         path: 'complete',
@@ -202,8 +207,7 @@ export const routes: Routes = [
     ],
   },
 
-
-  // 404 
+  // 404
   {
     path: '**',
     component: NotFoundComponent,

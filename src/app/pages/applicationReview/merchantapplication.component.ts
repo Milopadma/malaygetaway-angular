@@ -1,15 +1,12 @@
-import { HostListener, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { buttonwIconModule } from '../../components/button.component';
-import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
 import { Router, RouterOutlet } from '@angular/router';
-import { FileInputComponentModule } from '../../components/form/fileinput.component';
-import { ButtonUnborderedModule } from '../../components/buttonunbordered.component';
-import { ButtonNoIconModule } from '../../components/buttonnoicon.component';
-import { IconComponentModule } from '../../components/icon.component';
+import { IconComponent } from '../../components/icon.component';
+import { ButtonNoIcon } from '../../components/buttonnoicon.component';
+
 @Component({
   selector: 'officer-merchant-application',
+  standalone: true,
+  imports: [IconComponent, ButtonNoIcon],
   template: `
     <div class="flex flex-col h-full">
       <div class="h-12" id="spacer"></div>
@@ -56,19 +53,3 @@ export class OfficerMerchantApplicationsComponent {
     this.router.navigate([page]);
   }
 }
-
-@NgModule({
-  declarations: [OfficerMerchantApplicationsComponent],
-  exports: [OfficerMerchantApplicationsComponent],
-  imports: [
-    CommonModule,
-    buttonwIconModule,
-    ProgressBarComponentModule,
-    RouterOutlet,
-    FileInputComponentModule,
-    ButtonUnborderedModule,
-    ButtonNoIconModule,
-    IconComponentModule,
-  ],
-})
-export class OfficerMerchantApplicationsComponentModule {}

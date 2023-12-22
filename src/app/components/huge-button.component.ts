@@ -1,16 +1,18 @@
-import { Input, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Input } from '@angular/core';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'huge-button',
+  standalone: true,
   template: `
     <div
       class="text-titles flex flex-col text-softblack max-w-full cursor-pointer py-32 border-2 border-softblack px-20 hover:bg-softblack hover:text-white transition-all duration-200"
     >
       <button type="submit">
         <span class="line-clamp-2 text-left">{{ label.split(' ')[0] }}</span>
-        <span class="line-clamp-2 text-left">{{ label.split(' ').slice(1).join(' ') }}</span>
+        <span class="line-clamp-2 text-left">{{
+          label.split(' ').slice(1).join(' ')
+        }}</span>
       </button>
       <img
         loading="lazy"
@@ -24,10 +26,3 @@ import { Component } from '@angular/core';
 export class HugeButton {
   @Input() label!: string;
 }
-
-@NgModule({
-  declarations: [HugeButton],
-  imports: [CommonModule],
-  exports: [HugeButton],
-})
-export class HugeButtonModule {}

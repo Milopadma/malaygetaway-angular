@@ -1,13 +1,10 @@
-import { HostListener, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { buttonwIconModule } from '../../components/button.component';
-import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
-import { Router, RouterOutlet } from '@angular/router';
-import { FileInputComponentModule } from '../../components/form/fileinput.component';
-import { SidebarModule } from '../sidebar.component';
+import { Sidebar } from '../sidebar.component';
+import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'officer-layout',
+  standalone: true,
+  imports: [Sidebar, RouterOutlet],
   template: `
     <main class="flex flex-row">
       <div class="flex flex-shrink-0">
@@ -22,17 +19,3 @@ import { SidebarModule } from '../sidebar.component';
   `,
 })
 export class MerchantLayout {}
-
-@NgModule({
-  declarations: [MerchantLayout],
-  exports: [MerchantLayout],
-  imports: [
-    CommonModule,
-    buttonwIconModule,
-    ProgressBarComponentModule,
-    RouterOutlet,
-    FileInputComponentModule,
-    SidebarModule,
-  ],
-})
-export class MerchantLayoutModule {}

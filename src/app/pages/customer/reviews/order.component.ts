@@ -1,12 +1,9 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ProgressBarComponentModule } from '../../../components/form/progressbar.component';
-import { buttonwIconModule } from '../../../components/button.component';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'order',
+  standalone: true,
   template: `
     <section class="py-20">
       <div class="max-w-4xl mx-auto px-4">
@@ -272,9 +269,3 @@ export class Orders {
     this.router.navigate(['customer/review/reviewAquaria']);
   }
 }
-@NgModule({
-  declarations: [Orders],
-  exports: [Orders],
-  imports: [CommonModule, ProgressBarComponentModule, buttonwIconModule],
-})
-export class OrdersModule {}

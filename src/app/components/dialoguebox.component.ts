@@ -1,15 +1,10 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  NgModule,
-} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ButtonBorderedModule } from './buttonbordered.component';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { ButtonBordered } from './buttonbordered.component';
 
 @Component({
   selector: 'dialogue-box',
+  standalone: true,
+  imports: [ButtonBordered],
   template: `
     <div
       class="fixed inset-0 flex items-center justify-center z-50"
@@ -60,10 +55,3 @@ export class DialogueBoxComponent {
     this.close.emit();
   }
 }
-
-@NgModule({
-  declarations: [DialogueBoxComponent],
-  exports: [DialogueBoxComponent],
-  imports: [CommonModule, ButtonBorderedModule],
-})
-export class DialogueBoxModule {}

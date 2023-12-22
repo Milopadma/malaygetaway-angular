@@ -1,18 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
-import { buttonwIconModule } from '../../components/button.component';
 import { Router } from '@angular/router';
 // Backend Http Client
 import { FormsModule } from '@angular/forms';
 import { PersonalDetailService } from '../../api/personal-detail.service';
 import { HttpClientModule } from '@angular/common/http';
+import { progressbar } from '../../components/form/progressbar.component';
 
 @Component({
   selector: 'purchase2',
   // Backend Http Client
   standalone: true,
-  imports: [FormsModule, HttpClientModule, ProgressBarComponentModule],
+  imports: [FormsModule, HttpClientModule, progressbar],
   template: `
     <section>
       <br />
@@ -42,90 +41,118 @@ import { HttpClientModule } from '@angular/common/http';
           <div class="bg-white p-6 rounded-lg">
             <h2 class="text-subtitles font-bold mb-4">Personal Detail</h2>
             <form (submit)="navigateToBillingAddress()">
-                <div class="grid gap-6 mb-1 lg:grid-cols-2">
-                  <div>
-                    <label for="first_name" class="block mb-2 text-small font-medium text-softblack">First Name</label>
-                    <input
-                      type="text"
-                      id="first_name"
-                      name="first_name"
-                      (input)="updatePersonalDetail('firstName', $event)"
-                      class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label for="last_name" class="block mb-1 text-small font-medium text-softblack">Last Name</label>
-                    <input
-                      type="text"
-                      id="last_name"
-                      name="last_name"
-                      (input)="updatePersonalDetail('lastName', $event)"
-                      class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="mb-1">
-                  <label for="address" class="block mb-1 text-small font-medium text-softblack">Address</label>
+              <div class="grid gap-6 mb-1 lg:grid-cols-2">
+                <div>
+                  <label
+                    for="first_name"
+                    class="block mb-2 text-small font-medium text-softblack"
+                    >First Name</label
+                  >
                   <input
                     type="text"
-                    id="address"
-                    name="address"
-                    (input)="updatePersonalDetail('address', $event)"
+                    id="first_name"
+                    name="first_name"
+                    (input)="updatePersonalDetail('firstName', $event)"
                     class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     required
                   />
                 </div>
-                <div class="grid gap-6 mb-1 lg:grid-cols-2">
-                  <div>
-                    <label for="city" class="block mb-2 text-small font-medium text-softblack">City</label>
-                    <input
-                      type="text"
-                      id="city"
-                      name="city"
-                      (input)="updatePersonalDetail('city', $event)"
-                      class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label for="state" class="block mb-2 text-small font-medium text-softblack">State</label>
-                    <input
-                      type="text"
-                      id="state"
-                      name="state"
-                      (input)="updatePersonalDetail('state', $event)"
-                      class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                      required
-                    />
-                  </div>
+                <div>
+                  <label
+                    for="last_name"
+                    class="block mb-1 text-small font-medium text-softblack"
+                    >Last Name</label
+                  >
+                  <input
+                    type="text"
+                    id="last_name"
+                    name="last_name"
+                    (input)="updatePersonalDetail('lastName', $event)"
+                    class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    required
+                  />
                 </div>
+              </div>
+              <div class="mb-1">
+                <label
+                  for="address"
+                  class="block mb-1 text-small font-medium text-softblack"
+                  >Address</label
+                >
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  (input)="updatePersonalDetail('address', $event)"
+                  class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  required
+                />
+              </div>
+              <div class="grid gap-6 mb-1 lg:grid-cols-2">
+                <div>
+                  <label
+                    for="city"
+                    class="block mb-2 text-small font-medium text-softblack"
+                    >City</label
+                  >
+                  <input
+                    type="text"
+                    id="city"
+                    name="city"
+                    (input)="updatePersonalDetail('city', $event)"
+                    class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    for="state"
+                    class="block mb-2 text-small font-medium text-softblack"
+                    >State</label
+                  >
+                  <input
+                    type="text"
+                    id="state"
+                    name="state"
+                    (input)="updatePersonalDetail('state', $event)"
+                    class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    required
+                  />
+                </div>
+              </div>
 
-                <div class="grid gap-6 mb-5 lg:grid-cols-2">
-                  <div>
-                    <label for="country" class="block mb-2 text-small font-medium text-softblack">Country</label>
-                    <input
-                      type="text"
-                      id="country"
-                      name="country"
-                      (input)="updatePersonalDetail('country', $event)"
-                      class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label for="zip" class="block mb-2 text-small font-medium text-softblack">ZIP / Postal Code</label>
-                    <input
-                      type="text"
-                      id="zip"
-                      name="zip"
-                      (input)="formatZipCode($event)"
-                      class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                      required
-                    />
-                  </div>
+              <div class="grid gap-6 mb-5 lg:grid-cols-2">
+                <div>
+                  <label
+                    for="country"
+                    class="block mb-2 text-small font-medium text-softblack"
+                    >Country</label
+                  >
+                  <input
+                    type="text"
+                    id="country"
+                    name="country"
+                    (input)="updatePersonalDetail('country', $event)"
+                    class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    required
+                  />
                 </div>
+                <div>
+                  <label
+                    for="zip"
+                    class="block mb-2 text-small font-medium text-softblack"
+                    >ZIP / Postal Code</label
+                  >
+                  <input
+                    type="text"
+                    id="zip"
+                    name="zip"
+                    (input)="formatZipCode($event)"
+                    class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    required
+                  />
+                </div>
+              </div>
               <div class="flex justify-end space-x-4">
                 <button
                   (click)="navButton1()"
@@ -157,26 +184,33 @@ export class CustomerPersonalDetailComponent {
     city: '',
     state: '',
     country: '',
-    postalCode: ''
+    postalCode: '',
   };
 
   isSubmitting = false;
 
-  constructor(private router: Router, private personalDetailService: PersonalDetailService) { }
+  constructor(
+    private router: Router,
+    private personalDetailService: PersonalDetailService
+  ) {}
 
   navigateToBillingAddress() {
     if (this.isSubmitting) {
       return;
     }
     this.isSubmitting = true;
-    this.personalDetailService.createPersonalDetail(this.personalDetail)
-      .subscribe(response => {
-        this.router.navigate(['customer/billingaddress/1']);
-        this.isSubmitting = false;
-      }, error => {
-        console.error('Error when saving personal detail:', error);
-        this.isSubmitting = false;
-      });
+    this.personalDetailService
+      .createPersonalDetail(this.personalDetail)
+      .subscribe(
+        (response) => {
+          this.router.navigate(['customer/billingaddress/1']);
+          this.isSubmitting = false;
+        },
+        (error) => {
+          console.error('Error when saving personal detail:', error);
+          this.isSubmitting = false;
+        }
+      );
   }
 
   navButton1() {
@@ -191,9 +225,11 @@ export class CustomerPersonalDetailComponent {
     this.personalDetail.postalCode = value;
   }
 
-  updatePersonalDetail(field: keyof CustomerPersonalDetailComponent['personalDetail'], event: Event) {
+  updatePersonalDetail(
+    field: keyof CustomerPersonalDetailComponent['personalDetail'],
+    event: Event
+  ) {
     const input = event.target as HTMLInputElement;
     this.personalDetail[field] = input.value;
   }
 }
-

@@ -1,11 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { buttonwIconModule } from '../../components/button.component';
+
 import { Router } from '@angular/router';
+import { ButtonwIcon } from '../../components/button.component';
 
 @Component({
   selector: 'merchantregistercta',
+  standalone: true,
+  imports: [ButtonwIcon],
   template: `
     <div class="h-32" id="spacer"></div>
     <div class="flex flex-row justify-between w-screen">
@@ -44,10 +45,3 @@ export class MerchantRegisterCTA {
     this.router.navigate(['/merchant/register/name']); // replace '/nextPage' with the actual route
   }
 }
-
-@NgModule({
-  declarations: [MerchantRegisterCTA],
-  exports: [MerchantRegisterCTA],
-  imports: [CommonModule, buttonwIconModule],
-})
-export class MerchantRegisterCTAModule {}

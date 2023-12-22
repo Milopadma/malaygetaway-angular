@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
-import { buttonwIconModule } from '../../components/button.component';
-import { ProgressBarComponentModule } from '../../components/form/progressbar.component';
 import { Router, RouterOutlet } from '@angular/router';
-import { FileInputComponentModule } from '../../components/form/fileinput.component';
+import { FileInputComponent } from '../../components/form/fileinput.component';
+import { ButtonwIcon } from '../../components/button.component';
 @Component({
   selector: 'merchant-products-add',
+  standalone: true,
+  imports: [FileInputComponent, ButtonwIcon],
   template: `
     <div class="h-12" id="spacer"></div>
     <div class="flex flex-col w-full">
@@ -43,7 +43,7 @@ import { FileInputComponentModule } from '../../components/form/fileinput.compon
           />
         </div>
         <div class="flex">
-            <fileinput label="Upload Images"></fileinput>
+          <fileinput label="Upload Images"></fileinput>
         </div>
       </div>
       <div class="h-32" id="spacer"></div>
@@ -73,16 +73,3 @@ export class MerchantAddProductsComponent {
     this.router.navigate(['/merchant/products']); // replace '/nextPage' with the actual route
   }
 }
-
-@NgModule({
-  declarations: [MerchantAddProductsComponent],
-  exports: [MerchantAddProductsComponent],
-  imports: [
-    CommonModule,
-    buttonwIconModule,
-    ProgressBarComponentModule,
-    RouterOutlet,
-    FileInputComponentModule,
-  ],
-})
-export class MerchantAddProductsComponentModule {}
