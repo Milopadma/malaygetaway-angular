@@ -4,6 +4,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MerchantRegistrationService } from './merchantregistration.service';
 import { ButtonwIcon } from '../../components/button.component';
+import { z } from 'zod';
 @Component({
   selector: 'businessdetails-form',
   standalone: true,
@@ -30,12 +31,21 @@ import { ButtonwIcon } from '../../components/button.component';
         />
         <!-- errors -->
         <div
-          [class.opacity-100]="!contactNumber.valid && contactNumber.touched"
-          [class.translate-y-0]="!contactNumber.valid && contactNumber.touched"
-          [class.h-8]="contactNumber.valid || !contactNumber.touched"
-          class="text-reject transition-all ease-in-out duration-500 opacity-0 -translate-y-3/4 block h-0"
+          [class.opacity-100]="
+            (contactNumber.touched || formSubmitted) &&
+            contactNumberError.status
+          "
+          [class.translate-y-0]="
+            (contactNumber.touched || formSubmitted) &&
+            contactNumberError.status
+          "
+          [class.h-0]="
+            !(contactNumber.touched || formSubmitted) ||
+            !contactNumberError.status
+          "
+          class="text-reject transition-all ease-in-out duration-500 opacity-0 -translate-y-3/4 block h-8"
         >
-          Contact Number required.
+          {{ contactNumberError.message }}
         </div>
         <input
           type="email"
@@ -90,6 +100,39 @@ import { ButtonwIcon } from '../../components/button.component';
 export class BusinessDetailsFormComponent {
   // init new business from global state
   business = this.mrs.getBusiness();
+  businessDataForm: NgForm;
+
+  // for the errors
+  contactNumberError: { status: boolean; message: string | null } = {
+    status: true,
+    message: 'Required',
+  };
+  contactEmail: { status: boolean; message: string | null } = {
+    status: true,
+    message: 'Required',
+  };
+  description: { status: boolean; message: string | null } = {
+    status: true,
+    message: 'Required',
+  };
+  formSubmitted: boolean = false;
+
+  // zod schema for validating business object
+  BusinessSchema = z.object({
+    contactNumber: z
+      .string()
+      .min(6, { message: 'Invalid contact number' })
+      .max(10, { message: 'Invalid contact number' }),
+    contactEmail: z.string().email({ message: 'Invalid email' }),
+    description: z.string().min(3, { message: 'Invalid description' }),
+  });
+
+  constructor(
+    private router: Router,
+    private mrs: MerchantRegistrationService
+  ) {
+    this.businessDataForm = new NgForm([], []);
+  }
 
   autoResize(textarea: HTMLTextAreaElement) {
     textarea.style.overflow = 'auto';
@@ -97,23 +140,67 @@ export class BusinessDetailsFormComponent {
     textarea.style.height = textarea.scrollHeight + 'px';
   }
 
-  constructor(
-    private router: Router,
-    private mrs: MerchantRegistrationService
-  ) {}
-
+  // update global state on form change
   onFormChange() {
-    this.mrs.setBusiness(this.business);
+    try {
+      // trigger the validation error if the data is invalid
+      const validatedData = this.BusinessSchema.parse(this.business);
+      this.contactNumberError.status = false; // clear previous error
+      this.contactNumberError.message = null; // clear previous error
+      this.contactEmail.status = false; // clear previous error
+      this.contactEmail.message = null; // clear previous error
+      this.description.status = false; // clear previous error
+      this.description.message = null; // clear previous error
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        // ZodError.errors is an array of errors for each field
+        this.contactNumberError = {
+          status: true,
+          message: error.errors[0].message,
+        };
+        this.contactEmail = {
+          status: true,
+          message: error.errors[1].message,
+        };
+        this.description = {
+          status: true,
+          message: error.errors[3].message,
+        };
+      }
+
+      this.mrs.setBusiness(this.business);
+    }
   }
 
   onSubmit(form: NgForm) {
-    if (form.valid) {
-      this.business = form.value;
+    this.formSubmitted = true;
+    try {
+      const validatedData = this.BusinessSchema.parse(form.value);
+      // update local form data
+      this.business.contactNumber = validatedData.contactNumber;
+      this.business.contactEmail = validatedData.contactEmail;
+      this.business.description = validatedData.description;
+      // then update global state with that form data
       this.mrs.setBusiness(this.business);
       console.log('Form data:', this.business);
       this.navigateToNextPage();
-    } else {
+    } catch (error) {
       console.log('Form is not valid');
+      console.log(error);
+      if (error instanceof z.ZodError) {
+        this.contactNumberError = {
+          status: true,
+          message: error.errors[0].message,
+        };
+        this.contactEmail = {
+          status: true,
+          message: error.errors[1].message,
+        };
+        this.description = {
+          status: true,
+          message: error.errors[2].message,
+        };
+      }
     }
   }
 
