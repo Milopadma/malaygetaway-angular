@@ -92,15 +92,12 @@ interface FormError {
           {{ descriptionError().message }}
         </div>
         <div class="h-32" id="spacer"></div>
-        <div class="flex flex-col items-end" type="submit">
-          <buttonwicon
-            label="Continue"
-            [disabled]="
-              contactNumberError().isHidden ||
-              contactEmailError().isHidden ||
-              descriptionError().isHidden
-            "
-          ></buttonwicon>
+        <div
+          class="flex flex-col items-end"
+          type="submit"
+          [ariaDisabled]="!isFormValid"
+        >
+          <buttonwicon label="Continue" [disabled]="!isFormValid"></buttonwicon>
           <p
             class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
           >
@@ -130,7 +127,9 @@ export class BusinessDetailsFormComponent {
     isHidden: true,
   });
 
+  // form states
   formSubmitted: boolean = false;
+  isFormValid: boolean = false;
 
   // zod schema for validating business object
   BusinessSchema = z.object({
@@ -165,6 +164,8 @@ export class BusinessDetailsFormComponent {
     try {
       // trigger the validation error if the data is invalid
       const validatedData = this.BusinessSchema.parse(this.business);
+      this.isFormValid = true;
+      console.log('Form is valid');
     } catch (error) {
       if (error instanceof z.ZodError) {
         error.errors.forEach((err) => {
