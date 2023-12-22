@@ -23,10 +23,21 @@ import { FormError } from '../../types';
           (fileChanged)="handleFileChange($event)"
           label="Licenses"
         ></fileinput>
+
         <fileinput
           (fileChanged)="handleFileChange($event)"
           label="Testimonials"
         ></fileinput>
+      </div>
+      <!-- errors -->
+      <div
+        class="{{
+          !fileError().isHidden
+            ? 'opacity-100 translate-y-0 h-8'
+            : 'opacity-0 -translate-y-3/4 h-0'
+        }} text-reject transition-all ease-in-out duration-500 block"
+      >
+        {{ fileError().message }}
       </div>
       <div class="h-32" id="spacer"></div>
       <div class="flex w-full items-end justify-end">
@@ -54,6 +65,7 @@ export class BusinessFilesFormComponent {
   // form states
   formSubmitted: boolean = false;
   isFormValid: boolean = false;
+  formFiles: FileList[] = [];
 
   // error states
   fileError = signal<FormError>({
@@ -72,6 +84,7 @@ export class BusinessFilesFormComponent {
     private mrs: MerchantRegistrationService
   ) {
     this.businessFilesForm = new NgForm([], []);
+    this.formFiles = [];
   }
 
   onSubmit(form: NgForm) {
@@ -106,9 +119,32 @@ export class BusinessFilesFormComponent {
   }
 
   handleFileChange(fileData: FileList) {
-    // validate
+    console.log(fileData);
+    // Check if a file was added or replaced
+    if (this.formFiles.length < 2) {
+      // Add the file to the formFiles array
+      this.formFiles = [...this.formFiles, fileData];
+    } else {
+      // Replace the second file in the formFiles array
+      this.formFiles[1] = fileData;
+    }
 
+    // Update isFormValid based on the number of files
+    this.isFormValid = this.formFiles.length === 2;
 
+    console.log('added file', this.formFiles);
+
+    // Check if the form is still not valid
+    if (!this.isFormValid) {
+      this.fileError.set({
+        message: 'Required',
+        isHidden: false,
+      });
+    } else {
+      this.fileError.set({
+        message: '',
+        isHidden: true,
+      });
+    }
   }
 }
-
