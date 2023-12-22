@@ -1,10 +1,16 @@
-import { HostListener } from '@angular/core';
+import { HostListener, signal } from '@angular/core';
 import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MerchantRegistrationService } from './merchantregistration.service';
 import { ButtonwIcon } from '../../components/button.component';
 import { z } from 'zod';
+
+interface FormError {
+  message: string | null;
+  isHidden: boolean;
+}
+
 @Component({
   selector: 'businessdetails-form',
   standalone: true,
@@ -31,21 +37,13 @@ import { z } from 'zod';
         />
         <!-- errors -->
         <div
-          [class.opacity-100]="
-            (contactNumber.touched || formSubmitted) &&
-            contactNumberError.status
-          "
-          [class.translate-y-0]="
-            (contactNumber.touched || formSubmitted) &&
-            contactNumberError.status
-          "
-          [class.h-0]="
-            !(contactNumber.touched || formSubmitted) ||
-            !contactNumberError.status
-          "
-          class="text-reject transition-all ease-in-out duration-500 opacity-0 -translate-y-3/4 block h-8"
+          class="{{
+            !contactNumberError().isHidden && contactNumber.touched
+              ? 'opacity-100 translate-y-0 h-8'
+              : 'opacity-0 -translate-y-3/4 h-0'
+          }} text-reject transition-all ease-in-out duration-500 block"
         >
-          {{ contactNumberError.message }}
+          {{ contactNumberError().message }}
         </div>
         <input
           type="email"
@@ -61,12 +59,13 @@ import { z } from 'zod';
         />
         <!-- errors -->
         <div
-          [class.opacity-100]="!contactEmail.valid && contactEmail.touched"
-          [class.translate-y-0]="!contactEmail.valid && contactEmail.touched"
-          [class.h-8]="contactEmail.valid || !contactEmail.touched"
-          class="text-reject transition-all ease-in-out duration-500 opacity-0 -translate-y-3/4 block h-0"
+          class="{{
+            !contactEmailError().isHidden && contactEmail.touched
+              ? 'opacity-100 translate-y-0 h-8'
+              : 'opacity-0 -translate-y-3/4 h-0'
+          }} text-reject transition-all ease-in-out duration-500 block"
         >
-          Contact Email required.
+          {{ contactEmailError().message }}
         </div>
         <textarea
           id="description"
@@ -76,16 +75,31 @@ import { z } from 'zod';
           name="description"
           #name="ngModel"
           #textarea
+          #description="ngModel"
           (input)="autoResize(textarea)"
           class="text-black placeholder:text-fadedgray  h-32 text-paragraph leading-7 tracking-tighter border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full mt-2 px-5 py-2 border-2 border-solid max-md:pl-1 resize-y"
           placeholder="brief company description"
           rows="1"
         ></textarea>
+        <!-- errors -->
+        <div
+          class="{{
+            !descriptionError().isHidden && description.touched
+              ? 'opacity-100 translate-y-0 h-8'
+              : 'opacity-0 -translate-y-3/4 h-0'
+          }} text-reject transition-all ease-in-out duration-500 block"
+        >
+          {{ descriptionError().message }}
+        </div>
         <div class="h-32" id="spacer"></div>
-        <div class="flex flex-col items-end">
+        <div class="flex flex-col items-end" type="submit">
           <buttonwicon
-            (click)="navigateToNextPage()"
             label="Continue"
+            [disabled]="
+              contactNumberError().isHidden ||
+              contactEmailError().isHidden ||
+              descriptionError().isHidden
+            "
           ></buttonwicon>
           <p
             class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
@@ -103,18 +117,19 @@ export class BusinessDetailsFormComponent {
   businessDataForm: NgForm;
 
   // for the errors
-  contactNumberError: { status: boolean; message: string | null } = {
-    status: true,
+  contactNumberError = signal<FormError>({
     message: 'Required',
-  };
-  contactEmail: { status: boolean; message: string | null } = {
-    status: true,
+    isHidden: true,
+  });
+  contactEmailError = signal<FormError>({
     message: 'Required',
-  };
-  description: { status: boolean; message: string | null } = {
-    status: true,
+    isHidden: true,
+  });
+  descriptionError = signal<FormError>({
     message: 'Required',
-  };
+    isHidden: true,
+  });
+
   formSubmitted: boolean = false;
 
   // zod schema for validating business object
@@ -145,27 +160,24 @@ export class BusinessDetailsFormComponent {
     try {
       // trigger the validation error if the data is invalid
       const validatedData = this.BusinessSchema.parse(this.business);
-      this.contactNumberError.status = false; // clear previous error
-      this.contactNumberError.message = null; // clear previous error
-      this.contactEmail.status = false; // clear previous error
-      this.contactEmail.message = null; // clear previous error
-      this.description.status = false; // clear previous error
-      this.description.message = null; // clear previous error
+      this.contactNumberError.set({ message: null, isHidden: true }); // clear previous error
+      this.contactEmailError.set({ message: null, isHidden: true }); // clear previous error
+      this.descriptionError.set({ message: null, isHidden: true }); // clear previous error
     } catch (error) {
       if (error instanceof z.ZodError) {
         // ZodError.errors is an array of errors for each field
-        this.contactNumberError = {
-          status: true,
+        this.contactNumberError.set({
           message: error.errors[0].message,
-        };
-        this.contactEmail = {
-          status: true,
+          isHidden: false,
+        });
+        this.contactEmailError.set({
           message: error.errors[1].message,
-        };
-        this.description = {
-          status: true,
-          message: error.errors[3].message,
-        };
+          isHidden: false,
+        });
+        this.descriptionError.set({
+          message: error.errors[2].message,
+          isHidden: false,
+        });
       }
 
       this.mrs.setBusiness(this.business);
@@ -188,18 +200,18 @@ export class BusinessDetailsFormComponent {
       console.log('Form is not valid');
       console.log(error);
       if (error instanceof z.ZodError) {
-        this.contactNumberError = {
-          status: true,
+        this.contactNumberError.set({
           message: error.errors[0].message,
-        };
-        this.contactEmail = {
-          status: true,
+          isHidden: false,
+        });
+        this.contactEmailError.set({
           message: error.errors[1].message,
-        };
-        this.description = {
-          status: true,
+          isHidden: false,
+        });
+        this.descriptionError.set({
           message: error.errors[2].message,
-        };
+          isHidden: false,
+        });
       }
     }
   }
@@ -210,6 +222,6 @@ export class BusinessDetailsFormComponent {
 
   @HostListener('document:keydown.enter', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
-    this.navigateToNextPage();
+    this.onSubmit(this.businessDataForm);
   }
 }
