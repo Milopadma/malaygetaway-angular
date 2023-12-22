@@ -157,31 +157,38 @@ export class BusinessDetailsFormComponent {
 
   // update global state on form change
   onFormChange() {
+    // clear previous errors
+    this.contactNumberError.set({ message: null, isHidden: true });
+    this.contactEmailError.set({ message: null, isHidden: true });
+    this.descriptionError.set({ message: null, isHidden: true });
+
     try {
       // trigger the validation error if the data is invalid
       const validatedData = this.BusinessSchema.parse(this.business);
-      this.contactNumberError.set({ message: null, isHidden: true }); // clear previous error
-      this.contactEmailError.set({ message: null, isHidden: true }); // clear previous error
-      this.descriptionError.set({ message: null, isHidden: true }); // clear previous error
     } catch (error) {
       if (error instanceof z.ZodError) {
-        // ZodError.errors is an array of errors for each field
-        this.contactNumberError.set({
-          message: error.errors[0].message,
-          isHidden: false,
-        });
-        this.contactEmailError.set({
-          message: error.errors[1].message,
-          isHidden: false,
-        });
-        this.descriptionError.set({
-          message: error.errors[2].message,
-          isHidden: false,
+        error.errors.forEach((err) => {
+          if (err.path[0] === 'contactNumber') {
+            this.contactNumberError.set({
+              message: err.message,
+              isHidden: false,
+            });
+          } else if (err.path[0] === 'contactEmail') {
+            this.contactEmailError.set({
+              message: err.message,
+              isHidden: false,
+            });
+          } else if (err.path[0] === 'description') {
+            this.descriptionError.set({
+              message: err.message,
+              isHidden: false,
+            });
+          }
         });
       }
-
-      this.mrs.setBusiness(this.business);
     }
+
+    this.mrs.setBusiness(this.business);
   }
 
   onSubmit(form: NgForm) {
