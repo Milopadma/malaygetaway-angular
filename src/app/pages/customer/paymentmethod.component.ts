@@ -20,15 +20,14 @@ import { CommonModule } from '@angular/common';
           <h2 class="text-subtitles font-bold mb-4">Payment Method</h2>
           <p class="text-small text-softblack mb-6">Choose PayPal as the Payment Method</p>
           <div class="flex justify-center gap-4 mb-6">
-          <button class="group py-1 px-10 font-bold border rounded-lg flex flex-col items-center text-softblack bg-softblack text-white border-softblack" disabled>
-            <div class="w-20 h-12 mb-2 flex justify-center items-center">
-              <img src="https://www.pngplay.com/wp-content/uploads/8/Paypal-Transparent-Image.png" alt="PayPal" class="h-20" />
+          <button class="group py-1 px-10 font-bold rounded-lg flex flex-col items-center text-softblack" disabled>
+            <div class="w-full h-12 mb-2 flex justify-center items-center">
+              <img src="https://logos-world.net/wp-content/uploads/2020/05/PayPal-Logo.png" alt="PayPal" class="h-20" />
             </div>
-            <span>PayPal</span>
           </button>
           </div>
           <form *ngIf="selectedMethod === 'paypal'" class="flex flex-col gap-4">
-            <div class="text-center mt-4">
+            <div class="text-center mt-1">
               <p class="mb-4 text-small">Enter your PayPal details:</p>
               <div>
                 <label for="paypalEmail" class="block mb-2 text-small font-medium text-softblack">PayPal Email</label>
