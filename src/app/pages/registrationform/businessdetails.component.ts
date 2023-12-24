@@ -332,8 +332,8 @@ export class BusinessDetailsFormComponent {
     this.mrs.setMerchant(this.merchant);
   }
   navigateToNextPage() {
-    // this.router.navigate(['/merchant/register/merchantdata']);
-    this.router.navigate(['/merchant/register/complete']);
+    this.router.navigate(['/merchant/register/documents']);
+    // this.router.navigate(['/merchant/register/complete']);
   }
 
   @HostListener('document:keydown.enter', ['$event'])

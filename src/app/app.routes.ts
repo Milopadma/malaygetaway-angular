@@ -77,10 +77,10 @@ export const routes: Routes = [
         component: BusinessDetailsFormComponent,
       },
       // TODO! DISABLED DOCUMENTS FOR NOW DUE TO MULTER ERRORS
-      // {
-      //   path: 'documents',
-      //   component: BusinessFilesFormComponent,
-      // },
+      {
+        path: 'documents',
+        component: BusinessFilesFormComponent,
+      },
       // { !DEPRECATED
       //   path: 'merchantdata',
       //   component: MerchantDataFormComponent,

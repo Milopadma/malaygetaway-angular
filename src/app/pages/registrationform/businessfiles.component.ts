@@ -157,9 +157,14 @@ export class BusinessFilesFormComponent {
       // attemp to send after 5 seconds of inactiviy
       setTimeout(() => {
         console.log('current formfiles : ', this.formFiles);
-        this.apiService
-          .sendFiles(this.formFiles)
-          .subscribe((fileURLs) => console.log('fileURLs', fileURLs));
+        this.apiService.uploadFile(this.formFiles[0]).subscribe(
+          (response) => {
+            console.log('File is uploaded', response);
+          },
+          (error) => {
+            console.log('Error', error);
+          }
+        );
       }, 5000);
     }
   }

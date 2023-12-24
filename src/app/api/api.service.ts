@@ -152,6 +152,12 @@ export class ApiService {
       .pipe();
   }
 
+  uploadFile(file: File): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    return this.http.post('/api/files/upload', formData);
+  }
+
   // personal details related APIs
   public createPersonalDetail(personalDetail: any): Observable<any> {
     console.log(personalDetail);
