@@ -44,18 +44,10 @@ export class MerchantRegistrationService {
   }
 
   // checks
-  checkUsername(username: string): boolean {
-    this.apiService.checkMerchantName(username).subscribe(
-      (response) => {
-        console.log('Response from backend', response);
-        return response;
-      },
-      (error) => {
-        console.log('Error from backend', error);
-        return false;
-      }
-    );
-    return false;
+  checkUsername(
+    username: string
+  ): Observable<{ code: number; message: string }> {
+    return this.apiService.checkMerchantName(username);
   }
 
   checkEmail(email: string): boolean {

@@ -4,7 +4,9 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { MerchantRegistrationService } from './merchantregistration.service';
 import { ButtonwIcon } from '../../components/button.component';
 import { z } from 'zod';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, switchMap } from 'rxjs/operators';
+import { ApiService } from '../../api/api.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'businessname-form',
@@ -25,6 +27,7 @@ import { debounceTime } from 'rxjs/operators';
           required
           [(ngModel)]="business.name"
           (ngModelChange)="onFormChange()"
+          (ngModelChange)="onBusinessNameChange($event)"
           name="name"
           #name="ngModel"
           class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full mt-4 px-5 py-2 border-2 border-solid max-md:pl-1"
@@ -81,10 +84,42 @@ export class BusinessNameFormComponent {
 
   constructor(
     private router: Router,
-    private mrs: MerchantRegistrationService
+    private mrs: MerchantRegistrationService,
+    private apiService: ApiService
   ) {
     // init new business from global state
     this.merchantDataForm = new NgForm([], []);
+
+    // Check username availability with debounce
+    // debounce function
+    this.businessNameSubject
+      .pipe(
+        debounceTime(300), // Wait for 300ms of silence
+        switchMap((name) => this.apiService.checkMerchantName(name)) // Switch to new search observable each time
+      )
+      .subscribe(
+        (response) => {
+          console.log('Response from backend', response);
+          if (response.code == 200) {
+            this.nameError.status = false;
+            this.nameError.message = null;
+          } else {
+            this.nameError.status = true;
+            this.nameError.message = 'Name is already taken';
+          }
+        },
+        (error) => {
+          console.log('Error from backend', error);
+          this.nameError.status = true;
+          this.nameError.message = 'Name is already taken';
+        }
+      );
+  }
+  private businessNameSubject = new Subject<string>();
+
+  // Call this method whenever the business name changes
+  onBusinessNameChange(name: string) {
+    this.businessNameSubject.next(name);
   }
 
   onFormChange() {
@@ -93,11 +128,6 @@ export class BusinessNameFormComponent {
       const validatedData = this.BusinessSchema.parse(this.business);
       this.nameError.status = false; // clear previous error
       this.nameError.message = null; // clear previous error
-
-      // Check username availability with debounce
-      if (this.mrs.checkUsername(this.business.name)) {
-        this.nameError = { status: true, message: 'Username already taken' };
-      }
     } catch (error) {
       if (error instanceof z.ZodError) {
         // ZodError.errors is an array of errors for each field
@@ -110,6 +140,10 @@ export class BusinessNameFormComponent {
   onSubmit(form: NgForm) {
     this.formSubmitted = true;
     try {
+      if (this.nameError.status) {
+        // If there's an error, don't submit the form
+        return;
+      }
       const validatedData = this.BusinessSchema.parse(form.value);
       this.business.name = validatedData.name;
       this.mrs.setMerchant(this.business);
@@ -126,6 +160,10 @@ export class BusinessNameFormComponent {
 
   @HostListener('document:keydown.enter', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
+    if (this.nameError.status) {
+      // If there's an error, don't submit the form
+      return;
+    }
     this.onSubmit(this.merchantDataForm);
   }
 

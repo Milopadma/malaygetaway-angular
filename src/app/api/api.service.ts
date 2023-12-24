@@ -68,7 +68,7 @@ export class ApiService {
     name: string
   ): Observable<{ code: number; message: string }> {
     return this.http
-      .post<any>(`${this.apiUrl}/api/merchant/check/name/${name}`, {})
+      .get<any>(`${this.apiUrl}/api/merchant/check/name/${name}`, {})
       .pipe(
         map((response) => {
           if (response.status === 'Conflict') {
