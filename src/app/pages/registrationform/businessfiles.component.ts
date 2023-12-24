@@ -56,7 +56,7 @@ import { ApiService } from '../../api/api.service';
 })
 export class BusinessFilesFormComponent {
   // global state
-  business = this.mrs.getBusiness();
+  business = this.mrs.getMerchant();
   businessFilesForm: NgForm;
 
   // form states
@@ -94,7 +94,7 @@ export class BusinessFilesFormComponent {
         // update local form data
         this.business.businessFileURLs = fileURLs;
         // then update global state with that form data
-        this.mrs.setBusiness(this.business);
+        this.mrs.setMerchant(this.business);
         console.log('Form data:', this.business);
         this.navigateToNextPage();
       });
@@ -103,7 +103,7 @@ export class BusinessFilesFormComponent {
       // update local form data
       this.business.businessFileURLs = validatedData.files;
       // then update global state with that form data
-      this.mrs.setBusiness(this.business);
+      this.mrs.setMerchant(this.business);
       console.log('Form data:', this.business);
       this.navigateToNextPage();
     } catch (error) {
@@ -156,6 +156,7 @@ export class BusinessFilesFormComponent {
       });
       // attemp to send after 5 seconds of inactiviy
       setTimeout(() => {
+        console.log('current formfiles : ', this.formFiles);
         this.apiService
           .sendFiles(this.formFiles)
           .subscribe((fileURLs) => console.log('fileURLs', fileURLs));

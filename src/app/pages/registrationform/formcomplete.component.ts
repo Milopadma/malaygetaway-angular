@@ -1,6 +1,8 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { ButtonwIcon } from '../../components/button.component';
+import { MerchantRegistrationService } from './merchantregistration.service';
+import { ApiService } from '../../api/api.service';
 @Component({
   selector: 'completed-form',
   standalone: true,
@@ -28,11 +30,24 @@ import { ButtonwIcon } from '../../components/button.component';
           or press Enter
         </p>
       </div>
+      <button (click)="test()">hello</button>
     </div>
   `,
 })
-export class CompletedFormComponent {
-  constructor(private router: Router) {}
+export class CompletedFormComponent implements OnInit {
+  constructor(
+    private router: Router,
+    private mrs: MerchantRegistrationService,
+    private apiservice: ApiService
+  ) {}
+
+  test() {
+    this.apiservice.testAPI();
+  }
+
+  ngOnInit() {
+    this.mrs.registerMerchant();
+  }
 
   @HostListener('document:keydown.enter', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {

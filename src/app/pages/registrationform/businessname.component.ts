@@ -4,6 +4,8 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { MerchantRegistrationService } from './merchantregistration.service';
 import { ButtonwIcon } from '../../components/button.component';
 import { z } from 'zod';
+import { debounceTime } from 'rxjs/operators';
+
 @Component({
   selector: 'businessname-form',
   standalone: true,
@@ -59,7 +61,7 @@ import { z } from 'zod';
 })
 export class BusinessNameFormComponent {
   // init new business from global state
-  business = this.mrs.getBusiness();
+  business = this.mrs.getMerchant();
   merchantDataForm: NgForm;
 
   // for the errors
@@ -85,13 +87,17 @@ export class BusinessNameFormComponent {
     this.merchantDataForm = new NgForm([], []);
   }
 
-  // update global state on form change
   onFormChange() {
     try {
       // this will throw an error if the data is invalid
       const validatedData = this.BusinessSchema.parse(this.business);
       this.nameError.status = false; // clear previous error
       this.nameError.message = null; // clear previous error
+
+      // Check username availability with debounce
+      if (this.mrs.checkUsername(this.business.name)) {
+        this.nameError = { status: true, message: 'Username already taken' };
+      }
     } catch (error) {
       if (error instanceof z.ZodError) {
         // ZodError.errors is an array of errors for each field
@@ -106,7 +112,7 @@ export class BusinessNameFormComponent {
     try {
       const validatedData = this.BusinessSchema.parse(form.value);
       this.business.name = validatedData.name;
-      this.mrs.setBusiness(this.business);
+      this.mrs.setMerchant(this.business);
       console.log('Form data:', this.business);
       this.navigateToNextPage();
     } catch (error) {

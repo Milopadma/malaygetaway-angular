@@ -23,7 +23,7 @@ import { FormError } from '../../types';
           type="tel"
           id="contactNumber"
           required
-          [(ngModel)]="business.contactNumber"
+          [(ngModel)]="merchant.contactNumber"
           (ngModelChange)="onFormChange()"
           name="contactNumber"
           pattern="^[0-9]*$"
@@ -46,7 +46,7 @@ import { FormError } from '../../types';
           id="contactEmail"
           required
           pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
-          [(ngModel)]="business.contactEmail"
+          [(ngModel)]="merchant.contactEmail"
           (ngModelChange)="onFormChange()"
           name="contactEmail"
           #contactEmail="ngModel"
@@ -66,7 +66,7 @@ import { FormError } from '../../types';
         <textarea
           id="description"
           required
-          [(ngModel)]="business.description"
+          [(ngModel)]="merchant.description"
           (ngModelChange)="onFormChange()"
           name="description"
           #name="ngModel"
@@ -106,8 +106,8 @@ import { FormError } from '../../types';
 })
 export class BusinessDetailsFormComponent {
   // init new business from global state
-  business = this.mrs.getBusiness();
-  businessDataForm: NgForm;
+  merchant = this.mrs.getMerchant();
+  MerchantDataForm: NgForm;
 
   // for the errors
   contactNumberError = signal<FormError>({
@@ -130,7 +130,7 @@ export class BusinessDetailsFormComponent {
   // zod schema for validating business object
   BusinessSchema = z.object({
     contactNumber: z
-      .string()
+      .number()
       .min(6, { message: 'Invalid contact number' })
       .max(10, { message: 'Invalid contact number' }),
     contactEmail: z.string().email({ message: 'Invalid email' }),
@@ -141,7 +141,7 @@ export class BusinessDetailsFormComponent {
     private router: Router,
     private mrs: MerchantRegistrationService
   ) {
-    this.businessDataForm = new NgForm([], []);
+    this.MerchantDataForm = new NgForm([], []);
   }
 
   autoResize(textarea: HTMLTextAreaElement) {
@@ -159,7 +159,7 @@ export class BusinessDetailsFormComponent {
 
     try {
       // trigger the validation error if the data is invalid
-      const validatedData = this.BusinessSchema.parse(this.business);
+      const validatedData = this.BusinessSchema.parse(this.merchant);
       this.isFormValid = true;
       console.log('Form is valid');
     } catch (error) {
@@ -185,7 +185,7 @@ export class BusinessDetailsFormComponent {
       }
     }
 
-    this.mrs.setBusiness(this.business);
+    this.mrs.setMerchant(this.merchant);
   }
 
   onSubmit(form: NgForm) {
@@ -193,12 +193,12 @@ export class BusinessDetailsFormComponent {
     try {
       const validatedData = this.BusinessSchema.parse(form.value);
       // update local form data
-      this.business.contactNumber = validatedData.contactNumber;
-      this.business.contactEmail = validatedData.contactEmail;
-      this.business.description = validatedData.description;
+      this.merchant.contactNumber = validatedData.contactNumber;
+      this.merchant.contactEmail = validatedData.contactEmail;
+      this.merchant.description = validatedData.description;
       // then update global state with that form data
-      this.mrs.setBusiness(this.business);
-      console.log('Form data:', this.business);
+      this.mrs.setMerchant(this.merchant);
+      console.log('Form data:', this.merchant);
       this.navigateToNextPage();
     } catch (error) {
       console.log('Form is not valid');
@@ -221,11 +221,12 @@ export class BusinessDetailsFormComponent {
   }
 
   navigateToNextPage() {
-    this.router.navigate(['/merchant/register/documents']);
+    // this.router.navigate(['/merchant/register/merchantdata']);
+    this.router.navigate(['/merchant/register/complete']);
   }
 
   @HostListener('document:keydown.enter', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
-    this.onSubmit(this.businessDataForm);
+    this.onSubmit(this.MerchantDataForm);
   }
 }

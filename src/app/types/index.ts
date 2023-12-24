@@ -34,8 +34,11 @@ export enum MerchantStatus {
 
 export interface MerchantData {
   merchantId: number;
-  phoneNumber: number;
-  email: string;
+  name: string;
+  contactNumber: number;
+  contactEmail: string;
+  description: string;
+  businessFileURLs: string[];
   status: MerchantStatus;
 }
 
@@ -49,29 +52,18 @@ export interface MinistryOfficerData {
   officerId: number;
 }
 
-// business related interface types
-export interface Business {
-  merchantId: number; // as owner of the business
-  businessId: number;
-  name: string;
-  description: string;
-  address: string;
-  contactNumber: string;
-  contactEmail: string;
-  businessFileURLs: string[];
-}
-
-export class Business {
+export class MerchantData {
   constructor(
     public merchantId: number,
-    public businessId: number,
     public name: string,
-    public description: string,
-    public address: string,
-    public contactNumber: string,
+    public contactNumber: number,
     public contactEmail: string,
-    public businessFileURLs: string[]
+    public description: string,
+    public businessFileURLs: string[],
+    public status: MerchantStatus
   ) {}
+
+  [key: string]: any;
 }
 
 export class UserMerchant {

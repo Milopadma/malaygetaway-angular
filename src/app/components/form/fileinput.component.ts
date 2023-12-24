@@ -28,6 +28,7 @@ import { IconComponent } from '../icon.component';
       </label>
       <input
         [id]="id"
+        name="fileupload"
         type="file"
         class="hidden"
         (change)="onFileChange($event)"

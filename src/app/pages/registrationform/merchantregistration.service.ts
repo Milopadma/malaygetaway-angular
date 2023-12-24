@@ -1,49 +1,87 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {
-  Business,
-  MerchantData,
-  MerchantStatus,
-  UserMerchant,
-} from '../../types';
+import { MerchantData, MerchantStatus, UserMerchant } from '../../types';
 import { ApiService } from '../../api/api.service';
 
 // Handles the global state for the Merchant Registration Form flow data state
 @Injectable({ providedIn: 'root' })
 export class MerchantRegistrationService {
   // init empty merchant object
-  merchant: UserMerchant = new UserMerchant(0, '', '', {
-    merchantId: 0,
-    phoneNumber: 0,
-    email: '',
-    status: MerchantStatus.PENDING,
-  } as MerchantData);
-  business: Business = new Business(0, 0, '', '', '', '', '', []);
+  merchant: MerchantData = new MerchantData(
+    111,
+    'test',
+    111,
+    'test@test.com',
+    'test',
+    ['testURL', 'testURL'],
+    MerchantStatus.PENDING
+  );
 
   constructor(private http: HttpClient, private apiService: ApiService) {}
+
   // get merchant data
-  getMerchant(): UserMerchant {
+  getMerchant(): MerchantData {
     return this.merchant;
   }
   // set merchant data
-  setMerchant(merchant: UserMerchant) {
+  setMerchant(merchant: MerchantData) {
     console.log(merchant);
     this.merchant = merchant;
   }
-  // get business data
-  getBusiness(): Business {
-    return this.business;
-  }
-  // set business data
-  setBusiness(business: Business) {
-    console.log(business);
-    this.business = business;
-  }
 
   // send the data to backend
-  sendData() {
-    console.log('Sending data to backend...', this.merchant, this.business);
-    return this.apiService.setMerchant(this.merchant);
+  registerMerchant() {
+    console.log('Sending data to backend...', this.merchant);
+    return this.apiService.registerMerchant(this.merchant).subscribe(
+      (response) => {
+        console.log('Response from backend', response);
+      },
+      (error) => {
+        console.log('Error from backend', error);
+      }
+    );
+  }
+
+  // checks
+  checkUsername(username: string): boolean {
+    this.apiService.checkMerchantName(username).subscribe(
+      (response) => {
+        console.log('Response from backend', response);
+        return response;
+      },
+      (error) => {
+        console.log('Error from backend', error);
+        return false;
+      }
+    );
+    return false;
+  }
+
+  checkEmail(email: string): boolean {
+    this.apiService.checkMerchantEmail(email).subscribe(
+      (response) => {
+        console.log('Response from backend', response);
+        return response;
+      },
+      (error) => {
+        console.log('Error from backend', error);
+        return false;
+      }
+    );
+    return false;
+  }
+  checkNumber(number: string): boolean {
+    this.apiService.checkMerchantContactNumber(number).subscribe(
+      (response) => {
+        console.log('Response from backend', response);
+        return response;
+      },
+      (error) => {
+        console.log('Error from backend', error);
+        return false;
+      }
+    );
+    return false;
   }
 }
