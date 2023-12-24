@@ -74,7 +74,7 @@ import { Subject, debounceTime } from 'rxjs';
 })
 export class BusinessFilesFormComponent {
   // global state
-  business = this.mrs.getMerchant();
+  merchant = this.mrs.getMerchant();
 
   // form states
   formSubmitted: boolean = false;
@@ -88,9 +88,7 @@ export class BusinessFilesFormComponent {
   });
 
   // zod schema for validating business object
-  BusinessSchema = z.object({
-    files: z.array(z.string()).min(1, { message: 'Required' }),
-  });
+  BusinessSchema = z.array(z.string().min(2, 'Please upload exactly 2 files.'));
 
   // constructor
   constructor(
@@ -112,12 +110,14 @@ export class BusinessFilesFormComponent {
   onSubmit() {
     this.formSubmitted = true;
     try {
-      const validatedData = this.BusinessSchema.parse(this.business);
+      const validatedData = this.BusinessSchema.parse(
+        this.merchant.businessFileURLs
+      );
       // update local form data
-      this.business.businessFileURLs = validatedData.files;
+      this.merchant.businessFileURLs = validatedData;
       // then update global state with that form data
-      this.mrs.setMerchant(this.business);
-      console.log('Form data:', this.business);
+      this.mrs.setMerchant(this.merchant);
+      console.log('Form data:', this.merchant);
       this.navigateToNextPage();
     } catch (error) {
       console.log('Form is not valid');
@@ -137,7 +137,7 @@ export class BusinessFilesFormComponent {
   }
 
   navigateToNextPage() {
-    this.router.navigate(['merchant/register/merchantdata']); // replace '/nextPage' with the actual route
+    this.router.navigate(['merchant/register/complete']);
   }
 
   handleFileChange(file: File) {
@@ -173,7 +173,7 @@ export class BusinessFilesFormComponent {
           console.log('File is uploaded', response);
           // urls
           for (let i = 0; i < response.data.length; i++) {
-            this.business.businessFileURLs.push(response.data[i].data.url);
+            this.merchant.businessFileURLs.push(response.data[i].data.url);
           }
           this.isLoading = false;
           this.isFormValid = true;

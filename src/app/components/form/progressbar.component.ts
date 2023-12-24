@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { filter, map } from 'rxjs';
 
 @Component({
   selector: 'progress-bar',
@@ -30,7 +32,20 @@ import { Component, Input } from '@angular/core';
     </div>
   `,
 })
-export class progressbar {
+export class ProgressBarComponent implements OnInit {
   @Input() labels: string[] = [];
-  @Input() current: string = '';
+  current: string = '';
+
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.route.url
+      .pipe(
+        filter((segments) => segments.length > 0),
+        map((segments) => segments.join('/'))
+      )
+      .subscribe((path) => {
+        this.current = path;
+      });
+  }
 }
