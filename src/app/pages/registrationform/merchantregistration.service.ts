@@ -63,7 +63,7 @@ export class MerchantRegistrationService {
     );
     return false;
   }
-  checkNumber(number: string): boolean {
+  checkNumber(number: number): boolean {
     this.apiService.checkMerchantContactNumber(number).subscribe(
       (response) => {
         console.log('Response from backend', response);

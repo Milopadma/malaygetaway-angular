@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MerchantData, UserMerchant } from '../types';
-import { Observable, catchError, map, of } from 'rxjs';
+import { EMPTY, Observable, catchError, map, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Response } from 'express';
 
@@ -67,6 +67,9 @@ export class ApiService {
   public checkMerchantName(
     name: string
   ): Observable<{ code: number; message: string }> {
+    if (!name) {
+      return EMPTY;
+    }
     return this.http
       .get<any>(`${this.apiUrl}/api/merchant/check/name/${name}`, {})
       .pipe(
@@ -83,21 +86,51 @@ export class ApiService {
       );
   }
 
-  public checkMerchantEmail(email: string): Observable<boolean> {
+  public checkMerchantEmail(
+    email: string
+  ): Observable<{ code: number; message: string }> {
+    if (!email) {
+      return EMPTY;
+    }
     return this.http
-      .post<boolean>(`${this.apiUrl}/api/merchant/check/email/${email}`, {})
-      .pipe();
+      .get<any>(`${this.apiUrl}/api/merchant/check/email/${email}`, {})
+      .pipe(
+        map((response) => {
+          if (response.status === 'Conflict') {
+            return { code: 409, message: 'Email already exists' };
+          }
+          return { code: 200, message: 'Email is available' };
+        }),
+        catchError((error) => {
+          console.error(error);
+          return of({ code: 500, message: 'Internal server error' });
+        })
+      );
   }
 
   public checkMerchantContactNumber(
-    contactNumber: string
-  ): Observable<boolean> {
+    contactNumber: number
+  ): Observable<{ code: number; message: string }> {
+    if (!contactNumber) {
+      return EMPTY;
+    }
     return this.http
-      .post<boolean>(
+      .get<any>(
         `${this.apiUrl}/api/merchant/check/contactNumber/${contactNumber}`,
         {}
       )
-      .pipe();
+      .pipe(
+        map((response) => {
+          if (response.status === 'Conflict') {
+            return { code: 409, message: 'Contact number already exists' };
+          }
+          return { code: 200, message: 'Contact number is available' };
+        }),
+        catchError((error) => {
+          console.error(error);
+          return of({ code: 500, message: 'Internal server error' });
+        })
+      );
   }
 
   // send files

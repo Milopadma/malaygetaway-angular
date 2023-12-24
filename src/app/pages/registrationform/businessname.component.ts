@@ -91,7 +91,6 @@ export class BusinessNameFormComponent {
     this.merchantDataForm = new NgForm([], []);
 
     // Check username availability with debounce
-    // debounce function
     this.businessNameSubject
       .pipe(
         debounceTime(300), // Wait for 300ms of silence

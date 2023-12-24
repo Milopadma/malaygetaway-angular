@@ -6,6 +6,8 @@ import { MerchantRegistrationService } from './merchantregistration.service';
 import { ButtonwIcon } from '../../components/button.component';
 import { z } from 'zod';
 import { FormError } from '../../types';
+import { Subject, debounceTime, switchMap } from 'rxjs';
+import { ApiService } from '../../api/api.service';
 
 @Component({
   selector: 'businessdetails-form',
@@ -24,7 +26,7 @@ import { FormError } from '../../types';
           id="contactNumber"
           required
           [(ngModel)]="merchant.contactNumber"
-          (ngModelChange)="onFormChange()"
+          (ngModelChange)="onContactNumberChange($event)"
           name="contactNumber"
           pattern="^[0-9]*$"
           #contactNumber="ngModel"
@@ -47,7 +49,7 @@ import { FormError } from '../../types';
           required
           pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
           [(ngModel)]="merchant.contactEmail"
-          (ngModelChange)="onFormChange()"
+          (ngModelChange)="onEmailChange($event)"
           name="contactEmail"
           #contactEmail="ngModel"
           class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full mt-2 px-5 py-2 border-2 border-solid max-md:pl-1"
@@ -67,7 +69,7 @@ import { FormError } from '../../types';
           id="description"
           required
           [(ngModel)]="merchant.description"
-          (ngModelChange)="onFormChange()"
+          (ngModelChange)="onDescriptionChange($event)"
           name="description"
           #name="ngModel"
           #textarea
@@ -127,22 +129,64 @@ export class BusinessDetailsFormComponent {
   formSubmitted: boolean = false;
   isFormValid: boolean = false;
 
-  // zod schema for validating business object
-  BusinessSchema = z.object({
-    contactNumber: z
-      .number()
-      .min(6, { message: 'Invalid contact number' })
-      .max(10, { message: 'Invalid contact number' }),
-    contactEmail: z.string().email({ message: 'Invalid email' }),
-    description: z.string().min(3, { message: 'Invalid description' }),
-  });
-
   constructor(
     private router: Router,
-    private mrs: MerchantRegistrationService
+    private mrs: MerchantRegistrationService,
+    private apiService: ApiService
   ) {
     this.MerchantDataForm = new NgForm([], []);
+    // Check contactnumber availability with debounce
+    this.contactNumberSubject
+      .pipe(
+        debounceTime(300),
+        switchMap((number) =>
+          this.apiService.checkMerchantContactNumber(number)
+        )
+      )
+      .subscribe(
+        (response) => {
+          console.log('Response from backend', response);
+          if (response.code == 200) {
+            this.contactNumberError().isHidden = true;
+            this.contactNumberError().message = null;
+          } else {
+            this.contactNumberError().isHidden = false;
+            this.contactNumberError().message =
+              'Contact number is already taken';
+          }
+        },
+        (error) => {
+          console.log('Error from backend', error);
+          this.contactNumberError().isHidden = false;
+          this.contactNumberError().message = 'Contact number is already taken';
+        }
+      );
+
+    this.emailSubject
+      .pipe(
+        debounceTime(300),
+        switchMap((email) => this.apiService.checkMerchantEmail(email))
+      )
+      .subscribe(
+        (response) => {
+          console.log('Response from backend', response);
+          if (response.code == 200) {
+            this.contactEmailError().isHidden = true;
+            this.contactEmailError().message = null;
+          } else {
+            this.contactEmailError().isHidden = false;
+            this.contactEmailError().message = 'Contact email is already taken';
+          }
+        },
+        (error) => {
+          console.log('Error from backend', error);
+          this.contactNumberError().isHidden = false; // there was an error, so show the error
+          this.contactNumberError().message = 'Contact email is already taken';
+        }
+      );
   }
+  private contactNumberSubject = new Subject<number>();
+  private emailSubject = new Subject<string>();
 
   autoResize(textarea: HTMLTextAreaElement) {
     textarea.style.overflow = 'auto';
@@ -150,52 +194,38 @@ export class BusinessDetailsFormComponent {
     textarea.style.height = textarea.scrollHeight + 'px';
   }
 
-  // update global state on form change
-  onFormChange() {
-    // clear previous errors
-    this.contactNumberError.set({ message: null, isHidden: true });
-    this.contactEmailError.set({ message: null, isHidden: true });
-    this.descriptionError.set({ message: null, isHidden: true });
+  // // update global state on form change
+  // onFormChange() {
+  //   try {
+  //     // trigger the validation error if the data is invalid
+  //     const validatedData = this.BusinessSchema.parse(this.merchant);
+  //     this.isFormValid = true;
+  //     console.log('Form is valid');
+  //   } catch (error) {
+  //     if (error instanceof z.ZodError) {
+  //       // ZodError.errors is an array of errors for each field
+  //       // since we only have one field, we can just take the first error
+  //       this.isFormValid = false;
+  //       console.log('Form is not valid');
+  //     }
+  //   }
 
-    try {
-      // trigger the validation error if the data is invalid
-      const validatedData = this.BusinessSchema.parse(this.merchant);
-      this.isFormValid = true;
-      console.log('Form is valid');
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        error.errors.forEach((err) => {
-          if (err.path[0] === 'contactNumber') {
-            this.contactNumberError.set({
-              message: err.message,
-              isHidden: false,
-            });
-          } else if (err.path[0] === 'contactEmail') {
-            this.contactEmailError.set({
-              message: err.message,
-              isHidden: false,
-            });
-          } else if (err.path[0] === 'description') {
-            this.descriptionError.set({
-              message: err.message,
-              isHidden: false,
-            });
-          }
-        });
-      }
-    }
-
-    this.mrs.setMerchant(this.merchant);
-  }
+  //   this.mrs.setMerchant(this.merchant);
+  // }
 
   onSubmit(form: NgForm) {
     this.formSubmitted = true;
     try {
-      const validatedData = this.BusinessSchema.parse(form.value);
       // update local form data
-      this.merchant.contactNumber = validatedData.contactNumber;
-      this.merchant.contactEmail = validatedData.contactEmail;
-      this.merchant.description = validatedData.description;
+      this.merchant.contactNumber = this.ContactNumberSchema.parse(
+        form.value
+      ).contactNumber;
+      this.merchant.contactEmail = this.EmailSchema.parse(
+        form.value
+      ).contactEmail;
+      this.merchant.description = this.DescriptionSchema.parse(
+        form.value
+      ).description;
       // then update global state with that form data
       this.mrs.setMerchant(this.merchant);
       console.log('Form data:', this.merchant);
@@ -220,6 +250,87 @@ export class BusinessDetailsFormComponent {
     }
   }
 
+  // Define separate Zod schemas for each field
+  ContactNumberSchema = z.object({
+    contactNumber: z.number(),
+  });
+
+  EmailSchema = z.object({
+    contactEmail: z.string().email({ message: 'Invalid email' }),
+  });
+
+  DescriptionSchema = z.object({
+    description: z.string(),
+  });
+
+  // Use the separate schemas in the onFieldChange methods
+  onContactNumberChange(number: string) {
+    const parsedNumber = parseInt(number, 10);
+    if (isNaN(parsedNumber)) {
+      this.contactNumberError.set({
+        message: 'Invalid contact number',
+        isHidden: false,
+      });
+      return;
+    }
+    this.contactNumberSubject.next(parsedNumber);
+    this.contactNumberError.set({ message: null, isHidden: true });
+    try {
+      const validatedData = this.ContactNumberSchema.parse({
+        contactNumber: parsedNumber,
+      });
+      this.isFormValid = true;
+      console.log('Contact number is valid');
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        this.contactNumberError.set({
+          message: error.errors[0].message,
+          isHidden: false,
+        });
+      }
+    }
+    this.merchant.contactNumber = parsedNumber;
+    this.mrs.setMerchant(this.merchant);
+  }
+
+  onEmailChange(email: string) {
+    this.emailSubject.next(email);
+    this.contactEmailError.set({ message: null, isHidden: true });
+    try {
+      const validatedData = this.EmailSchema.parse({ contactEmail: email });
+      this.isFormValid = true;
+      console.log('Email is valid');
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        this.contactEmailError.set({
+          message: error.errors[0].message,
+          isHidden: false,
+        });
+      }
+    }
+    this.merchant.contactEmail = email;
+    this.mrs.setMerchant(this.merchant);
+  }
+
+  onDescriptionChange(description: string) {
+    this.descriptionError.set({ message: null, isHidden: true });
+    try {
+      const validatedData = this.DescriptionSchema.parse({
+        description: description,
+      });
+      this.isFormValid = true;
+      console.log('Description is valid');
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        this.descriptionError.set({
+          message: error.errors[0].message,
+          isHidden: false,
+        });
+      }
+    }
+    this.merchant.description = description;
+    this.mrs.setMerchant(this.merchant);
+  }
   navigateToNextPage() {
     // this.router.navigate(['/merchant/register/merchantdata']);
     this.router.navigate(['/merchant/register/complete']);
