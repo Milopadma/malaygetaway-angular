@@ -62,7 +62,7 @@ export class BusinessFilesFormComponent {
   // form states
   formSubmitted: boolean = false;
   isFormValid: boolean = false;
-  formFiles: FileList[] = [];
+  formFiles: File[] = [];
 
   // error states
   fileError = signal<FormError>({
@@ -89,9 +89,15 @@ export class BusinessFilesFormComponent {
     this.formSubmitted = true;
     try {
       // attempt to send the files to the server and await for the returning URLs
-      for (const file of this.formFiles) {
-        this.apiService.sendFiles(file);
-      }
+      this.apiService.sendFiles(this.formFiles).subscribe((fileURLs) => {
+        console.log('fileURLs', fileURLs);
+        // update local form data
+        this.business.businessFileURLs = fileURLs;
+        // then update global state with that form data
+        this.mrs.setBusiness(this.business);
+        console.log('Form data:', this.business);
+        this.navigateToNextPage();
+      });
 
       const validatedData = this.BusinessSchema.parse(form.value);
       // update local form data
@@ -121,15 +127,15 @@ export class BusinessFilesFormComponent {
     this.router.navigate(['merchant/register/merchantdata']); // replace '/nextPage' with the actual route
   }
 
-  handleFileChange(fileData: FileList) {
-    console.log(fileData);
+  handleFileChange(file: File) {
+    console.log(file);
     // Check if a file was added or replaced
     if (this.formFiles.length < 2) {
       // Add the file to the formFiles array
-      this.formFiles = [...this.formFiles, fileData];
+      this.formFiles.push(file);
     } else {
       // Replace the second file in the formFiles array
-      this.formFiles[1] = fileData;
+      this.formFiles[1] = file;
     }
 
     // Update isFormValid based on the number of files
@@ -148,6 +154,12 @@ export class BusinessFilesFormComponent {
         message: '',
         isHidden: true,
       });
+      // attemp to send after 5 seconds of inactiviy
+      setTimeout(() => {
+        this.apiService
+          .sendFiles(this.formFiles)
+          .subscribe((fileURLs) => console.log('fileURLs', fileURLs));
+      }, 5000);
     }
   }
 }

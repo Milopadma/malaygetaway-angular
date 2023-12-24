@@ -37,7 +37,7 @@ import { IconComponent } from '../icon.component';
 })
 export class FileInputComponent {
   @Input() label!: string;
-  @Output() fileChanged = new EventEmitter<FileList>();
+  @Output() fileChanged = new EventEmitter<File>();
   previewUrl: string | ArrayBuffer | null = null;
 
   id = `file-upload-${Math.random().toString(36).substr(2, 9)}`;
@@ -52,7 +52,7 @@ export class FileInputComponent {
         return;
       }
 
-      this.fileChanged.emit(fileInput.files);
+      this.fileChanged.emit(fileInput.files[0]);
       const reader = new FileReader();
       reader.onload = (e) => (this.previewUrl = reader.result);
       reader.readAsDataURL(fileInput.files[0]);
