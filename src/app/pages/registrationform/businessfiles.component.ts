@@ -5,8 +5,9 @@ import { FileInputComponent } from '../../components/form/fileinput.component';
 import { ButtonwIcon } from '../../components/button.component';
 import { z } from 'zod';
 import { NgForm } from '@angular/forms';
-import { FormError } from '../../types';
+import { FileUploadResponse, FormError } from '../../types';
 import { ApiService } from '../../api/api.service';
+import { Subject, debounceTime } from 'rxjs';
 @Component({
   selector: 'businessfiles-form',
   standalone: true,
@@ -21,11 +22,13 @@ import { ApiService } from '../../api/api.service';
       <div id="spacer" class="h-4"></div>
       <div class="flex flex-row gap-4">
         <fileinput
+          (fileChanged)="fileChangeSubject.next($event)"
           (fileChanged)="handleFileChange($event)"
           label="Licenses"
         ></fileinput>
 
         <fileinput
+          (fileChanged)="fileChangeSubject.next($event)"
           (fileChanged)="handleFileChange($event)"
           label="Testimonials"
         ></fileinput>
@@ -43,12 +46,27 @@ import { ApiService } from '../../api/api.service';
       <div class="h-32" id="spacer"></div>
       <div class="flex w-full items-end justify-end">
         <div class="flex flex-col items-end" type="submit">
-          <buttonwicon label="Continue" [disabled]="!isFormValid"></buttonwicon>
+          @if (isLoading) {
+          <div class="flex justify-center items-center gap-4">
+            <div
+              class="animate-spin rounded-full h-4 w-4 border-b-2 border-zinc-800"
+            ></div>
+            <div class="text-softgray text-base animate-pulse">
+              Uploading your files...
+            </div>
+          </div>
+          } @else {
+          <buttonwicon
+            label="Continue"
+            [disabled]="!isFormValid || isLoading"
+            (click)="onSubmit()"
+          ></buttonwicon>
           <p
             class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
           >
             or press Enter
           </p>
+          }
         </div>
       </div>
     </div>
@@ -57,7 +75,6 @@ import { ApiService } from '../../api/api.service';
 export class BusinessFilesFormComponent {
   // global state
   business = this.mrs.getMerchant();
-  businessFilesForm: NgForm;
 
   // form states
   formSubmitted: boolean = false;
@@ -81,25 +98,21 @@ export class BusinessFilesFormComponent {
     private mrs: MerchantRegistrationService,
     private apiService: ApiService
   ) {
-    this.businessFilesForm = new NgForm([], []);
     this.formFiles = [];
+
+    this.fileChangeSubject.pipe(debounceTime(5000)).subscribe((file) => {
+      this.handleFileChange(file);
+    });
   }
 
-  onSubmit(form: NgForm) {
+  // local state
+  fileChangeSubject = new Subject<File>();
+  isLoading: boolean = false;
+
+  onSubmit() {
     this.formSubmitted = true;
     try {
-      // attempt to send the files to the server and await for the returning URLs
-      this.apiService.sendFiles(this.formFiles).subscribe((fileURLs) => {
-        console.log('fileURLs', fileURLs);
-        // update local form data
-        this.business.businessFileURLs = fileURLs;
-        // then update global state with that form data
-        this.mrs.setMerchant(this.business);
-        console.log('Form data:', this.business);
-        this.navigateToNextPage();
-      });
-
-      const validatedData = this.BusinessSchema.parse(form.value);
+      const validatedData = this.BusinessSchema.parse(this.business);
       // update local form data
       this.business.businessFileURLs = validatedData.files;
       // then update global state with that form data
@@ -120,7 +133,7 @@ export class BusinessFilesFormComponent {
 
   @HostListener('document:keydown.enter', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
-    this.onSubmit(this.businessFilesForm);
+    this.onSubmit();
   }
 
   navigateToNextPage() {
@@ -154,18 +167,22 @@ export class BusinessFilesFormComponent {
         message: '',
         isHidden: true,
       });
-      // attemp to send after 5 seconds of inactiviy
-      setTimeout(() => {
-        console.log('current formfiles : ', this.formFiles);
-        this.apiService.uploadFile(this.formFiles[0]).subscribe(
-          (response) => {
-            console.log('File is uploaded', response);
-          },
-          (error) => {
-            console.log('Error', error);
+      this.isLoading = true;
+      this.apiService.uploadMultipleFiles(this.formFiles).subscribe(
+        (response: FileUploadResponse) => {
+          console.log('File is uploaded', response);
+          // urls
+          for (let i = 0; i < response.data.length; i++) {
+            this.business.businessFileURLs.push(response.data[i].data.url);
           }
-        );
-      }, 5000);
+          this.isLoading = false;
+          this.isFormValid = true;
+        },
+        (error) => {
+          console.log('Error', error);
+          this.isLoading = false;
+        }
+      );
     }
   }
 }

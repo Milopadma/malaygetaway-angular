@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MerchantData, UserMerchant } from '../types';
+import { FileUploadResponse, MerchantData, UserMerchant } from '../types';
 import { EMPTY, Observable, catchError, map, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Response } from 'express';
@@ -152,10 +152,24 @@ export class ApiService {
       .pipe();
   }
 
-  uploadFile(file: File): Observable<any> {
+  uploadFile(file: File): Observable<FileUploadResponse> {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
-    return this.http.post('/api/files/upload', formData);
+    return this.http.post<FileUploadResponse>(
+      `${this.apiUrl}/api/files/upload`,
+      formData
+    );
+  }
+
+  uploadMultipleFiles(files: File[]): Observable<FileUploadResponse> {
+    const formData: FormData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append('file', files[i], files[i].name);
+    }
+    return this.http.post<FileUploadResponse>(
+      `${this.apiUrl}/api/files/upload`,
+      formData
+    );
   }
 
   // personal details related APIs

@@ -3,6 +3,21 @@ export interface FormError {
   isHidden: boolean;
 }
 
+export interface FileUploadResponse {
+  status: string;
+  code: number;
+  data: {
+    data: {
+      key: string;
+      url: string;
+      name: string;
+      size: number;
+    };
+    error: any;
+  }[];
+  message: string;
+}
+
 // UserType
 export enum UserType {
   EMPTY = 'empty',
