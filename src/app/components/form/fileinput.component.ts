@@ -63,9 +63,10 @@ export class FileInputComponent {
 
 // separate function to validate File Type and Size before uploading to backend
 function validateFile(file: File): boolean {
-  const validTypes = ['application/pdf'];
+  const validTypes = ['application/pdf', 'image/png', 'image/jpeg'];
   const validSize = 1024 * 1024 * 5; // 5MB
   if (!validTypes.includes(file.type)) {
+    console.log(file.type);
     return false;
   }
   if (file.size > validSize) {

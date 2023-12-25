@@ -138,6 +138,13 @@ export class Login {
         localStorage.setItem('token', res.token);
         localStorage.setItem('userType', res.role);
 
+        // get the id
+        this.apiService
+          .getMerchantId(this.user.username)
+          .subscribe(
+            (res) => (localStorage.setItem('userId', res.id), console.log(res))
+          );
+
         this.showDialog = true;
         console.log(localStorage.getItem('token'));
         console.log(localStorage.getItem('userType'));

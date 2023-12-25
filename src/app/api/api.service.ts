@@ -50,6 +50,16 @@ export class ApiService {
       .pipe();
   }
 
+  public getMerchantId(username: string): Observable<any> {
+    return this.http
+      .get<any>(`${this.apiUrl}/api/auth/getMerchantId`, {
+        params: {
+          username,
+        },
+      })
+      .pipe();
+  }
+
   public checkUsernameAvailability(username: string): Observable<any> {
     console.log('Checking username availability...');
     return this.http
@@ -179,25 +189,6 @@ export class ApiService {
       );
   }
 
-  // send files
-  public sendFiles(files: File[]): Observable<string[]> {
-    const formData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      console.log(formData.getAll('files'));
-      formData.append('files', files[i], files[i].name);
-      console.log(formData.getAll('files'));
-    }
-    return this.http
-      .post<string[]>(
-        `${this.apiUrl}/api/files/upload/multiple`,
-        formData, // send formData directly
-        {
-          reportProgress: true, // for tracking upload progress
-        }
-      )
-      .pipe();
-  }
-
   uploadFile(file: File): Observable<FileUploadResponse> {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
@@ -231,10 +222,12 @@ export class ApiService {
       .pipe();
   }
 
-  public addProduct(product: Product, merchantId: number): Observable<any> {
+  public addProduct(product: Product): Observable<any> {
     console.log(product);
     return this.http
-      .post(`${this.apiUrl}/api/merchant/addProduct/${merchantId}`, product)
+      .post(`${this.apiUrl}/api/merchant/addProduct`, {
+        product: product,
+      })
       .pipe();
   }
 
