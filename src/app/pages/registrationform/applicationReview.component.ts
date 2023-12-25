@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { progressbar } from '../../components/form/progressbar.component';
+import { ProgressBarComponent } from '../../components/form/progressbar.component';
 @Component({
   selector: 'merchant-register, MerchantRegister',
   standalone: true,
-  imports: [RouterOutlet, progressbar],
+  imports: [RouterOutlet, ProgressBarComponent],
   template: `
     <main
       class="justify-center items-center bg-white flex flex-col px-20 max-md:px-5"

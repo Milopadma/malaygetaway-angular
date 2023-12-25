@@ -9,6 +9,8 @@ import {
   withFetch,
 } from '@angular/common/http';
 import { AuthInterceptor } from './api/http.interceptor';
+import { provideToastr } from 'ngx-toastr';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,5 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideHttpClient(withFetch()),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    provideToastr(),
+    provideAnimations(),
   ],
 };

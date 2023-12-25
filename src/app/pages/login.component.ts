@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonwIcon } from '../components/button.component';
 import { DialogueBoxComponent } from '../components/dialoguebox.component';
 import { ApiService } from '../api/api.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
+import { FormError } from '../types';
+import { Subject, debounceTime, switchMap } from 'rxjs';
+import { z } from 'zod';
 
 @Component({
   selector: 'login',
@@ -12,29 +15,50 @@ import { FormsModule } from '@angular/forms';
   template: `
     <div class="flex flex-row md:h-screen justify-center items-center">
       <div class="flex flex-col">
-        <div class="text-titles">Login</div>
-        <div class="h-4" id="spacer"></div>
-        <input
-          [(ngModel)]="username"
-          type="text"
-          class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
-          placeholder="username or email"
-        />
-        <div class="h-2" id="spacer"></div>
-        <input
-          [(ngModel)]="password"
-          type="text"
-          class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
-          placeholder="password"
-        />
-        <div class="h-2" id="spacer"></div>
-        <div class="flex flex-row gap-2 items-center justify-end">
-          <div class="text-small text-right">
-            don't have an account? <br />
-            <span class="underline">register</span>
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+          <div class="text-titles">Login</div>
+          <div class="h-4" id="spacer"></div>
+          <input
+            type="text"
+            id="username"
+            required
+            [(ngModel)]="user.username"
+            (ngModelChange)="onUsernameChange($event)"
+            name="username"
+            #username="ngModel"
+            class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
+            placeholder="username or email"
+          />
+          <!-- errors -->
+          <div
+            class="{{
+              !usernameError().isHidden && username.touched
+                ? 'opacity-100 translate-y-0 h-8'
+                : 'opacity-0 -translate-y-3/4 h-0'
+            }} text-reject transition-all ease-in-out duration-500 block"
+          >
+            {{ usernameError().message }}
           </div>
-          <buttonwicon (click)="login()" label="Continue"></buttonwicon>
-        </div>
+          <div class="h-2" id="spacer"></div>
+          <input
+            type="password"
+            id="password"
+            required
+            [(ngModel)]="user.password"
+            name="password"
+            #password="ngModel"
+            class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
+            placeholder="password"
+          />
+          <div class="h-2" id="spacer"></div>
+          <div class="flex flex-row gap-2 items-center justify-end">
+            <div class="text-small text-right">
+              don't have an account? <br />
+              <span class="underline">register</span>
+            </div>
+            <buttonwicon (click)="login()" label="Continue"></buttonwicon>
+          </div>
+        </form>
       </div>
       <div class="w-12" id="spacer"></div>
       <div class="">
@@ -55,30 +79,133 @@ import { FormsModule } from '@angular/forms';
   `,
 })
 export class Login {
-  username: string = '';
-  password: string = '';
   showDialog = false;
 
-  constructor(private router: Router, private apiService: ApiService) {}
+  user = {
+    username: '',
+    password: '',
+  };
+  LoginForm: NgForm;
+
+  // for the errors
+  usernameError = signal<FormError>({
+    message: 'Required',
+    isHidden: true,
+  });
+
+  usernameSchema = z.object({
+    username: z.string().min(2, 'Username must be at least 2 characters'),
+  });
+
+  // form states
+  formSubmitted: boolean = false;
+  isFormValid: boolean = false;
+
+  constructor(private router: Router, private apiService: ApiService) {
+    this.LoginForm = new NgForm([], []);
+    // Check contactnumber availability with debounce
+    this.usernameSubject
+      .pipe(
+        debounceTime(300),
+        switchMap((username) =>
+          this.apiService.checkUsernameAvailability(username)
+        )
+      )
+      .subscribe(
+        (response) => {
+          console.log('Response from backend', response);
+          if (response.success === true) {
+            this.usernameError().isHidden = true;
+            this.usernameError().message = null;
+          } else {
+            this.usernameError().isHidden = false;
+            this.usernameError().message = 'Username invalid.';
+          }
+        },
+        (error) => {
+          console.log('Error from backend', error);
+          this.usernameError().isHidden = false;
+          this.usernameError().message = 'Username invalid';
+        }
+      );
+  }
+
+  private usernameSubject = new Subject<string>();
 
   login() {
-    this.apiService.login(this.username, this.password).subscribe(
+    this.apiService.login(this.user.username, this.user.password).subscribe(
       (res) => {
         localStorage.setItem('token', res.token);
-        this.showDialog = true;
+        localStorage.setItem('userType', res.role);
 
+        this.showDialog = true;
         console.log(localStorage.getItem('token'));
+        console.log(localStorage.getItem('userType'));
       },
       (err) => {
-        // Show error message if login fails
         console.error(err);
       }
     );
   }
 
+  onSubmit(form: NgForm) {
+    this.formSubmitted = true;
+    try {
+      this.user.username = this.usernameSchema.parse(form.value).username;
+      console.log('Form data:', this.user);
+      this.navigateToNextPage();
+    } catch (error) {
+      console.log('Form is not valid');
+      console.log(error);
+      if (error instanceof z.ZodError) {
+        this.usernameError.set({
+          message: error.errors[0].message,
+          isHidden: false,
+        });
+      }
+    }
+  }
+
+  onUsernameChange(username: string) {
+    this.usernameSubject.next(username);
+    this.usernameError.set({ message: null, isHidden: true });
+    try {
+      const validatedData = this.usernameSchema.parse({ username: username });
+      this.isFormValid = true;
+      console.log('Email is valid');
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        this.usernameError.set({
+          message: error.errors[0].message,
+          isHidden: false,
+        });
+      }
+    }
+    this.user.username = username;
+  }
+
   navigateToNextPage() {
     if (!this.showDialog) {
-      this.router.navigate(['/merchant/home']);
+      // Get the user type from localStorage
+      const userType = localStorage.getItem('userType');
+
+      // Navigate to the appropriate route based on the user type
+      switch (userType) {
+        case 'merchant':
+          this.router.navigate(['/merchant/home']);
+          break;
+        case 'ministry_officer':
+          console.log('officer');
+          this.router.navigate(['/officer/home']);
+          break;
+        case 'customer':
+          this.router.navigate(['/customer/home']);
+          break;
+        default:
+          // Handle unknown user type
+          console.error('Unknown user type:', userType);
+          break;
+      }
     }
   }
 

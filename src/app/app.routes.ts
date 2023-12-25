@@ -37,6 +37,7 @@ import { CustomerBillingAddressComponent } from './pages/customer/billingaddress
 import { CustomerPaymentMethodComponent } from './pages/customer/paymentmethod.component';
 import { CustomerHomeComponent } from './pages/customer/homePurchase.component';
 import { CustomerSuccessfulyPurchase } from './pages/customer/purchasesuccess.component';
+import { OfficerAuthGuard } from './api/auth/officer.authguard';
 // import { MerchantDataFormComponent } from './pages/registrationform/merchantdata.component';
 
 export const routes: Routes = [
@@ -124,6 +125,7 @@ export const routes: Routes = [
   {
     path: 'officer',
     component: OfficerLayout,
+    canActivate: [OfficerAuthGuard],
     children: [
       {
         path: '',

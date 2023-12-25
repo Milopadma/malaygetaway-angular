@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FileUploadResponse, MerchantData, UserMerchant } from '../types';
+import {
+  FileUploadResponse,
+  MerchantData,
+  MerchantDataResponse,
+  MerchantStatus,
+  UserMerchant,
+  UserType,
+} from '../types';
 import { EMPTY, Observable, catchError, map, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Response } from 'express';
@@ -32,6 +39,33 @@ export class ApiService {
       .pipe();
   }
 
+  public getUserType(username: string): Observable<any> {
+    return this.http
+      .get<any>(`${this.apiUrl}/api/auth/userType`, {
+        params: {
+          username,
+        },
+      })
+      .pipe();
+  }
+
+  public checkUsernameAvailability(username: string): Observable<any> {
+    console.log('Checking username availability...');
+    return this.http
+      .get<any>(`${this.apiUrl}/api/auth/check/username/${username}`, {})
+      .pipe();
+  }
+
+  public isOfficer(): boolean {
+    // Get the role from localStorage
+    // const role = localStorage.getItem('userType');
+
+    // Check if the role is 'officer'
+    // return role === 'officer';
+    // todo! proper implementation of this, needs to be Sessions
+    return true;
+  }
+
   // merchant related APIs
   public registerMerchant(merchant: MerchantData): Observable<any> {
     console.log(merchant);
@@ -50,19 +84,28 @@ export class ApiService {
       .pipe();
   }
 
-  public getMerchants(): Observable<UserMerchant[]> {
-    return this.http.get<UserMerchant[]>(`${this.apiUrl}/api/merchants`).pipe();
+  public getMerchants(): Observable<MerchantDataResponse> {
+    return this.http
+      .get<MerchantDataResponse>(`${this.apiUrl}/api/merchant/get`)
+      .pipe();
   }
 
   public setMerchant(merchant: UserMerchant): Observable<UserMerchant> {
-    return this.http.post<UserMerchant>(
-      `${this.apiUrl}/api/merchants`,
-      merchant
-    );
+    return this.http
+      .post<UserMerchant>(`${this.apiUrl}/api/merchant/merchants`, merchant)
+      .pipe();
   }
 
-  public getMerchant(id: string): Observable<UserMerchant> {
-    return this.http.get<UserMerchant>(`${this.apiUrl}/api/merchants/${id}`);
+  public setStatus(merhantId: number, status: MerchantStatus): Observable<any> {
+    return this.http
+      .post<any>(`${this.apiUrl}/api/merchant/setStatus/${merhantId}`, {
+        status,
+      })
+      .pipe();
+  }
+
+  public getMerchant(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/api/merchant/get/${id}`).pipe();
   }
 
   // individual fields checks

@@ -3,6 +3,13 @@ export interface FormError {
   isHidden: boolean;
 }
 
+export interface MerchantDataResponse {
+  status: string;
+  code: number;
+  data: MerchantData[];
+  message: string;
+}
+
 export interface FileUploadResponse {
   status: string;
   code: number;
