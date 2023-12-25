@@ -34,7 +34,6 @@ import { ProgressBarComponent } from '../../components/form/progressbar.componen
           or press Enter
         </p>
       </div>
-      <button (click)="test()">hello</button>
     </div>
   `,
   imports: [RouterOutlet, ButtonwIcon, ProgressBarComponent],

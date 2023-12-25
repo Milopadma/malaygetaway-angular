@@ -2,23 +2,27 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonwIcon } from '../components/button.component';
 import { DialogueBoxComponent } from '../components/dialoguebox.component';
+import { ApiService } from '../api/api.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'login',
   standalone: true,
-  imports: [ButtonwIcon, DialogueBoxComponent],
+  imports: [ButtonwIcon, DialogueBoxComponent, FormsModule],
   template: `
-    <div class="flex flex-row h-full justify-center items-center">
+    <div class="flex flex-row md:h-screen justify-center items-center">
       <div class="flex flex-col">
         <div class="text-titles">Login</div>
         <div class="h-4" id="spacer"></div>
         <input
+          [(ngModel)]="username"
           type="text"
           class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
           placeholder="username or email"
         />
         <div class="h-2" id="spacer"></div>
         <input
+          [(ngModel)]="password"
           type="text"
           class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
           placeholder="password"
@@ -29,7 +33,7 @@ import { DialogueBoxComponent } from '../components/dialoguebox.component';
             don't have an account? <br />
             <span class="underline">register</span>
           </div>
-          <buttonwicon (click)="showDialogue()" label="Continue"></buttonwicon>
+          <buttonwicon (click)="login()" label="Continue"></buttonwicon>
         </div>
       </div>
       <div class="w-12" id="spacer"></div>
@@ -45,20 +49,43 @@ import { DialogueBoxComponent } from '../components/dialoguebox.component';
       button1="Change Password"
       button2="Later"
       (close)="closeDialog()"
-      (secondButtonClicked)="navigateToNextPage()"
+      (secondButtonClicked)="showDialog = false; navigateToNextPage()"
     ></dialogue-box>
     }
   `,
 })
 export class Login {
+  username: string = '';
+  password: string = '';
   showDialog = false;
-  constructor(private router: Router) {}
-  navigateToNextPage() {
-    this.router.navigate(['/merchant/home']);
+
+  constructor(private router: Router, private apiService: ApiService) {}
+
+  login() {
+    this.apiService.login(this.username, this.password).subscribe(
+      (res) => {
+        localStorage.setItem('token', res.token);
+        this.showDialog = true;
+
+        console.log(localStorage.getItem('token'));
+      },
+      (err) => {
+        // Show error message if login fails
+        console.error(err);
+      }
+    );
   }
+
+  navigateToNextPage() {
+    if (!this.showDialog) {
+      this.router.navigate(['/merchant/home']);
+    }
+  }
+
   closeDialog() {
     this.showDialog = false;
   }
+
   showDialogue() {
     this.showDialog = true;
   }

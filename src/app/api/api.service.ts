@@ -24,10 +24,12 @@ export class ApiService {
 
   // login related APIs
   public login(username: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/api/login`, {
-      username,
-      password,
-    });
+    return this.http
+      .post<any>(`${this.apiUrl}/api/auth/login`, {
+        username,
+        password,
+      })
+      .pipe();
   }
 
   // merchant related APIs
