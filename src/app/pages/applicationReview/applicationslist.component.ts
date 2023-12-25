@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { ButtonUnbordered } from '../../components/buttonunbordered.component';
 import { IconComponent } from '../../components/icon.component';
 import { ButtonNoIcon } from '../../components/buttonnoicon.component';
+import { ApiService } from '../../api/api.service';
+import { MerchantData, UserMerchant, MerchantStatus } from '../../types';
 
 type status = 'Pending' | 'Accepted' | 'Rejected';
 
@@ -43,26 +45,24 @@ export interface MerchantApplication {
               <th class="text-small"></th>
             </tr>
 
-            @for (application of applications; track application.id){
+            @for (application of applications; track application.merchantId){
             <tr class="border-t-[1px] border-softblack">
-              <td class="text-paragraph">{{ application.id }}</td>
-              @if (application.status == 'Pending') {
+              <td class="text-paragraph">{{ application.merchantId }}</td>
+              @if (application.status == "pending") {
               <td class="text-paragraph uppercase text-warning">
                 {{ application.status }}
               </td>
-              } @else if (application.status == 'Accepted') {
+              } @else if (application.status == 'accepted') {
               <td class="text-paragraph uppercase text-confirm">
                 {{ application.status }}
               </td>
-              } @else if (application.status == 'Rejected') {
+              } @else if (application.status == 'rejected') {
               <td class="text-paragraph uppercase text-reject">
                 {{ application.status }}
               </td>
               }
               <td class="flex flex-col py-4">
-                <span class="text-paragraph">{{
-                  application.merchantName
-                }}</span
+                <span class="text-paragraph">{{ application.name }}</span
                 ><span class="text-small text-softgray">{{
                   application.description
                 }}</span>
@@ -71,7 +71,9 @@ export interface MerchantApplication {
                 <button
                   class="text-small hover:underline text-softblack"
                   (click)="
-                    navigateToPage('officer/applications/' + application.id)
+                    navigateToPage(
+                      'officer/applications/' + application.merchantId
+                    )
                   "
                 >
                   See Details
@@ -97,45 +99,25 @@ export interface MerchantApplication {
     </div>
   `,
 })
-export class OfficerApplicationsComponent {
-  constructor(private router: Router) {}
+export class OfficerApplicationsComponent implements OnInit {
+  applications: MerchantData[] = [];
+
+  constructor(private router: Router, private apiService: ApiService) {}
+
+  ngOnInit() {
+    this.apiService.getMerchants().subscribe(
+      (res) => {
+        this.applications = res.data;
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
+  }
+
   navigateToPage(page: string) {
     this.router.navigate([page]);
   }
-
-  // placeholder data
-  applications: MerchantApplication[] = [
-    {
-      id: 1,
-      status: 'Pending',
-      merchantName: 'Acme',
-      description: 'We are a company that focuses on this and that.',
-    },
-    {
-      id: 2,
-      status: 'Pending',
-      merchantName: 'Acme',
-      description: 'We are a company that focuses on this and that.',
-    },
-    {
-      id: 3,
-      status: 'Pending',
-      merchantName: 'Acme',
-      description: 'We are a company that focuses on this and that.',
-    },
-    {
-      id: 4,
-      status: 'Rejected',
-      merchantName: 'Acme',
-      description: 'We are a company that focuses on this and that.',
-    },
-    {
-      id: 5,
-      status: 'Accepted',
-      merchantName: 'Acme',
-      description: 'We are a company that focuses on this and that.',
-    },
-  ];
 
   // pagination data
   currentPage: number = 1;

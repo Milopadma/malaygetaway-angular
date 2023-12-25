@@ -1,17 +1,17 @@
 import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
-import { progressbar } from '../../components/form/progressbar.component';
 import { CommonModule } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
 import { ProductService } from '../../api/product-price.service';
 import { HttpClientModule } from '@angular/common/http';
 
 declare var paypal: any;
-
 @Component({
   selector: 'purchase4',
   standalone: true,
+
   imports: [progressbar, CommonModule, HttpClientModule],
+
   template: `
     <section>
       <br /><br /><br /><br /><br />
@@ -30,6 +30,7 @@ declare var paypal: any;
           <div class="flex justify-center gap-4 mb-6">
             <div id="paypal-button-container"></div>
           </div>
+
         </div>
       </main>
     </section>
