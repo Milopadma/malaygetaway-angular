@@ -37,7 +37,7 @@ import { CustomerBillingAddressComponent } from './pages/customer/billingaddress
 import { CustomerPaymentMethodComponent } from './pages/customer/paymentmethod.component';
 import { CustomerHomeComponent } from './pages/customer/homePurchase.component';
 import { CustomerSuccessfulyPurchase } from './pages/customer/purchasesuccess.component';
-import { MerchantDataFormComponent } from './pages/registrationform/merchantdata.component';
+// import { MerchantDataFormComponent } from './pages/registrationform/merchantdata.component';
 
 export const routes: Routes = [
   {
@@ -76,14 +76,15 @@ export const routes: Routes = [
         path: 'details',
         component: BusinessDetailsFormComponent,
       },
+      // TODO! DISABLED DOCUMENTS FOR NOW DUE TO MULTER ERRORS
       {
         path: 'documents',
         component: BusinessFilesFormComponent,
       },
-      {
-        path: 'merchantdata',
-        component: MerchantDataFormComponent,
-      },
+      // { !DEPRECATED
+      //   path: 'merchantdata',
+      //   component: MerchantDataFormComponent,
+      // },
       {
         path: 'complete',
         component: CompletedFormComponent,

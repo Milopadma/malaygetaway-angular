@@ -1,62 +1,79 @@
 import { Injectable } from '@angular/core';
-import { Merchant } from '../../types/merchant';
-import { Business } from '../../types/business';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { MerchantData, MerchantStatus, UserMerchant } from '../../types';
+import { ApiService } from '../../api/api.service';
 
 // Handles the global state for the Merchant Registration Form flow data state
 @Injectable({ providedIn: 'root' })
 export class MerchantRegistrationService {
   // init empty merchant object
-  merchant: Merchant = new Merchant(0, '', '', 0, '');
-  business: Business = new Business(0, '', '', '', '', '');
+  merchant: MerchantData = new MerchantData(
+    0,
+    '',
+    0,
+    '',
+    '',
+    [],
+    MerchantStatus.PENDING
+  );
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private apiService: ApiService) {}
+
   // get merchant data
-  getMerchant(): Merchant {
+  getMerchant(): MerchantData {
     return this.merchant;
   }
   // set merchant data
-  setMerchant(merchant: Merchant) {
+  setMerchant(merchant: MerchantData) {
     console.log(merchant);
     this.merchant = merchant;
   }
-  // get business data
-  getBusiness(): Business {
-    return this.business;
-  }
-  // set business data
-  setBusiness(business: Business) {
-    console.log(business);
-    this.business = business;
-  }
 
   // send the data to backend
-  sendData() {
-    console.log('Sending data to backend...', this.merchant, this.business);
-    return this.http.post(
-      'http://localhost:3003/api/merchant/register',
-      {
-        merchant: JSON.stringify(this.merchant),
-        business: JSON.stringify(this.business),
+  registerMerchant() {
+    console.log('Sending data to backend...', this.merchant);
+    return this.apiService.registerMerchant(this.merchant).subscribe(
+      (response) => {
+        console.log('Response from backend', response);
       },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      (error) => {
+        console.log('Error from backend', error);
       }
     );
   }
 
-  // send files
-  sendFiles(files: FileList) {
-    console.log('Sending files to backend...', files);
-    const formData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      formData.append('files', files[i]);
-    }
-    return this.http.post(
-      'http://localhost:3003/api/files/upload/multiple',
-      formData
+  // checks
+  checkUsername(
+    username: string
+  ): Observable<{ code: number; message: string }> {
+    return this.apiService.checkMerchantName(username);
+  }
+
+  checkEmail(email: string): boolean {
+    this.apiService.checkMerchantEmail(email).subscribe(
+      (response) => {
+        console.log('Response from backend', response);
+        return response;
+      },
+      (error) => {
+        console.log('Error from backend', error);
+        return false;
+      }
     );
+    return false;
+  }
+  checkNumber(number: number): boolean {
+    this.apiService.checkMerchantContactNumber(number).subscribe(
+      (response) => {
+        console.log('Response from backend', response);
+        return response;
+      },
+      (error) => {
+        console.log('Error from backend', error);
+        return false;
+      }
+    );
+    return false;
   }
 }
