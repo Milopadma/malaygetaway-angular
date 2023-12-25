@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { IconComponent } from '../../components/icon.component';
 import { ButtonNoIcon } from '../../components/buttonnoicon.component';
@@ -6,13 +6,24 @@ import { MerchantData, MerchantStatus } from '../../types';
 import { ApiService } from '../../api/api.service';
 import { CommonModule } from '@angular/common';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
-import { ToastrService } from 'ngx-toastr';
+import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'officer-merchant-application',
   standalone: true,
-  imports: [IconComponent, ButtonNoIcon, CommonModule, NgxDocViewerModule],
+  imports: [
+    IconComponent,
+    ButtonNoIcon,
+    CommonModule,
+    NgxDocViewerModule,
+    ToastContainerDirective,
+  ],
   template: `
+    <div
+      aria-live="polite"
+      toastContainer
+      style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; pointer-events: none;"
+    ></div>
     <div class="flex flex-col h-full">
       <div class="h-12" id="spacer"></div>
       <div class="w-full flex items-start">
@@ -78,6 +89,9 @@ export class OfficerMerchantApplicationsComponent implements OnInit {
     status: MerchantStatus.PENDING,
   };
 
+  @ViewChild(ToastContainerDirective, { static: true })
+  toastContainer: ToastContainerDirective | undefined;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -86,6 +100,7 @@ export class OfficerMerchantApplicationsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.toastr.overlayContainer = this.toastContainer;
     this.route.params.subscribe((params) => {
       const merchantId = params['id'];
       console.log(merchantId);
@@ -103,12 +118,15 @@ export class OfficerMerchantApplicationsComponent implements OnInit {
       .subscribe((response) => {
         console.log('Merchant approved');
       });
-    this.toastr.success('Successfully approved merchant!', 'Success!', {
+    this.toastr.success('Successfully approved merchant!', '', {
       timeOut: 3000,
-      positionClass: 'toast-top-center',
+      positionClass: 'toast-bottom-center',
+      toastClass: 'ngx-toastr toast-success absolute top-0',
     });
-
-    // this.navigateToPage('officer/applications');
+    // wait for 3 seconds
+    setTimeout(() => {
+      this.navigateToPage('officer/applications');
+    }, 1000);
   }
 
   rejectMerchant() {
@@ -117,7 +135,15 @@ export class OfficerMerchantApplicationsComponent implements OnInit {
       .subscribe((response) => {
         console.log('Merchant rejected');
       });
-    this.navigateToPage('officer/applications');
+    this.toastr.success('Successfully rejected merchant!', '', {
+      timeOut: 3000,
+      positionClass: 'toast-bottom-center',
+      toastClass: 'ngx-toastr toast-success absolute top-0',
+    });
+    // wait for 3 seconds
+    setTimeout(() => {
+      this.navigateToPage('officer/applications');
+    }, 1000);
   }
 
   navigateToPage(page: string) {
