@@ -49,7 +49,7 @@ import { Subject } from 'rxjs';
               id="productType"
               required
               [(ngModel)]="product.type"
-              (ngModelChange)="onProductNameChange($event)"
+              (ngModelChange)="onProductTypeChange($event)"
               name="type"
               #productType="ngModel"
               class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
@@ -70,7 +70,7 @@ import { Subject } from 'rxjs';
               id="productPrice"
               required
               [(ngModel)]="product.price"
-              (ngModelChange)="onProductNameChange($event)"
+              (ngModelChange)="onProductPriceChange($event)"
               name="price"
               #productPrice="ngModel"
               class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
@@ -134,12 +134,6 @@ import { Subject } from 'rxjs';
   `,
 })
 export class MerchantEditProductComponent implements OnInit {
-  onProductDescriptionChange($event: any) {
-    throw new Error('Method not implemented.');
-  }
-  onProductNameChange($event: any) {
-    throw new Error('Method not implemented.');
-  }
   // init new business from global state
   product = {
     productId: Math.floor(Math.random() * 1000),
@@ -154,7 +148,7 @@ export class MerchantEditProductComponent implements OnInit {
     merchantId: 420949,
   } as Product;
 
-  AddProductForm: NgForm;
+  EditProductForm: NgForm;
 
   // for the errors
   productNameError = signal<FormError>({
@@ -194,9 +188,114 @@ export class MerchantEditProductComponent implements OnInit {
     private apiService: ApiService,
     private route: ActivatedRoute
   ) {
-    this.AddProductForm = new NgForm([], []);
+    this.EditProductForm = new NgForm([], []);
     // Check contactnumber availability with debounce
   }
+
+  // the subjects for each field
+  productNameSubject = new Subject<string>();
+  productTypeSubject = new Subject<string>();
+  productPriceSubject = new Subject<number>();
+  productDescriptionSubject = new Subject<string>();
+
+  onProductNameChange(value: string) {
+    this.productNameSubject.next(value);
+    this.productNameError.set({ message: 'Required', isHidden: true });
+
+    // try to validate
+    try {
+      this.ProductSchema.parse(this.product);
+      this.isFormValid = true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.log(error.errors[0].message);
+        this.productNameError.set({
+          message: error.errors[0].message,
+          isHidden: false,
+        });
+      }
+      this.isFormValid = false;
+    }
+
+    // update global state
+    this.product.name = value;
+  }
+
+  checkFormValidity() {
+    const result = this.ProductSchema.safeParse(this.product);
+
+    this.isFormValid = result.success;
+  }
+
+  onProductTypeChange(value: string) {
+    this.productTypeSubject.next(value);
+    this.productTypeError.set({ message: 'Required', isHidden: true });
+
+    // try to validate
+    try {
+      this.ProductSchema.parse(this.product);
+      this.isFormValid = true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.log(error.errors[0].message);
+        this.productTypeError.set({
+          message: error.errors[0].message,
+          isHidden: false,
+        });
+      }
+      this.isFormValid = false;
+    }
+
+    // update global state
+    this.product.type = value;
+  }
+
+  onProductPriceChange(value: number) {
+    this.productPriceSubject.next(value);
+    this.productPriceError.set({ message: 'Required', isHidden: true });
+
+    // try to validate
+    try {
+      this.ProductSchema.parse(this.product);
+      this.isFormValid = true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.log(error.errors[0].message);
+        this.productPriceError.set({
+          message: error.errors[0].message,
+          isHidden: false,
+        });
+      }
+      this.isFormValid = false;
+    }
+
+    // update global state
+    this.product.price = value;
+  }
+
+  onProductDescriptionChange(value: string) {
+    this.productDescriptionSubject.next(value);
+    this.productDescriptionError.set({ message: 'Required', isHidden: true });
+
+    // try to validate
+    try {
+      this.ProductSchema.parse(this.product);
+      this.isFormValid = true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.log(error.errors[0].message);
+        this.productDescriptionError.set({
+          message: error.errors[0].message,
+          isHidden: false,
+        });
+      }
+      this.isFormValid = false;
+    }
+
+    // update global state
+    this.product.description = value;
+  }
+
   ngOnInit() {
     this.route.params.subscribe((params) => {
       const productId = params['id'];
@@ -244,6 +343,6 @@ export class MerchantEditProductComponent implements OnInit {
 
   @HostListener('document:keydown.enter', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
-    this.onSubmit(this.AddProductForm);
+    this.onSubmit(this.EditProductForm);
   }
 }
