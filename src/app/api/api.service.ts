@@ -4,6 +4,7 @@ import {
   FileUploadResponse,
   MerchantData,
   MerchantDataResponse,
+  MerchantStatus,
   UserMerchant,
   UserType,
 } from '../types';
@@ -84,14 +85,20 @@ export class ApiService {
 
   public setMerchant(merchant: UserMerchant): Observable<UserMerchant> {
     return this.http
-      .post<UserMerchant>(`${this.apiUrl}/api/merchants`, merchant)
+      .post<UserMerchant>(`${this.apiUrl}/api/merchant/merchants`, merchant)
       .pipe();
   }
 
-  public getMerchant(id: string): Observable<UserMerchant> {
+  public setStatus(merhantId: number, status: MerchantStatus): Observable<any> {
     return this.http
-      .get<UserMerchant>(`${this.apiUrl}/api/merchants/${id}`)
+      .post<any>(`${this.apiUrl}/api/merchant/setStatus/${merhantId}`, {
+        status,
+      })
       .pipe();
+  }
+
+  public getMerchant(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/api/merchant/get/${id}`).pipe();
   }
 
   // individual fields checks
