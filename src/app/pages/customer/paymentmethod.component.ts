@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { progressbar } from '../../components/form/progressbar.component';
 import { CommonModule } from '@angular/common';
+import { ProgressBarComponent } from '../../components/form/progressbar.component';
 
 @Component({
   selector: 'purchase4',
   standalone: true,
-  imports: [progressbar, CommonModule],
+  imports: [ProgressBarComponent, CommonModule],
   template: `
     <section>
       <br />

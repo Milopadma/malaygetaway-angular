@@ -5,13 +5,13 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PersonalDetailService } from '../../api/personal-detail.service';
 import { HttpClientModule } from '@angular/common/http';
-import { progressbar } from '../../components/form/progressbar.component';
+import { ProgressBarComponent } from '../../components/form/progressbar.component';
 
 @Component({
   selector: 'purchase2',
   // Backend Http Client
   standalone: true,
-  imports: [FormsModule, HttpClientModule, progressbar],
+  imports: [FormsModule, HttpClientModule, ProgressBarComponent],
   template: `
     <section>
       <br />

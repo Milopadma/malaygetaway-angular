@@ -32,20 +32,9 @@ import { filter, map } from 'rxjs';
     </div>
   `,
 })
-export class ProgressBarComponent implements OnInit {
+export class ProgressBarComponent {
   @Input() labels: string[] = [];
-  current: string = '';
+  @Input() current: string = '';
 
   constructor(private route: ActivatedRoute) {}
-
-  ngOnInit() {
-    this.route.url
-      .pipe(
-        filter((segments) => segments.length > 0),
-        map((segments) => segments.join('/'))
-      )
-      .subscribe((path) => {
-        this.current = path;
-      });
-  }
 }

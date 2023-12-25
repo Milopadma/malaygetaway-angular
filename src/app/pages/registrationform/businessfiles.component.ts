@@ -8,12 +8,16 @@ import { NgForm } from '@angular/forms';
 import { FileUploadResponse, FormError } from '../../types';
 import { ApiService } from '../../api/api.service';
 import { Subject, debounceTime } from 'rxjs';
+import { ProgressBarComponent } from '../../components/form/progressbar.component';
 @Component({
   selector: 'businessfiles-form',
   standalone: true,
-  imports: [ButtonwIcon, FileInputComponent],
   template: `
-    <div class="flex flex-col items-start">
+    <progress-bar
+      [labels]="['Business name', 'Details', 'Documents', 'Done']"
+      [current]="'Documents'"
+    />
+    <div class="flex flex-col items-start ">
       <h1
         class="text-zinc-800 text-subtitles leading-10 tracking-tighter max-w-[313px] mt-20 max-md:mt-10"
       >
@@ -71,6 +75,7 @@ import { Subject, debounceTime } from 'rxjs';
       </div>
     </div>
   `,
+  imports: [ButtonwIcon, FileInputComponent, ProgressBarComponent],
 })
 export class BusinessFilesFormComponent {
   // global state

@@ -8,12 +8,16 @@ import { z } from 'zod';
 import { FormError } from '../../types';
 import { Subject, debounceTime, switchMap } from 'rxjs';
 import { ApiService } from '../../api/api.service';
+import { ProgressBarComponent } from '../../components/form/progressbar.component';
 
 @Component({
   selector: 'businessdetails-form',
   standalone: true,
-  imports: [RouterOutlet, FormsModule, ButtonwIcon],
   template: `
+    <progress-bar
+      [labels]="['Business name', 'Details', 'Documents', 'Done']"
+      [current]="'Details'"
+    />
     <form #merchantDataForm="ngForm" (ngSubmit)="onSubmit(merchantDataForm)">
       <div class="flex flex-col transition-all duration-500 ease-in-out">
         <h1
@@ -105,6 +109,7 @@ import { ApiService } from '../../api/api.service';
       </div>
     </form>
   `,
+  imports: [RouterOutlet, FormsModule, ButtonwIcon, ProgressBarComponent],
 })
 export class BusinessDetailsFormComponent {
   // init new business from global state

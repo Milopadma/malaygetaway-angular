@@ -9,12 +9,12 @@ import { ApiService } from '../../api/api.service';
 export class MerchantRegistrationService {
   // init empty merchant object
   merchant: MerchantData = new MerchantData(
-    111,
-    'test',
-    111,
-    'test@test.com',
-    'test',
-    ['testURL', 'testURL'],
+    0,
+    '',
+    0,
+    '',
+    '',
+    [],
     MerchantStatus.PENDING
   );
 

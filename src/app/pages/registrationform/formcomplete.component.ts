@@ -3,11 +3,15 @@ import { Router, RouterOutlet } from '@angular/router';
 import { ButtonwIcon } from '../../components/button.component';
 import { MerchantRegistrationService } from './merchantregistration.service';
 import { ApiService } from '../../api/api.service';
+import { ProgressBarComponent } from '../../components/form/progressbar.component';
 @Component({
   selector: 'completed-form',
   standalone: true,
-  imports: [RouterOutlet, ButtonwIcon],
   template: `
+    <progress-bar
+      [labels]="['Business name', 'Details', 'Documents', 'Done']"
+      [current]="'Done'"
+    />
     <div id="spacer" class="h-64"></div>
     <div class="flex flex-col">
       <h1 class="text-zinc-800 text-titles leading-10 tracking-tighter">
@@ -33,6 +37,7 @@ import { ApiService } from '../../api/api.service';
       <button (click)="test()">hello</button>
     </div>
   `,
+  imports: [RouterOutlet, ButtonwIcon, ProgressBarComponent],
 })
 export class CompletedFormComponent implements OnInit {
   constructor(
