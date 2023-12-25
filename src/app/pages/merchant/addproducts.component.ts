@@ -8,6 +8,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { z } from 'zod';
 import { FileUploadResponse, FormError, Product } from '../../types';
 import { Subject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'merchant-products-add',
   standalone: true,
@@ -195,7 +196,11 @@ export class MerchantAddProductsComponent {
   formSubmitted: boolean = false;
   isFormValid: boolean = false;
 
-  constructor(private router: Router, private apiService: ApiService) {
+  constructor(
+    private router: Router,
+    private apiService: ApiService,
+    private toastr: ToastrService
+  ) {
     this.AddProductForm = new NgForm([], []);
     // Check contactnumber availability with debounce
   }
@@ -312,11 +317,13 @@ export class MerchantAddProductsComponent {
 
       this.apiService.addProduct(this.product).subscribe((res) => {
         console.log(res);
+        this.toastr.success('Product added successfully');
       });
       this.navigateToNextPage();
     } catch (error) {
       console.log('Form is not valid');
       console.log(error);
+      this.toastr.error('Form was not valid, server side error.');
       if (error instanceof z.ZodError) {
         console.log('Form onSubmit Err!: ', error.errors[0].message);
       }
