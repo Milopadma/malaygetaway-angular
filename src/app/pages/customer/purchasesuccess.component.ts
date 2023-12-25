@@ -48,10 +48,6 @@ import { progressbar } from '../../components/form/progressbar.component';
               </p>
               <br />
               <br />
-              <p class="text-md font-bold text-green-700">AMOUNT PAID</p>
-              <h2 class="text-subtitles font-bold mb-2 text-green-800">
-                RM. 200.78
-              </h2>
               <div class="mt-6 flex justify-center">
                 <button
                   (click)="navButton1()"
