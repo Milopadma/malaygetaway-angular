@@ -6,6 +6,7 @@ import { MerchantData, MerchantStatus } from '../../types';
 import { ApiService } from '../../api/api.service';
 import { CommonModule } from '@angular/common';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'officer-merchant-application',
@@ -80,7 +81,8 @@ export class OfficerMerchantApplicationsComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -101,6 +103,12 @@ export class OfficerMerchantApplicationsComponent implements OnInit {
       .subscribe((response) => {
         console.log('Merchant approved');
       });
+    this.toastr.success('Successfully approved merchant!', 'Success!', {
+      timeOut: 3000,
+      positionClass: 'toast-top-center',
+    });
+
+    // this.navigateToPage('officer/applications');
   }
 
   rejectMerchant() {
@@ -109,6 +117,7 @@ export class OfficerMerchantApplicationsComponent implements OnInit {
       .subscribe((response) => {
         console.log('Merchant rejected');
       });
+    this.navigateToPage('officer/applications');
   }
 
   navigateToPage(page: string) {
