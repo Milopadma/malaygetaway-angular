@@ -1,12 +1,14 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { BillingAddressService } from '../../api/billing-address.service';
 import { ProgressBarComponent } from '../../components/form/progressbar.component';
 
 @Component({
-  selector: 'purchase3',
+  selector: 'billing-address',
   standalone: true,
-  imports: [ProgressBarComponent],
+  imports: [FormsModule, HttpClientModule, ProgressBarComponent],
   template: `
     <section>
       <br />
@@ -30,61 +32,27 @@ import { ProgressBarComponent } from '../../components/form/progressbar.componen
             [current]="'Billing Address'"
           ></progress-bar>
           <br />
-          <div class="flex flex-col"></div>
         </div>
         <div>
           <div class="bg-white p-6 rounded-lg">
             <h2 class="text-subtitles font-bold mb-4">Billing Address</h2>
-            <p class="text-small text-softblack mb-6">
-              The billing address must match the address associated with the
-              payment method
-            </p>
-            <form action="#" method="POST">
-              <div class="grid gap-6 mb-1 lg:grid-cols-2">
+            <form (submit)="navigateToPaymentMethod()">
+              <div class="grid gap-6 mb-6 lg:grid-cols-2">
                 <div>
                   <label
-                    for="first_name"
+                    for="address"
                     class="block mb-2 text-small font-medium text-softblack"
-                    >First Name</label
+                    >Address</label
                   >
                   <input
                     type="text"
-                    id="first_name"
-                    name="first_name"
+                    id="address"
+                    name="address"
+                    (input)="updateBillingAddress('address', $event)"
                     class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     required
                   />
                 </div>
-                <div>
-                  <label
-                    for="last_name"
-                    class="block mb-1 text-small font-medium text-softblack"
-                    >Last Name</label
-                  >
-                  <input
-                    type="text"
-                    id="last_name"
-                    name="last_name"
-                    class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="mb-1">
-                <label
-                  for="address"
-                  class="block mb-1 text-small font-medium text-softblack"
-                  >Address</label
-                >
-                <input
-                  type="text"
-                  id="address"
-                  name="address"
-                  class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  required
-                />
-              </div>
-              <div class="grid gap-6 mb-1 lg:grid-cols-2">
                 <div>
                   <label
                     for="city"
@@ -95,10 +63,13 @@ import { ProgressBarComponent } from '../../components/form/progressbar.componen
                     type="text"
                     id="city"
                     name="city"
+                    (input)="updateBillingAddress('city', $event)"
                     class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     required
                   />
                 </div>
+              </div>
+              <div class="grid gap-6 mb-6 lg:grid-cols-2">
                 <div>
                   <label
                     for="state"
@@ -109,12 +80,11 @@ import { ProgressBarComponent } from '../../components/form/progressbar.componen
                     type="text"
                     id="state"
                     name="state"
+                    (input)="updateBillingAddress('state', $event)"
                     class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     required
                   />
                 </div>
-              </div>
-              <div class="grid gap-6 mb-5 lg:grid-cols-2">
                 <div>
                   <label
                     for="country"
@@ -125,25 +95,26 @@ import { ProgressBarComponent } from '../../components/form/progressbar.componen
                     type="text"
                     id="country"
                     name="country"
+                    (input)="updateBillingAddress('country', $event)"
                     class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     required
                   />
                 </div>
-                <div>
-                  <label
-                    for="zip"
-                    class="block mb-2 text-small font-medium text-softblack"
-                    >ZIP / Postal Code</label
-                  >
-                  <input
-                    type="text"
-                    id="zip"
-                    name="zip"
-                    class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    (input)="formatZipCode($event)"
-                    required
-                  />
-                </div>
+              </div>
+              <div class="mb-6">
+                <label
+                  for="zip"
+                  class="block mb-2 text-small font-medium text-softblack"
+                  >ZIP / Postal Code</label
+                >
+                <input
+                  type="text"
+                  id="zip"
+                  name="zip"
+                  (input)="formatZipCode($event)"
+                  class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  required
+                />
               </div>
               <div class="flex justify-end space-x-4">
                 <button
@@ -154,11 +125,10 @@ import { ProgressBarComponent } from '../../components/form/progressbar.componen
                   Cancel
                 </button>
                 <button
-                  (click)="navigateToPage('customer/paymentmethod/887')"
                   type="submit"
                   class="text-white bg-softblack hover:bg-fadedgray focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 >
-                  Save
+                  Next
                 </button>
               </div>
             </form>
@@ -169,18 +139,60 @@ import { ProgressBarComponent } from '../../components/form/progressbar.componen
   `,
 })
 export class CustomerBillingAddressComponent {
-  constructor(private router: Router) {}
-  navButton1() {
-    this.router.navigate(['product/:id']);
+  billingAddress = {
+    address: '',
+    city: '',
+    state: '',
+    country: '',
+    postalCode: '',
+  };
+
+  isSubmitting = false;
+
+  constructor(
+    private router: Router,
+    private billingAddressService: BillingAddressService
+  ) {}
+
+  navigateToPaymentMethod() {
+    if (this.isSubmitting) {
+      return;
+    }
+    this.isSubmitting = true;
+    this.billingAddressService
+      .createBillingAddress(this.billingAddress)
+      .subscribe(
+        (response) => {
+          this.router.navigate(['customer/paymentmethod/1']);
+          this.isSubmitting = false;
+        },
+        (error) => {
+          console.error('Error when saving billing address:', error);
+          this.isSubmitting = false;
+        }
+      );
   }
-  navigateToPage(pageName: string) {
-    this.router.navigate([pageName]);
-  }
-  formatZipCode(event: any) {
-    let value = event.target.value.replace(/\D/g, '');
+
+  formatZipCode(event: Event) {
+    const input = event.target as HTMLInputElement;
+    let value = input.value.replace(/\D/g, '');
+
     if (value.length > 5) {
       value = value.substring(0, 5);
     }
-    event.target.value = value;
+    this.billingAddress.postalCode = value;
+    input.value = value;
+  }
+
+  navButton1() {
+    this.router.navigate(['previous-route']); // Sesuaikan dengan route yang diinginkan
+  }
+
+  updateBillingAddress(
+    field: keyof CustomerBillingAddressComponent['billingAddress'],
+    event: Event
+  ) {
+    const input = event.target as HTMLInputElement;
+    this.billingAddress[field] = input.value;
   }
 }

@@ -11,12 +11,10 @@ export class PersonalDetailService {
 
   createPersonalDetail(personalDetail: any): Observable<any> {
     console.log(personalDetail);
-    // return this.http.post(`${this.apiBaseUrl}/create`, personalDetail).pipe();
     return this.apiService.createPersonalDetail(personalDetail).pipe();
   }
 
   private handleError(error: HttpErrorResponse) {
-    // Error handling sesuai kebutuhan
     return throwError('An error occurred');
   }
 }
