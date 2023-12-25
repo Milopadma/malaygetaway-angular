@@ -65,12 +65,13 @@ export class Login {
     this.apiService.login(this.username, this.password).subscribe(
       (res) => {
         localStorage.setItem('token', res.token);
-        this.showDialog = true;
+        localStorage.setItem('userType', res.role);
 
+        this.showDialog = true;
         console.log(localStorage.getItem('token'));
+        console.log(localStorage.getItem('userType'));
       },
       (err) => {
-        // Show error message if login fails
         console.error(err);
       }
     );
@@ -78,7 +79,26 @@ export class Login {
 
   navigateToNextPage() {
     if (!this.showDialog) {
-      this.router.navigate(['/merchant/home']);
+      // Get the user type from localStorage
+      const userType = localStorage.getItem('userType');
+
+      // Navigate to the appropriate route based on the user type
+      switch (userType) {
+        case 'merchant':
+          this.router.navigate(['/merchant/home']);
+          break;
+        case 'ministry_officer':
+          console.log('officer');
+          this.router.navigate(['/officer/home']);
+          break;
+        case 'customer':
+          this.router.navigate(['/customer/home']);
+          break;
+        default:
+          // Handle unknown user type
+          console.error('Unknown user type:', userType);
+          break;
+      }
     }
   }
 
