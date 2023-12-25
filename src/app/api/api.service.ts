@@ -49,6 +49,13 @@ export class ApiService {
       .pipe();
   }
 
+  public checkUsernameAvailability(username: string): Observable<any> {
+    console.log('Checking username availability...');
+    return this.http
+      .get<any>(`${this.apiUrl}/api/auth/check/username/${username}`, {})
+      .pipe();
+  }
+
   public isOfficer(): boolean {
     // Get the role from localStorage
     // const role = localStorage.getItem('userType');
