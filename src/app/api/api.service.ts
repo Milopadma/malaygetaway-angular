@@ -5,6 +5,7 @@ import {
   MerchantData,
   MerchantDataResponse,
   MerchantStatus,
+  Product,
   UserMerchant,
   UserType,
 } from '../types';
@@ -215,6 +216,42 @@ export class ApiService {
       `${this.apiUrl}/api/files/upload`,
       formData
     );
+  }
+
+  // products related APIs
+  public getProducts(merchantId: number): Observable<any> {
+    return this.http
+      .get<any>(`${this.apiUrl}/api/merchant/getProducts/${merchantId}`)
+      .pipe();
+  }
+
+  public getSingleProduct(productId: number): Observable<any> {
+    return this.http
+      .get<any>(`${this.apiUrl}/api/merchant/getSingleProduct/${productId}`)
+      .pipe();
+  }
+
+  public addProduct(product: Product, merchantId: number): Observable<any> {
+    console.log(product);
+    return this.http
+      .post(`${this.apiUrl}/api/merchant/addProduct/${merchantId}`, product)
+      .pipe();
+  }
+
+  public updateProduct(product: Product): Observable<any> {
+    console.log(product);
+    return this.http
+      .patch(
+        `${this.apiUrl}/api/merchant/updateProduct/${product.productId}`,
+        product
+      )
+      .pipe();
+  }
+
+  public deleteProduct(productId: number): Observable<any> {
+    return this.http
+      .delete(`${this.apiUrl}/api/merchant/deleteProduct/${productId}`)
+      .pipe();
   }
 
   // personal details related APIs
