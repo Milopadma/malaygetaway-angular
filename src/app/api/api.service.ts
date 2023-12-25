@@ -236,7 +236,14 @@ export class ApiService {
     return this.http
       .patch(
         `${this.apiUrl}/api/merchant/updateProduct/${product.productId}`,
-        product
+        {
+          product: product,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
       )
       .pipe();
   }
