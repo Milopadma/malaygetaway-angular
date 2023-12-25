@@ -48,7 +48,7 @@ import { Subject } from 'rxjs';
               id="productType"
               required
               [(ngModel)]="product.type"
-              (ngModelChange)="onProductNameChange($event)"
+              (ngModelChange)="onProductTypeChange($event)"
               name="type"
               #productType="ngModel"
               class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
@@ -69,7 +69,7 @@ import { Subject } from 'rxjs';
               id="productPrice"
               required
               [(ngModel)]="product.price"
-              (ngModelChange)="onProductNameChange($event)"
+              (ngModelChange)="onProductPriceChange($event)"
               name="price"
               #productPrice="ngModel"
               class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
@@ -148,12 +148,6 @@ import { Subject } from 'rxjs';
   `,
 })
 export class MerchantAddProductsComponent {
-  onProductDescriptionChange($event: any) {
-    throw new Error('Method not implemented.');
-  }
-  onProductNameChange($event: any) {
-    throw new Error('Method not implemented.');
-  }
   // init new business from global state
   product = {
     productId: Math.floor(Math.random() * 1000),
@@ -190,13 +184,11 @@ export class MerchantAddProductsComponent {
 
   // Schema
   ProductSchema = z.object({
-    productId: z.number().min(1, 'Invalid Product Id'),
     name: z.string().min(2, 'Name must be at least 2 characters'),
     description: z.string().min(2, 'Description must be at least 2 characters'),
     price: z.number().min(1, 'Invalid Price'),
     type: z.string().min(2, 'Type must be at least 2 characters'),
-    productImageURLs: z.array(z.string()).min(1, 'Must have at least 1 image'),
-    merchantId: z.number().min(1, 'Invalid Merchant Id'),
+    // productImageURLs: z.array(z.string()).min(1, 'Must have at least 1 image'),
   });
 
   // form states
@@ -213,8 +205,103 @@ export class MerchantAddProductsComponent {
     textarea.style.height = 'auto';
     textarea.style.height = textarea.scrollHeight + 'px';
   }
+  // the subjects for each field
+  productNameSubject = new Subject<string>();
+  productTypeSubject = new Subject<string>();
+  productPriceSubject = new Subject<number>();
+  productDescriptionSubject = new Subject<string>();
+
+  onProductNameChange(value: string) {
+    console.log(value);
+    this.product.name = value;
+    this.validateField('name', value);
+    this.checkIfFormIsValid();
+  }
+
+  onProductTypeChange(value: string) {
+    console.log(value);
+    this.product.type = value;
+    this.validateField('type', value);
+    this.checkIfFormIsValid();
+  }
+
+  onProductPriceChange(value: number) {
+    console.log(value);
+    this.product.price = value;
+    this.validateField('price', value);
+    this.checkIfFormIsValid();
+  }
+
+  onProductDescriptionChange(value: string) {
+    console.log(value);
+    this.product.description = value;
+    this.validateField('description', value);
+    this.checkIfFormIsValid();
+  }
+
+  checkIfFormIsValid() {
+    try {
+      this.ProductSchema.parse(this.product);
+      this.isFormValid = true;
+    } catch (error) {
+      this.isFormValid = false;
+    }
+  }
+
+  validateField(fieldName: string, value: any) {
+    try {
+      // Validate the field individually
+      (this.ProductSchema.shape as Record<string, any>)[fieldName].parse(value);
+      // If the field is valid, reset its error
+      this.resetError(fieldName);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        // If the field is not valid, set its error
+        this.setError(fieldName, error.errors[0].message);
+      }
+    }
+  }
+
+  resetError(fieldName: string) {
+    switch (fieldName) {
+      case 'name':
+        this.productNameError.set({ message: 'Required', isHidden: true });
+        break;
+      case 'type':
+        this.productTypeError.set({ message: 'Required', isHidden: true });
+        break;
+      case 'price':
+        this.productPriceError.set({ message: 'Required', isHidden: true });
+        break;
+      case 'description':
+        this.productDescriptionError.set({
+          message: 'Required',
+          isHidden: true,
+        });
+        break;
+    }
+  }
+
+  setError(fieldName: string, message: string) {
+    switch (fieldName) {
+      case 'name':
+        this.productNameError.set({ message: message, isHidden: false });
+        break;
+      case 'type':
+        this.productTypeError.set({ message: message, isHidden: false });
+        break;
+      case 'price':
+        this.productPriceError.set({ message: message, isHidden: false });
+        break;
+      case 'description':
+        this.productDescriptionError.set({ message: message, isHidden: false });
+        break;
+    }
+  }
+
   onSubmit(form: NgForm) {
     this.formSubmitted = true;
+
     try {
       console.log(form.value);
 
@@ -223,7 +310,6 @@ export class MerchantAddProductsComponent {
       form.value.productImageURLs = this.product.productImageURLs;
       form.value.merchantId = this.product.merchantId;
 
-      this.product = this.ProductSchema.parse(form.value);
       this.apiService.addProduct(this.product).subscribe((res) => {
         console.log(res);
       });

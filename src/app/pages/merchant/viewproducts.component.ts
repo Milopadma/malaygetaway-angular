@@ -29,8 +29,11 @@ import { Product } from '../../types';
       </div>
       <div class="flex flex-col">
         <div class="h-4" id="spacer"></div>
-        <!--  -->
-        @for (product of products; track product.productId){
+        @if (products.length == 0) {
+        <div class="text-paragraph text-reject flex pt-8">
+          You have no products in your catalogue!
+        </div>
+        } @else { @for (product of products; track product.productId){
         <div
           class="flex flex-row border-t-2 border-fadedgray pt-4 pb-6 justify-between"
         >
@@ -64,10 +67,15 @@ import { Product } from '../../types';
             >
               Edit
             </button>
-            <button class="text-reject hover:underline">Delete</button>
+            <button
+              class="text-reject hover:underline"
+              (click)="deleteProduct(product.productId)"
+            >
+              Delete
+            </button>
           </div>
         </div>
-        }
+        } }
       </div>
     </div>
   `,
@@ -81,6 +89,18 @@ export class MerchantViewProductsComponent implements OnInit {
     this.apiService.getProducts(merchantId).subscribe(
       (res) => {
         this.products = res.data;
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
+  }
+
+  deleteProduct(productId: number) {
+    this.apiService.deleteProduct(productId).subscribe(
+      (res) => {
+        console.log(res);
+        location.reload();
       },
       (err) => {
         console.error(err);
