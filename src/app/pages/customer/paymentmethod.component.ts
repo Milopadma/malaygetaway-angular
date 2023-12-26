@@ -4,15 +4,13 @@ import { CommonModule } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
 import { ProductService } from '../../api/product-price.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ProgressBarComponent } from "../../components/form/progressbar.component";
 
 declare var paypal: any;
 @Component({
-  selector: 'purchase4',
-  standalone: true,
-
-  imports: [progressbar, CommonModule, HttpClientModule],
-
-  template: `
+    selector: 'purchase4',
+    standalone: true,
+    template: `
     <section>
       <br /><br /><br /><br /><br />
       <main class="container mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 font-sans text-softblack bg-softwhite py-10 rounded-lg shadow-2xl">
@@ -35,6 +33,7 @@ declare var paypal: any;
       </main>
     </section>
   `,
+    imports: [CommonModule, ProgressBarComponent]
 })
 export class CustomerPaymentMethodComponent implements AfterViewInit {
   constructor(

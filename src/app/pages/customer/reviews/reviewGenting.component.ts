@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ReviewService } from '../../../api/review.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'review-genting',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule, HttpClientModule],
   template: `
     <section class="py-20">
       <div class="max-w-4xl mx-auto px-4">
@@ -256,33 +259,25 @@ import { Router } from '@angular/router';
                   </div>
                 </div>
                 <div>
-                  <form action="#" method="POST">
+                <form (submit)="submitReview()">
                     <div class="grid gap-6 mb-1 lg:grid-cols-2">
                       <div>
-                        <label
-                          for="first_name"
-                          class="block mb-2 text-small font-medium text-softblack"
-                          >Name</label
-                        >
+                        <label for="name" class="block mb-2 text-small font-medium text-softblack">Name</label>
                         <input
                           type="text"
-                          id="first_name"
-                          name="first_name"
+                          id="name"
+                          (input)="updateReviewData('name', $event)"
                           placeholder="Your Name"
                           class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                           required
                         />
                       </div>
                       <div>
-                        <label
-                          for="last_name"
-                          class="block mb-1 text-small font-medium text-softblack"
-                          >Email</label
-                        >
+                        <label for="email" class="block mb-1 text-small font-medium text-softblack">Email</label>
                         <input
-                          type="text"
-                          id="last_name"
-                          name="last_name"
+                          type="email"
+                          id="email"
+                          (input)="updateReviewData('email', $event)"
                           placeholder="Email"
                           class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                           required
@@ -290,39 +285,29 @@ import { Router } from '@angular/router';
                       </div>
                     </div>
                     <div class="mb-1">
-                      <label
-                        for="address"
-                        class="block mb-1 text-small font-medium mt-5 text-softblack"
-                        >Product</label
-                      >
+                      <label for="product" class="block mb-1 text-small font-medium text-softblack">Product</label>
                       <input
                         type="text"
-                        id="address"
-                        name="address"
+                        id="product"
+                        (input)="updateReviewData('product', $event)"
                         placeholder="What service or product did you buy?"
                         class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         required
                       />
                     </div>
+
                     <div class="mb-1">
-                      <label
-                        for="address"
-                        class="block mb-1 text-small font-medium mt-5 text-softblack"
-                        >Description
-                      </label>
+                      <label for="description" class="block mb-1 text-small font-medium text-softblack">Description</label>
                       <textarea
-                        type="text"
-                        id="address"
-                        name="address"
+                        id="description"
+                        (input)="updateReviewData('description', $event)"
                         placeholder="Write your review here"
                         class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         required
-                      >
-                      </textarea>
+                      ></textarea>
                     </div>
                     <div class="flex justify-start md:justify-end">
                       <button
-                        (click)="navButton1()"
                         type="submit"
                         class="inline-flex justify-center py-2 px-4 mt-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-softblack hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                       >
@@ -348,7 +333,41 @@ import { Router } from '@angular/router';
   styles: [],
 })
 export class reviewGenting {
-  constructor(private router: Router) {}
+  reviewData = {
+    orderRating: 0,
+    serviceRating: 0,
+    priceRating: 0,
+    placeRating: 0,
+    overallRating: 0,
+    name: '',
+    email: '',
+    product: '',
+    description: '',
+  };
+
+  isSubmitting = false;
+
+  constructor(private router: Router, private reviewService: ReviewService) {}
+
+  submitReview() {
+    if (this.isSubmitting) {
+      return;
+    }
+    this.isSubmitting = true;
+    this.reviewService.createReview(this.reviewData).subscribe(
+      response => {
+        this.isSubmitting = false;
+      },
+      error => {
+        console.error('Error when submitting review:', error);
+        this.isSubmitting = false;
+      }
+    );
+  }
+
+  updateReviewData(field: keyof typeof this.reviewData, event: Event) {
+    const input = event.target as HTMLInputElement | null;
+  }
   rating1 = 0;
   rating2 = 0;
   rating3 = 0;
@@ -370,7 +389,7 @@ export class reviewGenting {
     this.rating5 = newRating;
   }
   navButton1() {
-    this.router.navigate(['send']);
+    this.router.navigate(['review/sent']);
   }
   navButton2() {
     this.router.navigate(['order']);
