@@ -5,11 +5,11 @@ import { ButtonBordered } from '../../components/buttonbordered.component';
 import { IconComponent } from '../../components/icon.component';
 import { ApiService } from '../../api/api.service';
 import { Product } from '../../types';
+import { DialogueBoxComponent } from '../../components/dialoguebox.component';
 
 @Component({
   selector: 'merchant-products-list',
   standalone: true,
-  imports: [ButtonUnbordered, ButtonBordered, IconComponent],
   template: `
     <div class="h-12" id="spacer"></div>
     <div class="flex flex-col w-full">
@@ -39,7 +39,7 @@ import { Product } from '../../types';
         >
           <div class="flex flex-row">
             <div>
-              <img src="{{ product.productImageURLs }}" class="w-24 h-24" />
+              <img src="{{ product.productImageURLs[0] }}" class="w-24 h-24" />
             </div>
             <div class="w-12" id="spacer"></div>
             <div class="flex flex-col">
@@ -69,7 +69,7 @@ import { Product } from '../../types';
             </button>
             <button
               class="text-reject hover:underline"
-              (click)="deleteProduct(product.productId)"
+              (click)="handleDelete(product.productId)"
             >
               Delete
             </button>
@@ -78,11 +78,37 @@ import { Product } from '../../types';
         } }
       </div>
     </div>
+    @if (showDialog){
+    <dialogue-box
+      header="Info"
+      content="Are you sure you want to delete this product?"
+      button1="Permanently Delete"
+      button2="Cancel"
+      (close)="closeDialog()"
+      (firstButtonClicked)="showDialog = false; deleteProduct(productToDelete)"
+      (secondButtonClicked)="showDialog = false"
+    ></dialogue-box>
+    }
   `,
+  imports: [
+    ButtonUnbordered,
+    ButtonBordered,
+    IconComponent,
+    DialogueBoxComponent,
+  ],
 })
 export class MerchantViewProductsComponent implements OnInit {
   products: Product[] = [];
+  showDialog = false;
+  productToDelete!: number;
   constructor(private router: Router, private apiService: ApiService) {}
+  handleDelete(productId: number) {
+    this.showDialog = true;
+    this.productToDelete = productId;
+  }
+  closeDialog() {
+    this.showDialog = false;
+  }
 
   ngOnInit() {
     const merchantId = 420949; // Replace this with the actual merchant ID

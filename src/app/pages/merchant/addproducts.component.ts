@@ -97,7 +97,7 @@ import { ToastrService } from 'ngx-toastr';
               #productDescription="ngModel"
               (input)="autoResize(textarea)"
               class="text-black placeholder:text-fadedgray  h-32 text-paragraph leading-7 tracking-tighter border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full mt-2 px-5 py-2 border-2 border-solid max-md:pl-1 resize-y"
-              placeholder="brief company description"
+              placeholder="brief product description"
               rows="1"
             ></textarea>
             <!-- errors -->
