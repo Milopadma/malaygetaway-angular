@@ -44,7 +44,7 @@ export class DialogueBoxComponent {
   @Output() secondButtonClicked = new EventEmitter<void>();
 
   onFirstButtonClick() {
-    this.close.emit();
+    this.firstButtonClicked.emit();
   }
 
   onSecondButtonClick() {

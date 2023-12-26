@@ -47,8 +47,9 @@ export class ApiService {
   ): Observable<any> {
     return this.http
       .post<any>(`${this.apiUrl}/api/auth/changePassword`, {
-        newPassword,
-        oldPassword,
+        userId: userId,
+        oldPassword: oldPassword,
+        newPassword: newPassword,
       })
       .pipe();
   }
@@ -71,11 +72,7 @@ export class ApiService {
 
   public getMerchantId(username: string): Observable<any> {
     return this.http
-      .get<any>(`${this.apiUrl}/api/auth/getMerchantId`, {
-        params: {
-          username,
-        },
-      })
+      .get<any>(`${this.apiUrl}/api/auth/getMerchantId/${username}`, {})
       .pipe();
   }
 

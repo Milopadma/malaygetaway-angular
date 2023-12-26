@@ -3,13 +3,14 @@ import { ApiService } from '../../api/api.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ButtonwIcon } from '../../components/button.component';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-account',
   standalone: true,
   template: `
     <div class="h-12" id="spacer"></div>
-    <div class="flex flex-col w-full">
+    <div class="flex flex-col w-full items-center justify-center">
       <form
         #changePasswordForm="ngForm"
         (ngSubmit)="onSubmit(changePasswordForm)"
@@ -50,7 +51,10 @@ import { ActivatedRoute } from '@angular/router';
           type="submit"
           [ariaDisabled]="!isFormValid"
         >
-          <buttonwicon label="Continue" [disabled]="!isFormValid"></buttonwicon>
+          <buttonwicon
+            label="Save Edits"
+            [disabled]="!isFormValid"
+          ></buttonwicon>
           <p
             class="text-softgray text-base font-light leading-5 tracking-tighter whitespace-nowrap"
           >
@@ -63,17 +67,20 @@ import { ActivatedRoute } from '@angular/router';
   imports: [FormsModule, ButtonwIcon],
 })
 export class ChangePasswordFormComponent implements OnInit {
-  merchantId: string = '';
-  merchantData: any = {};
   isFormValid: boolean = false;
   changePasswordForm: NgForm;
   user = {
+    userId: 0,
     oldPassword: '',
     newPassword: '',
     username: '',
   };
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute) {
+  constructor(
+    private apiService: ApiService,
+    private route: ActivatedRoute,
+    private toastr: ToastrService
+  ) {
     this.changePasswordForm = new NgForm([], []);
   }
 
@@ -84,24 +91,11 @@ export class ChangePasswordFormComponent implements OnInit {
       console.log(email);
       this.apiService.getUserByEmail(email).subscribe((response) => {
         console.log(response);
-        this.user = response.data;
+        this.user.userId = response.data;
 
         console.log(this.user);
       });
     });
-    this.getMerchantData();
-  }
-
-  getMerchantData(): void {
-    this.apiService.getMerchant(this.merchantId).subscribe(
-      (data: any) => {
-        this.merchantData = data;
-        this.user.username = this.merchantData.username;
-      },
-      (error: any) => {
-        console.error('Failed to fetch merchant data:', error);
-      }
-    );
   }
 
   onOldPasswordChange(value: string): void {
@@ -126,19 +120,23 @@ export class ChangePasswordFormComponent implements OnInit {
   }
 
   saveChanges(): void {
-    // Update the merchant data with the new username and password
-    this.merchantData.username = this.user.username;
-
-    const userId = this.merchantData.merchantId;
-
     // Call the API to save the changes
     this.apiService
-      .changePassword(userId, this.user.newPassword, this.user.oldPassword)
+      .changePassword(
+        this.user.userId,
+        this.user.newPassword,
+        this.user.oldPassword
+      )
       .subscribe(
         () => {
+          this.toastr.success('Password changed successfully');
           console.log('Merchant data updated successfully');
+          setTimeout(() => {
+            window.location.href = '/login';
+          });
         },
         (error: any) => {
+          this.toastr.error('Wrong Old Password');
           console.error('Failed to update merchant data:', error);
         }
       );
