@@ -87,6 +87,7 @@ export class OfficerMerchantApplicationsComponent implements OnInit {
     description: '',
     businessFileURLs: [''],
     status: MerchantStatus.PENDING,
+    products: [],
   };
 
   @ViewChild(ToastContainerDirective, { static: true })

@@ -5,6 +5,7 @@ import {
   MerchantData,
   MerchantDataResponse,
   MerchantStatus,
+  Product,
   UserMerchant,
   UserType,
 } from '../types';
@@ -39,6 +40,26 @@ export class ApiService {
       .pipe();
   }
 
+  public changePassword(
+    userId: number,
+    newPassword: string,
+    oldPassword: string
+  ): Observable<any> {
+    return this.http
+      .post<any>(`${this.apiUrl}/api/auth/changePassword`, {
+        userId: userId,
+        oldPassword: oldPassword,
+        newPassword: newPassword,
+      })
+      .pipe();
+  }
+
+  public getUserByEmail(email: string): Observable<any> {
+    return this.http
+      .get<any>(`${this.apiUrl}/api/auth/getUserByEmail/${email}`, {})
+      .pipe();
+  }
+
   public getUserType(username: string): Observable<any> {
     return this.http
       .get<any>(`${this.apiUrl}/api/auth/userType`, {
@@ -46,6 +67,12 @@ export class ApiService {
           username,
         },
       })
+      .pipe();
+  }
+
+  public getMerchantId(username: string): Observable<any> {
+    return this.http
+      .get<any>(`${this.apiUrl}/api/auth/getMerchantId/${username}`, {})
       .pipe();
   }
 
@@ -90,9 +117,23 @@ export class ApiService {
       .pipe();
   }
 
-  public setMerchant(merchant: UserMerchant): Observable<UserMerchant> {
+  public updateMerchant(
+    merchantId: number,
+    merchant: MerchantData
+  ): Observable<any> {
+    console.log(merchant);
     return this.http
-      .post<UserMerchant>(`${this.apiUrl}/api/merchant/merchants`, merchant)
+      .patch(
+        `${this.apiUrl}/api/merchant/update/${merchantId}`,
+        {
+          merchant: merchant,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .pipe();
   }
 
@@ -178,25 +219,6 @@ export class ApiService {
       );
   }
 
-  // send files
-  public sendFiles(files: File[]): Observable<string[]> {
-    const formData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      console.log(formData.getAll('files'));
-      formData.append('files', files[i], files[i].name);
-      console.log(formData.getAll('files'));
-    }
-    return this.http
-      .post<string[]>(
-        `${this.apiUrl}/api/files/upload/multiple`,
-        formData, // send formData directly
-        {
-          reportProgress: true, // for tracking upload progress
-        }
-      )
-      .pipe();
-  }
-
   uploadFile(file: File): Observable<FileUploadResponse> {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
@@ -215,6 +237,51 @@ export class ApiService {
       `${this.apiUrl}/api/files/upload`,
       formData
     );
+  }
+
+  // products related APIs
+  public getProducts(merchantId: number): Observable<any> {
+    return this.http
+      .get<any>(`${this.apiUrl}/api/merchant/getProducts/${merchantId}`)
+      .pipe();
+  }
+
+  public getSingleProduct(productId: number): Observable<any> {
+    return this.http
+      .get<any>(`${this.apiUrl}/api/merchant/getSingleProduct/${productId}`)
+      .pipe();
+  }
+
+  public addProduct(product: Product): Observable<any> {
+    console.log(product);
+    return this.http
+      .post(`${this.apiUrl}/api/merchant/addProduct`, {
+        product: product,
+      })
+      .pipe();
+  }
+
+  public updateProduct(product: Product): Observable<any> {
+    console.log(product);
+    return this.http
+      .patch(
+        `${this.apiUrl}/api/merchant/updateProduct/${product.productId}`,
+        {
+          product: product,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .pipe();
+  }
+
+  public deleteProduct(productId: number): Observable<any> {
+    return this.http
+      .delete(`${this.apiUrl}/api/merchant/deleteProduct/${productId}`)
+      .pipe();
   }
 
   // personal details related APIs
