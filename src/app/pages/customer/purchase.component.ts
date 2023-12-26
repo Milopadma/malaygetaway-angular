@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonBordered } from '../../components/buttonbordered.component';
+import { ProductService } from '../../api/product-price.service';
 
 type TouristImage = {
   id: number;
@@ -79,19 +80,21 @@ type TouristLocation = {
             <div class="bg-white p-10 rounded-lg shadow-lg max-w-xs mx-auto">
               <div class="text-center mb-1">
                 <span class="text-4xl font-bold text-gray-800"
-                  >RM {{ price }}</span
+                  >$ {{ price }},00</span
                 >
               </div>
               <div class="text-center mb-2">
                 <span class="text-paragraph text-gray-400 line-through ml-2"
-                  >Was RM {{ price + 120 }}</span
+                  >Was $ {{ price + 120 }},00</span
                 >
               </div>
               <a routerLink="personal"></a>
-              <buttonbordered
-                label="Purchase"
-                (click)="navigateToPage('customer/personaldetail/:id')"
-              ></buttonbordered>
+              <div *ngIf="selectedLocation">
+                <buttonbordered
+                  label="Purchase"
+                  (click)="navigateToPage('customer/personaldetail/' + selectedLocation.id, selectedLocation.id, selectedLocation.price)"
+                ></buttonbordered>
+              </div>
             </div>
           </div>
         </div>
@@ -99,10 +102,27 @@ type TouristLocation = {
     </section>
   `,
 })
-export class CustomerProductComponent {
-  constructor(private router: Router) {}
-  navigateToPage(pageName: string) {
-    this.router.navigate([pageName]);
+export class CustomerProductComponent implements OnInit {
+  selectedLocation: TouristLocation | undefined;
+  constructor(private router: Router, private productService: ProductService) {}
+
+  ngOnInit() {
+    const locationId = parseInt(this.router.url.split('/')[3], 10);
+    this.selectedLocation = this.getTouristLocationById(locationId);
+  }
+  
+  getTouristLocationById(id: number): TouristLocation | undefined {
+    return this.touristLocations.find(location => location.id === id);
+  }
+
+  navigateToPage(pageName: string, locationId: number, price: number) {
+    if (locationId !== undefined && price !== undefined) {
+      this.productService.setSelectedProductPrice(price);
+      this.router.navigate([pageName]);
+    } else {
+      // Handle the undefined case
+      console.error('Location ID or Price is undefined');
+    }
   }
 
   // placeholder data
@@ -111,9 +131,8 @@ export class CustomerProductComponent {
       id: 1,
       name: 'Genting Highlands',
       address: '69000 Genting Highlands, Pahang',
-      heroimage:
-        'https://www.malaymail.com/uploads/articles/2020/2020-06/IMG_20200616_104304.jpg',
-      price: 200,
+      heroimage: 'https://www.malaymail.com/uploads/articles/2020/2020-06/IMG_20200616_104304.jpg',
+      price: 50,
       images: [
         {
           id: 1,
@@ -141,22 +160,22 @@ export class CustomerProductComponent {
       address:
         'Kuala Lumpur City Centre, 50088 Kuala Lumpur, Federal Territory of Kuala Lumpur',
       heroimage: 'https://example.com/images/petronas_twin_towers.jpg',
-      price: 80,
+      price: 20,
       images: [
         {
           id: 1,
           description: 'The stunning Petronas Twin Towers at night',
-          url: 'https://example.com/images/petronas_twin_towers_night.jpg',
+          url: 'https://th.bing.com/th/id/OIP.p3tqtFP5hmiA0M_s7ix9JgHaE7?rs=1&pid=ImgDetMain',
         },
         {
           id: 2,
           description: 'The bridge connecting the Petronas Twin Towers',
-          url: 'https://example.com/images/petronas_twin_towers_bridge.jpg',
+          url: 'https://media.tacdn.com/media/attractions-splice-spp-674x446/0b/1a/85/e4.jpg',
         },
         {
           id: 3,
           description: 'Petronas Twin Towers viewed from KLCC Park',
-          url: 'https://example.com/images/petronas_twin_towers_park_view.jpg',
+          url: 'https://content.paulreiffer.com/wp-content/uploads/2015/10/KLCC-Park-Night-Water-Fountains-Feature-Pool-Petronas-Towers-Long-Exposure-Curve-Professional-Landscape-Cityscape-City-Photographer-Kuala-Lumpur-Paul-Reiffer.jpg',
         },
       ],
       description:
@@ -169,22 +188,22 @@ export class CustomerProductComponent {
       address:
         'Kuala Lumpur Convention Centre, Jalan Pinang, Kuala Lumpur City Centre, 50088 Kuala Lumpur',
       heroimage: 'https://example.com/images/aquaria_klcc.jpg',
-      price: 45,
+      price: 90,
       images: [
         {
           id: 1,
           description: 'Exotic marine life in Aquaria KLCC',
-          url: 'https://example.com/images/aquaria_klcc_marine_life.jpg',
+          url: 'https://www.promoteyourschool.co.uk/wp-content/uploads/2021/05/Great-Totham-Outdoor-School-Wall-Art-2.jpg',
         },
         {
           id: 2,
           description: 'The underwater tunnel in Aquaria KLCC',
-          url: 'https://example.com/images/aquaria_klcc_tunnel.jpg',
+          url: 'https://www.discoverthephilippines.com/wp-content/uploads/2022/01/article-cover-photo-manila-ocean-park.jpg',
         },
         {
           id: 3,
           description: 'Sharks swimming over visitors in Aquaria KLCC',
-          url: 'https://example.com/images/aquaria_klcc_sharks.jpg',
+          url: 'https://flyctory.com/wp-content/uploads/2022/12/20211210_SeaLifeOberhausen_0053.jpg',
         },
       ],
       description:
@@ -197,28 +216,30 @@ export class CustomerProductComponent {
       address:
         'Jalan Tuanku Abdul Halim, Bukit Damansara, 50490 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur',
       heroimage: 'https://example.com/images/istana_negara.jpg',
-      price: 0, // Assuming it's not chargeable if it's a palace
+      price: 15, // Assuming it's not chargeable if it's a palace
       images: [
         {
           id: 1,
           description: 'The majestic front view of Istana Negara',
-          url: 'https://example.com/images/istana_negara_front.jpg',
+          url: 'https://media.malaysianow.com/wp-content/uploads/2020/12/16160254/istana-negara-palace-AP-271020-1024x682-1.jpg',
         },
         {
           id: 2,
           description: 'The royal guard on duty at Istana Negara',
-          url: 'https://example.com/images/istana_negara_guard.jpg',
+          url: 'https://www.theborneopost.com/newsimages/2022/10/istana-negara-horses.jpg',
         },
         {
           id: 3,
           description: 'Istana Negara during a national event',
-          url: 'https://example.com/images/istana_negara_event.jpg',
+          url: 'https://i.ytimg.com/vi/IkXLeLYJwDc/maxresdefault.jpg',
         },
       ],
       description:
         'The Istana Negara is the official residence of the Yang di-Pertuan Agong, the monarch of Malaysia. The palace symbolizes the sovereignty of the King as the Head of State, as well as his role as the custodian of Islamic faith in Malaysia.',
     },
   ];
+
+  
 
   // get the url parameter
   locationId = this.router.url.split('/')[3];

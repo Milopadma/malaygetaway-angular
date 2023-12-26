@@ -83,7 +83,7 @@ type TouristLocation = {
         <div class="grid grid-cols-3 gap-8">
           <div
             class="border p-8 rounded-lg transition-transform transform hover:scale-105"
-            (click)="navigateToProductPage(1)"
+            (click)="navigateToProductPage(2)"
           >
             <h2 class="text-2xl font-bold mb-4">Petronas Kuala Lumpur</h2>
             <img
@@ -105,7 +105,7 @@ type TouristLocation = {
         <div class="grid grid-cols-3 gap-8">
           <div
             class="border border-gray-200 p-8 rounded-lg transition-transform transform hover:scale-105"
-            (click)="navigateToProductPage(2)"
+            (click)="navigateToProductPage(1)"
           >
             <h2 class="text-2xl font-bold mb-4">Genting Highland</h2>
             <img

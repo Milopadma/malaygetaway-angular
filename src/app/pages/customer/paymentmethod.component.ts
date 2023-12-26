@@ -1,12 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ProgressBarComponent } from '../../components/form/progressbar.component';
+import { isPlatformBrowser } from '@angular/common';
+import { ProductService } from '../../api/product-price.service';
+import { HttpClientModule } from '@angular/common/http';
 
+declare var paypal: any;
 @Component({
   selector: 'purchase4',
   standalone: true,
-  imports: [ProgressBarComponent, CommonModule],
+
+  imports: [progressbar, CommonModule, HttpClientModule],
+
   template: `
     <section>
       <br /><br /><br /><br /><br />
@@ -18,43 +23,67 @@ import { ProgressBarComponent } from '../../components/form/progressbar.componen
         </div>
         <div class="bg-white p-6 rounded-lg">
           <h2 class="text-subtitles font-bold mb-4">Payment Method</h2>
-          <p class="text-small text-softblack mb-6">Choose PayPal as the Payment Method</p>
-          <div class="flex justify-center gap-4 mb-6">
-          <button class="group py-1 px-10 font-bold rounded-lg flex flex-col items-center text-softblack" disabled>
-            <div class="w-full h-12 mb-2 flex justify-center items-center">
-              <img src="https://logos-world.net/wp-content/uploads/2020/05/PayPal-Logo.png" alt="PayPal" class="h-20" />
-            </div>
-          </button>
+          <p class="text-small text-softblack mb-10">Choose PayPal as the Payment Method</p>
+          <div class="w-full h-12 mb-10 flex justify-center items-center">
+            <img src="https://logos-download.com/wp-content/uploads/2016/03/PayPal_Logo_2007.png" alt="PayPal" class="h-20" />
           </div>
-          <form *ngIf="selectedMethod === 'paypal'" class="flex flex-col gap-4">
-            <div class="text-center mt-1">
-              <p class="mb-4 text-small">Enter your PayPal details:</p>
-              <div>
-                <label for="paypalEmail" class="block mb-2 text-small font-medium text-softblack">PayPal Email</label>
-                <input type="text" id="paypalEmail" placeholder="email@example.com" name="paypalEmail" class="bg-white border border-fadedgray text-softblack text-small rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-              </div>
-              <br />
-              <button (click)="navButton3()" class="text-white bg-softblack hover:bg-fadedgray focus:ring-4 focus:outline-none focus:ring-blue-300 mb-2 font-medium rounded-lg text-small px-8 py-2.5 text-center">
-                Proceed with PayPal
-              </button>
-            </div>
-          </form>
+          <div class="flex justify-center gap-4 mb-6">
+            <div id="paypal-button-container"></div>
+          </div>
+
         </div>
       </main>
     </section>
   `,
 })
-export class CustomerPaymentMethodComponent {
-  selectedMethod: string = 'paypal';
-  currentStep: string = 'Payment Method';
+export class CustomerPaymentMethodComponent implements AfterViewInit {
+  constructor(
+    private router: Router, 
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private productService: ProductService
+  ) {}
 
-  selectMethod(method: string): void {
-    this.selectedMethod = method;
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadPayPalScript().then(() => {
+        const productPrice = this.productService.getSelectedProductPrice() || '0.01';
+        paypal.Buttons({
+          createOrder: (_: any, actions: any) => {
+            return actions.order.create({
+              purchase_units: [{
+                amount: {
+                  value: productPrice.toString()
+                }
+              }]
+            });
+          },
+          onApprove: (_: any, actions: any) => {
+            return actions.order.capture().then((details: any) => {
+              this.router.navigate(['customer/paymentsuccess', details.id]);
+            });
+          },
+          onCancel: () => {
+            console.log('Payment Cancelled');
+          },
+          onError: (err: any) => {
+            console.error('Payment Error: ', err);
+          }
+        }).render('#paypal-button-container');
+      });
+    }
   }
 
-  constructor(private router: Router) {}
-
-  navButton3() {
-    this.router.navigate(['successfuly/:id']);
+  loadPayPalScript(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+        const scriptElement = document.createElement('script');
+        scriptElement.src = 'https://www.paypal.com/sdk/js?client-id=AalFHw36Pr_cNCwcoGfJc4zlBYjVnH_9Ew4UFZieMn8Z4AoO2orOS9uJdeSSMbUXiWy7BG6sLOEz9i7m';
+        scriptElement.onload = () => resolve();
+        scriptElement.onerror = () => reject();
+        document.body.appendChild(scriptElement);
+      } else {
+        reject(new Error('PayPal SDK can only be loaded in the browser'));
+      }
+    });
   }
 }
