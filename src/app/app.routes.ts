@@ -38,6 +38,7 @@ import { CustomerPaymentMethodComponent } from './pages/customer/paymentmethod.c
 import { CustomerHomeComponent } from './pages/customer/homePurchase.component';
 import { CustomerSuccessfulyPurchase } from './pages/customer/purchasesuccess.component';
 import { OfficerAuthGuard } from './api/auth/officer.authguard';
+import { ChangePasswordFormComponent } from './pages/merchant/account.component';
 // import { MerchantDataFormComponent } from './pages/registrationform/merchantdata.component';
 
 export const routes: Routes = [
@@ -60,6 +61,10 @@ export const routes: Routes = [
   {
     path: 'login',
     component: Login,
+  },
+  {
+    path: 'changePassword/:email',
+    component: ChangePasswordFormComponent,
   },
   {
     path: 'merchant/register', //localhost:4200/merchant/register

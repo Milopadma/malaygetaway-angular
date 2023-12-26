@@ -40,6 +40,25 @@ export class ApiService {
       .pipe();
   }
 
+  public changePassword(
+    userId: number,
+    newPassword: string,
+    oldPassword: string
+  ): Observable<any> {
+    return this.http
+      .post<any>(`${this.apiUrl}/api/auth/changePassword`, {
+        newPassword,
+        oldPassword,
+      })
+      .pipe();
+  }
+
+  public getUserByEmail(email: string): Observable<any> {
+    return this.http
+      .get<any>(`${this.apiUrl}/api/auth/getUserByEmail/${email}`, {})
+      .pipe();
+  }
+
   public getUserType(username: string): Observable<any> {
     return this.http
       .get<any>(`${this.apiUrl}/api/auth/userType`, {
@@ -101,9 +120,23 @@ export class ApiService {
       .pipe();
   }
 
-  public setMerchant(merchant: UserMerchant): Observable<UserMerchant> {
+  public updateMerchant(
+    merchantId: number,
+    merchant: MerchantData
+  ): Observable<any> {
+    console.log(merchant);
     return this.http
-      .post<UserMerchant>(`${this.apiUrl}/api/merchant/merchants`, merchant)
+      .patch(
+        `${this.apiUrl}/api/merchant/update/${merchantId}`,
+        {
+          merchant: merchant,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .pipe();
   }
 
