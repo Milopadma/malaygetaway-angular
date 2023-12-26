@@ -1,24 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ButtonUnbordered } from '../../components/buttonunbordered.component';
 import { Router } from '@angular/router';
 import { ButtonBordered } from '../../components/buttonbordered.component';
 import { IconComponent } from '../../components/icon.component';
-
-type Product = {
-  id: number;
-  name: string;
-  description: string;
-  image: string;
-  price: number;
-  quantity: number;
-  merchant: string;
-  type: string;
-};
+import { ApiService } from '../../api/api.service';
+import { Product } from '../../types';
+import { DialogueBoxComponent } from '../../components/dialoguebox.component';
 
 @Component({
   selector: 'merchant-products-list',
   standalone: true,
-  imports: [ButtonUnbordered, ButtonBordered, IconComponent],
   template: `
     <div class="h-12" id="spacer"></div>
     <div class="flex flex-col w-full">
@@ -38,14 +29,17 @@ type Product = {
       </div>
       <div class="flex flex-col">
         <div class="h-4" id="spacer"></div>
-        <!--  -->
-        @for (product of products; track product.id){
+        @if (products.length == 0) {
+        <div class="text-paragraph text-reject flex pt-8">
+          You have no products in your catalogue!
+        </div>
+        } @else { @for (product of products; track product.productId){
         <div
           class="flex flex-row border-t-2 border-fadedgray pt-4 pb-6 justify-between"
         >
           <div class="flex flex-row">
             <div>
-              <img src="{{ product.image }}" class="w-24 h-24" />
+              <img src="{{ product.productImageURLs[0] }}" class="w-24 h-24" />
             </div>
             <div class="w-12" id="spacer"></div>
             <div class="flex flex-col">
@@ -55,9 +49,6 @@ type Product = {
               <div class="flex flex-row gap-4">
                 <div class="text-small text-softgray">
                   RM {{ product.price }}
-                </div>
-                <div class="text-small text-softgray">
-                  {{ product.quantity }} pcs
                 </div>
                 <div class="text-small text-softgray">{{ product.type }}</div>
               </div>
@@ -69,66 +60,81 @@ type Product = {
           </div>
           <div class="flex flex-row gap-4">
             <button
-              (click)="navigateToPage('merchant/editproduct/' + product.id)"
+              (click)="
+                navigateToPage('merchant/editproduct/' + product.productId)
+              "
               class="text-small text-softblack hover:underline"
             >
               Edit
             </button>
-            <button class="text-reject hover:underline">Delete</button>
+            <button
+              class="text-reject hover:underline"
+              (click)="handleDelete(product.productId)"
+            >
+              Delete
+            </button>
           </div>
         </div>
-        }
+        } }
       </div>
     </div>
+    @if (showDialog){
+    <dialogue-box
+      header="Info"
+      content="Are you sure you want to delete this product?"
+      button1="Permanently Delete"
+      button2="Cancel"
+      (close)="closeDialog()"
+      (firstButtonClicked)="showDialog = false; deleteProduct(productToDelete)"
+      (secondButtonClicked)="showDialog = false"
+    ></dialogue-box>
+    }
   `,
+  imports: [
+    ButtonUnbordered,
+    ButtonBordered,
+    IconComponent,
+    DialogueBoxComponent,
+  ],
 })
-export class MerchantViewProductsComponent {
-  constructor(private router: Router) {}
+export class MerchantViewProductsComponent implements OnInit {
+  products: Product[] = [];
+  showDialog = false;
+  productToDelete!: number;
+  constructor(private router: Router, private apiService: ApiService) {}
+  handleDelete(productId: number) {
+    this.showDialog = true;
+    this.productToDelete = productId;
+  }
+  closeDialog() {
+    this.showDialog = false;
+  }
+
+  ngOnInit() {
+    const merchantId = 420949; // Replace this with the actual merchant ID
+    this.apiService.getProducts(merchantId).subscribe(
+      (res) => {
+        this.products = res.data;
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
+  }
+
+  deleteProduct(productId: number) {
+    this.apiService.deleteProduct(productId).subscribe(
+      (res) => {
+        console.log(res);
+        location.reload();
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
+  }
+
   navigateToPage(page: string) {
     this.router.navigate([page]);
   }
-
-  // placeholder data
-  products: Product[] = [
-    {
-      id: 1,
-      name: 'Acme Product',
-      description: 'Product Description',
-      image: 'https://via.placeholder.com/165x165',
-      price: 100,
-      quantity: 100,
-      merchant: 'Merchant Name',
-      type: 'Service',
-    },
-    {
-      id: 2,
-      name: 'Acme Product',
-      description: 'Product Description',
-      image: 'https://via.placeholder.com/165x165',
-      price: 100,
-      quantity: 100,
-      merchant: 'Merchant Name',
-      type: 'Item',
-    },
-    {
-      id: 3,
-      name: 'Acme Product',
-      description: 'Product Description',
-      image: 'https://via.placeholder.com/165x165',
-      price: 100,
-      quantity: 100,
-      merchant: 'Merchant Name',
-      type: 'Item',
-    },
-    {
-      id: 4,
-      name: 'Acme Product',
-      description: 'Product Description',
-      image: 'https://via.placeholder.com/165x165',
-      price: 100,
-      quantity: 100,
-      merchant: 'Merchant Name',
-      type: 'Service',
-    },
-  ] as Product[];
 }

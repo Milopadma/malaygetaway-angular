@@ -7,6 +7,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { FormError } from '../types';
 import { Subject, debounceTime, switchMap } from 'rxjs';
 import { z } from 'zod';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'login',
@@ -27,7 +28,7 @@ import { z } from 'zod';
             name="username"
             #username="ngModel"
             class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
-            placeholder="username or email"
+            placeholder="email"
           />
           <!-- errors -->
           <div
@@ -63,7 +64,7 @@ import { z } from 'zod';
       <div class="w-12" id="spacer"></div>
       <div class="">
         <!-- placeholder image -->
-        <img src="https://via.placeholder.com/600x600" />
+        <img src="../../assets/malaylogin.jpeg" class="w-96 object-cover" />
       </div>
     </div>
     @if (showDialog){
@@ -73,7 +74,10 @@ import { z } from 'zod';
       button1="Change Password"
       button2="Later"
       (close)="closeDialog()"
-      (secondButtonClicked)="showDialog = false; navigateToNextPage()"
+      (firstButtonClicked)="
+        showDialog = false; navigateToNextPage('/changePassword')
+      "
+      (secondButtonClicked)="showDialog = false; navigateToNextPage('/home')"
     ></dialogue-box>
     }
   `,
@@ -82,8 +86,8 @@ export class Login {
   showDialog = false;
 
   user = {
-    username: '',
-    password: '',
+    username: 'weaw@awd.com',
+    password: 'pwweaw31803812',
   };
   LoginForm: NgForm;
 
@@ -101,7 +105,11 @@ export class Login {
   formSubmitted: boolean = false;
   isFormValid: boolean = false;
 
-  constructor(private router: Router, private apiService: ApiService) {
+  constructor(
+    private router: Router,
+    private apiService: ApiService,
+    private toastr: ToastrService
+  ) {
     this.LoginForm = new NgForm([], []);
     // Check contactnumber availability with debounce
     this.usernameSubject
@@ -133,19 +141,32 @@ export class Login {
   private usernameSubject = new Subject<string>();
 
   login() {
-    this.apiService.login(this.user.username, this.user.password).subscribe(
-      (res) => {
+    this.apiService.login(this.user.username, this.user.password).subscribe({
+      next: (res) => {
         localStorage.setItem('token', res.token);
         localStorage.setItem('userType', res.role);
+
+        // get the id
+        this.apiService.getMerchantId(this.user.username).subscribe({
+          next: (res) => {
+            localStorage.setItem('userId', res.id);
+            console.log(res);
+          },
+        });
 
         this.showDialog = true;
         console.log(localStorage.getItem('token'));
         console.log(localStorage.getItem('userType'));
       },
-      (err) => {
-        console.error(err);
-      }
-    );
+      error: (err) => {
+        console.error('am i hit');
+        this.toastr.error('Username or password is incorrect');
+        this.usernameError.set({
+          message: 'Username or password is incorrect',
+          isHidden: false,
+        });
+      },
+    });
   }
 
   onSubmit(form: NgForm) {
@@ -153,7 +174,6 @@ export class Login {
     try {
       this.user.username = this.usernameSchema.parse(form.value).username;
       console.log('Form data:', this.user);
-      this.navigateToNextPage();
     } catch (error) {
       console.log('Form is not valid');
       console.log(error);
@@ -184,28 +204,34 @@ export class Login {
     this.user.username = username;
   }
 
-  navigateToNextPage() {
-    if (!this.showDialog) {
-      // Get the user type from localStorage
-      const userType = localStorage.getItem('userType');
+  navigateToNextPage(dest: string) {
+    console.log('navigateToNextPage called with dest:', dest);
+    if (dest === '/home') {
+      if (!this.showDialog) {
+        // Get the user type from localStorage
+        const userType = localStorage.getItem('userType');
 
-      // Navigate to the appropriate route based on the user type
-      switch (userType) {
-        case 'merchant':
-          this.router.navigate(['/merchant/home']);
-          break;
-        case 'ministry_officer':
-          console.log('officer');
-          this.router.navigate(['/officer/home']);
-          break;
-        case 'customer':
-          this.router.navigate(['/customer/home']);
-          break;
-        default:
-          // Handle unknown user type
-          console.error('Unknown user type:', userType);
-          break;
+        // Navigate to the appropriate route based on the user type
+        switch (userType) {
+          case 'merchant':
+            this.router.navigate(['/merchant/home']);
+            break;
+          case 'ministry_officer':
+            console.log('officer');
+            this.router.navigate(['/officer/home']);
+            break;
+          case 'customer':
+            this.router.navigate(['/customer/home']);
+            break;
+          default:
+            // Handle unknown user type
+            console.error('Unknown user type:', userType);
+            break;
+        }
       }
+    } else {
+      console.log('navigateToNextPage called with dest:', dest);
+      this.router.navigate([`/changePassword/${this.user.username}`]);
     }
   }
 

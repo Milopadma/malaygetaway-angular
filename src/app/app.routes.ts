@@ -20,7 +20,7 @@ import { Home } from './pages/home/home.component';
 import { MerchantLayout } from './pages/merchant/merchantlayout.component';
 import { Benefits } from './pages/home/benefits.component';
 import { About } from './pages/home/about.component';
-import { MerchantEditProductsComponent } from './pages/merchant/editproduct.component';
+import { MerchantEditProductComponent } from './pages/merchant/editproduct.component';
 
 // Epic 4-6 (adit e2000427)
 import { NgModule } from '@angular/core';
@@ -38,6 +38,7 @@ import { CustomerPaymentMethodComponent } from './pages/customer/paymentmethod.c
 import { CustomerHomeComponent } from './pages/customer/homePurchase.component';
 import { CustomerSuccessfulyPurchase } from './pages/customer/purchasesuccess.component';
 import { OfficerAuthGuard } from './api/auth/officer.authguard';
+import { ChangePasswordFormComponent } from './pages/merchant/account.component';
 // import { MerchantDataFormComponent } from './pages/registrationform/merchantdata.component';
 
 export const routes: Routes = [
@@ -60,6 +61,10 @@ export const routes: Routes = [
   {
     path: 'login',
     component: Login,
+  },
+  {
+    path: 'changePassword/:email',
+    component: ChangePasswordFormComponent,
   },
   {
     path: 'merchant/register', //localhost:4200/merchant/register
@@ -114,7 +119,7 @@ export const routes: Routes = [
       },
       {
         path: 'editproduct/:id',
-        component: MerchantEditProductsComponent,
+        component: MerchantEditProductComponent,
       },
       {
         path: 'reports',
