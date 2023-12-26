@@ -55,7 +55,9 @@ import { ToastrService } from 'ngx-toastr';
           <div class="flex flex-row gap-2 items-center justify-end">
             <div class="text-small text-right">
               don't have an account? <br />
-              <span class="underline">register</span>
+              <span class="underline cursor-pointer" (click)="registerPage()"
+                >register</span
+              >
             </div>
             <buttonwicon (click)="login()" label="Continue"></buttonwicon>
           </div>
@@ -86,8 +88,8 @@ export class Login {
   showDialog = false;
 
   user = {
-    username: 'weaw@awd.com',
-    password: 'pwweaw31803812',
+    username: '',
+    password: '',
   };
   LoginForm: NgForm;
 
@@ -233,6 +235,10 @@ export class Login {
       console.log('navigateToNextPage called with dest:', dest);
       this.router.navigate([`/changePassword/${this.user.username}`]);
     }
+  }
+
+  registerPage() {
+    this.router.navigate(['/merchant/register']);
   }
 
   closeDialog() {
