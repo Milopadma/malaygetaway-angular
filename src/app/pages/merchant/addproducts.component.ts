@@ -160,7 +160,7 @@ export class MerchantAddProductsComponent {
       'https://via.placeholder.com/600x600',
       'https://via.placeholder.com/600x600',
     ],
-    merchantId: 420949,
+    merchantId: Number(localStorage.getItem('userId') || 1),
   } as Product;
 
   AddProductForm: NgForm;
