@@ -259,7 +259,7 @@ import { HttpClientModule } from '@angular/common/http';
                   </div>
                 </div>
                 <div>
-                <form (submit)="submitReview()">
+                <form (submit)="navigateTosend()">
                     <div class="grid gap-6 mb-1 lg:grid-cols-2">
                       <div>
                         <label for="name" class="block mb-2 text-small font-medium text-softblack">Name</label>
@@ -334,11 +334,6 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class reviewGenting {
   reviewData = {
-    orderRating: 0,
-    serviceRating: 0,
-    priceRating: 0,
-    placeRating: 0,
-    overallRating: 0,
     name: '',
     email: '',
     product: '',
@@ -349,25 +344,31 @@ export class reviewGenting {
 
   constructor(private router: Router, private reviewService: ReviewService) {}
 
-  submitReview() {
+  navigateTosend() {
     if (this.isSubmitting) {
       return;
     }
     this.isSubmitting = true;
-    this.reviewService.createReview(this.reviewData).subscribe(
-      response => {
-        this.isSubmitting = false;
-      },
-      error => {
-        console.error('Error when submitting review:', error);
-        this.isSubmitting = false;
-      }
-    );
+    this.reviewService.createReview(this.reviewData)
+      .subscribe(
+        (response) => {
+          this.router.navigate(['customer/review/sent']);
+          this.isSubmitting = false;
+        },
+        (error) => {
+          console.error('Error when saving review:', error.message);
+          this.isSubmitting = false;
+        }
+      );
   }
-
-  updateReviewData(field: keyof typeof this.reviewData, event: Event) {
-    const input = event.target as HTMLInputElement | null;
+  
+  
+  updateReviewData(field: keyof reviewGenting['reviewData'], event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.reviewData[field] = input.value;
   }
+  
+  
   rating1 = 0;
   rating2 = 0;
   rating3 = 0;
@@ -388,10 +389,7 @@ export class reviewGenting {
   setRating5(newRating: number) {
     this.rating5 = newRating;
   }
-  navButton1() {
-    this.router.navigate(['review/sent']);
-  }
   navButton2() {
-    this.router.navigate(['order']);
+    this.router.navigate(['customer/home']);
   }
 }

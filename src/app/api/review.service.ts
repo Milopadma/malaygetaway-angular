@@ -11,14 +11,16 @@ export class ReviewService {
 
   constructor(private http: HttpClient) {}
 
-  createReview(review: any): Observable<any> {
-    console.log(review);
-    return this.http.post(`${this.apiBaseUrl}/create`, review).pipe(
+  createReview(send: any): Observable<any> {
+    console.log('Sending review:', send);
+    return this.http.post(`${this.apiBaseUrl}/create`, send).pipe(
+      catchError(this.handleError)
     );
   }
 
   private handleError(error: HttpErrorResponse) {
-    // Error handling sesuai kebutuhan
-    return throwError('An error occurred');
+    const errorMessage = error.error?.message || error.statusText;
+    console.error('Server error:', errorMessage);
+    return throwError(() => new Error(errorMessage));
   }
 }
