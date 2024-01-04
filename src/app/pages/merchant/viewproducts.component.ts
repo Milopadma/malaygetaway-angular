@@ -111,7 +111,7 @@ export class MerchantViewProductsComponent implements OnInit {
   }
 
   ngOnInit() {
-    const merchantId = 420949; // Replace this with the actual merchant ID
+    const merchantId = Number(localStorage.getItem('userId') || 0);
     this.apiService.getProducts(merchantId).subscribe(
       (res) => {
         this.products = res.data;
