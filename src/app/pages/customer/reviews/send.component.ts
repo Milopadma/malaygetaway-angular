@@ -25,6 +25,11 @@ import { Router } from '@angular/router';
                 Your review successfully send.
               </p>
             </div>
+            <div class="mt-6 flex justify-center">
+                <button (click)="navButton1()" class="bg-green-500 hover:bg-green-600 text-white text-xl font-bold py-3 px-20 rounded">
+                  Continue
+                </button>
+              </div>
           </div>
         </div>
       </div>
@@ -33,4 +38,8 @@ import { Router } from '@angular/router';
 })
 export class send {
   constructor(private router: Router) {}
-}
+  navButton1() {
+    this.router.navigate(['customer/home']);
+  }
+}  
+

@@ -9,7 +9,10 @@ import { Router } from '@angular/router';
       <div class="max-w-4xl mx-auto px-4">
         <div class="bg-white p-8 rounded-lg shadow-lg">
           <h1>Orders</h1>
-          <h2>Submit a review for your past orders</h2>
+          <br>
+          <h3>Submit a review for your past orders</h3>
+          <br>
+          <br>
           <div
             (click)="navButton1()"
             class="cursor-pointer border-2 border-transparent hover:border-fadedgray rounded-lg transition duration-300"
