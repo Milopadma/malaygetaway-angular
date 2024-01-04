@@ -67,9 +67,10 @@ export interface MerchantData {
 
 export interface Product {
   productId: number;
+  address: string;
   name: string;
   description: string;
-  price: number | undefined;
+  price: number;
   type: string;
   productImageURLs: string[];
   merchantId: number;

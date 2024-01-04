@@ -240,7 +240,7 @@ export class ApiService {
   }
 
   // products related APIs
-  // these ones refer to customer view
+  // these ones refer to customer view, getting all products from all merchants from the separate product table in mongodb
   public getAllProducts(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/api/customer/getProducts`).pipe();
   }

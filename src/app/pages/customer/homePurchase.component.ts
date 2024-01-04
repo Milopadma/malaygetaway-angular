@@ -37,7 +37,7 @@ type TouristLocation = {
             class="grid grid-cols-3 gap-4 transition-transform duration-500"
           >
             <!-- the cards -->
-            <!-- @for (p of products; track p.productId){
+            @for (p of products; track p.productId){
             <div
               class="flex-none p-4 hover:scale-110 z-50 transition-all duration-300"
               [ngClass]="{
@@ -68,7 +68,7 @@ type TouristLocation = {
                 </div>
               </div>
             </div>
-            } -->
+            }
           </div>
         </div>
         <!-- <button
@@ -133,7 +133,7 @@ export class CustomerHomeComponent implements OnInit {
 
   ngOnInit() {
     this.apiService.getAllProducts().subscribe((products) => {
-      this.products = products;
+      this.products = products.data;
     });
 
     console.log(this.products);
@@ -164,6 +164,7 @@ export class CustomerHomeComponent implements OnInit {
   }
 
   navigateToProductPage(id: number): void {
+    console.log(id);
     this.router.navigate(['/customer/purchase', id]);
   }
 }

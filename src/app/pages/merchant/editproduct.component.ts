@@ -66,6 +66,27 @@ import { Subject } from 'rxjs';
               {{ productTypeError().message }}
             </div>
             <input
+              type="text"
+              id="productAddress"
+              required
+              [(ngModel)]="product.address"
+              (ngModelChange)="onProductAddressChange($event)"
+              name="address"
+              #productAddress="ngModel"
+              class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
+              placeholder="product address"
+            />
+            <!-- errors -->
+            <div
+              class="{{
+                !productAddressError().isHidden && productAddress.touched
+                  ? 'opacity-100 translate-y-0 h-8'
+                  : 'opacity-0 -translate-y-3/4 h-0'
+              }} text-reject transition-all ease-in-out duration-500 block"
+            >
+              {{ productAddressError().message }}
+            </div>
+            <input
               type="number"
               id="productPrice"
               required
@@ -137,6 +158,7 @@ export class MerchantEditProductComponent implements OnInit {
   // init new business from global state
   product = {
     productId: Math.floor(Math.random() * 1000),
+    address: '',
     name: '',
     description: '',
     price: 0,
@@ -159,6 +181,10 @@ export class MerchantEditProductComponent implements OnInit {
     message: 'Required',
     isHidden: true,
   });
+  productAddressError = signal<FormError>({
+    message: 'Required',
+    isHidden: true,
+  });
   productPriceError = signal<FormError>({
     message: 'Required',
     isHidden: true,
@@ -171,6 +197,7 @@ export class MerchantEditProductComponent implements OnInit {
   // Schema
   ProductSchema = z.object({
     productId: z.number().min(1, 'Invalid Product Id'),
+    address: z.string().min(2, 'Address must be at least 2 characters'),
     name: z.string().min(2, 'Name must be at least 2 characters'),
     description: z.string().min(2, 'Description must be at least 2 characters'),
     price: z.number().min(1, 'Invalid Price'),
@@ -195,6 +222,7 @@ export class MerchantEditProductComponent implements OnInit {
   // the subjects for each field
   productNameSubject = new Subject<string>();
   productTypeSubject = new Subject<string>();
+  productAddressSubject = new Subject<string>();
   productPriceSubject = new Subject<number>();
   productDescriptionSubject = new Subject<string>();
 
@@ -248,6 +276,29 @@ export class MerchantEditProductComponent implements OnInit {
 
     // update global state
     this.product.type = value;
+  }
+
+  onProductAddressChange(value: string) {
+    this.productAddressSubject.next(value);
+    this.productAddressError.set({ message: 'Required', isHidden: true });
+
+    // try to validate
+    try {
+      this.ProductSchema.parse(this.product);
+      this.isFormValid = true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.log(error.errors[0].message);
+        this.productAddressError.set({
+          message: error.errors[0].message,
+          isHidden: false,
+        });
+      }
+      this.isFormValid = false;
+    }
+
+    // update global state
+    this.product.address = value;
   }
 
   onProductPriceChange(value: number) {
@@ -321,6 +372,7 @@ export class MerchantEditProductComponent implements OnInit {
       // Manually add the missing fields to form.value
       form.value.productId = this.product.productId;
       form.value.productImageURLs = this.product.productImageURLs;
+      form.value.productAddress = this.product.address;
       form.value.merchantId = this.product.merchantId;
 
       this.product = this.ProductSchema.parse(form.value);
