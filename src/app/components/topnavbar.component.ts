@@ -41,6 +41,11 @@ import { IconComponent } from './icon.component';
             >Officer
           </a>
           <a
+            (click)="navigateToNextPage('login')"
+            class="text-black text-base font-light leading-5 tracking-tighter cursor-pointer hover:underline transition-all duration-200"
+            >Login
+          </a>
+          <a
             (click)="navigateToNextPage('merchant/register')"
             class="text-base font-light leading-5 tracking-tighter whitespace-nowrap bg-softblack text-white px-6 py-2 cursor-pointer hover:underline transition-all duration-200"
             >Join Us</a

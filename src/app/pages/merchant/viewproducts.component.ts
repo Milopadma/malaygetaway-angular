@@ -111,7 +111,14 @@ export class MerchantViewProductsComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (
+      typeof localStorage === 'undefined' ||
+      localStorage.getItem('userId') == null
+    ) {
+      this.router.navigate(['/login']);
+    }
     const merchantId = Number(localStorage.getItem('userId') || 0);
+    console.log('localstorage merchantid: ', merchantId);
     this.apiService.getProducts(merchantId).subscribe(
       (res) => {
         this.products = res.data;
@@ -121,7 +128,6 @@ export class MerchantViewProductsComponent implements OnInit {
       }
     );
   }
-
   deleteProduct(productId: number) {
     this.apiService.deleteProduct(productId).subscribe(
       (res) => {

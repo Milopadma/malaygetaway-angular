@@ -66,6 +66,27 @@ import { ToastrService } from 'ngx-toastr';
               {{ productTypeError().message }}
             </div>
             <input
+              type="text"
+              id="productAddress"
+              required
+              [(ngModel)]="product.address"
+              (ngModelChange)="onProductAddressChange($event)"
+              name="address"
+              #productAddress="ngModel"
+              class="text-black placeholder:text-fadedgray text-paragraph leading-7 tracking-tighter whitespace-nowrap border-[color:var(--Soft-Black,#2C2C2C)] w-[412px] max-w-full px-5 py-4 border-2 border-solid max-md:pl-1"
+              placeholder="product address"
+            />
+            <!-- errors -->
+            <div
+              class="{{
+                !productAddressError().isHidden && productAddress.touched
+                  ? 'opacity-100 translate-y-0 h-8'
+                  : 'opacity-0 -translate-y-3/4 h-0'
+              }} text-reject transition-all ease-in-out duration-500 block"
+            >
+              {{ productAddressError().message }}
+            </div>
+            <input
               type="number"
               id="productPrice"
               required
@@ -152,6 +173,7 @@ export class MerchantAddProductsComponent {
   // init new business from global state
   product = {
     productId: Math.floor(Math.random() * 1000),
+    address: '',
     name: '',
     description: '',
     price: 0,
@@ -174,6 +196,10 @@ export class MerchantAddProductsComponent {
     message: 'Required',
     isHidden: true,
   });
+  productAddressError = signal<FormError>({
+    message: 'Required',
+    isHidden: true,
+  });
   productPriceError = signal<FormError>({
     message: 'Required',
     isHidden: true,
@@ -187,6 +213,7 @@ export class MerchantAddProductsComponent {
   ProductSchema = z.object({
     name: z.string().min(2, 'Name must be at least 2 characters'),
     description: z.string().min(2, 'Description must be at least 2 characters'),
+    address: z.string().min(2, 'Address must be at least 2 characters'),
     price: z.number().min(1, 'Invalid Price'),
     type: z.string().min(2, 'Type must be at least 2 characters'),
     // productImageURLs: z.array(z.string()).min(1, 'Must have at least 1 image'),
@@ -213,6 +240,7 @@ export class MerchantAddProductsComponent {
   // the subjects for each field
   productNameSubject = new Subject<string>();
   productTypeSubject = new Subject<string>();
+  productAddressSubject = new Subject<string>();
   productPriceSubject = new Subject<number>();
   productDescriptionSubject = new Subject<string>();
 
@@ -227,6 +255,13 @@ export class MerchantAddProductsComponent {
     console.log(value);
     this.product.type = value;
     this.validateField('type', value);
+    this.checkIfFormIsValid();
+  }
+
+  onProductAddressChange(value: string) {
+    console.log(value);
+    this.product.address = value;
+    this.validateField('address', value);
     this.checkIfFormIsValid();
   }
 
@@ -272,6 +307,9 @@ export class MerchantAddProductsComponent {
       case 'name':
         this.productNameError.set({ message: 'Required', isHidden: true });
         break;
+      case 'address':
+        this.productAddressError.set({ message: 'Required', isHidden: true });
+        break;
       case 'type':
         this.productTypeError.set({ message: 'Required', isHidden: true });
         break;
@@ -294,6 +332,9 @@ export class MerchantAddProductsComponent {
         break;
       case 'type':
         this.productTypeError.set({ message: message, isHidden: false });
+        break;
+      case 'address':
+        this.productAddressError.set({ message: message, isHidden: false });
         break;
       case 'price':
         this.productPriceError.set({ message: message, isHidden: false });

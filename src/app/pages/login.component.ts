@@ -148,14 +148,6 @@ export class Login {
         localStorage.setItem('token', res.token);
         localStorage.setItem('userType', res.role);
 
-        // get the id
-        this.apiService.getMerchantId(this.user.username).subscribe({
-          next: (res) => {
-            localStorage.setItem('userId', res.id);
-            console.log(res);
-          },
-        });
-
         this.showDialog = true;
         console.log(localStorage.getItem('token'));
         console.log(localStorage.getItem('userType'));
@@ -167,6 +159,16 @@ export class Login {
           message: 'Username or password is incorrect',
           isHidden: false,
         });
+      },
+    });
+
+    // get the id
+    this.apiService.getMerchantId(this.user.username).subscribe({
+      next: (res) => {
+        localStorage.setItem('userId', res.userId);
+        console.log('userid', res);
+
+        console.log(localStorage.getItem('userId'));
       },
     });
   }

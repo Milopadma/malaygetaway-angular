@@ -59,6 +59,6 @@ export class CompletedFormComponent implements OnInit {
   }
 
   navigateToNextPage() {
-    this.router.navigate(['/login']); // TODO replace '/' with the actual route later
+    this.router.navigate(['/home']);
   }
 }
