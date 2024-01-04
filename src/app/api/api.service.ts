@@ -240,6 +240,12 @@ export class ApiService {
   }
 
   // products related APIs
+  // these ones refer to customer view
+  public getAllProducts(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/api/customer/getProducts`).pipe();
+  }
+
+  // these ones refer to merchant view
   public getProducts(merchantId: number): Observable<any> {
     return this.http
       .get<any>(`${this.apiUrl}/api/merchant/getProducts/${merchantId}`)
